@@ -2,11 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useCart } from "@/store/cart";
 
 export default function Nav() {
-  const count = useCart((s) => s.count());
-
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-50 bg-petrol text-white/80 text-xs text-center py-2 px-4 tracking-wider">
@@ -31,14 +28,6 @@ export default function Nav() {
             <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
             <Link href="/events" className="hover:text-white transition-colors">Upcoming Events</Link>
             <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-            <Link href="/cart" className="relative hover:text-white transition-colors">
-              Cart
-              {count > 0 && (
-                <span className="absolute -top-2 -right-4 bg-sage text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-                  {count}
-                </span>
-              )}
-            </Link>
           </div>
         </div>
       </nav>
