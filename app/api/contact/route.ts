@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   const { name, email, message } = await req.json();
@@ -7,9 +10,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
-  // TODO: wire up an email service (e.g. Resend) to forward messages to Sage.
-  // For now, log to server console so submissions aren't silently dropped.
-  console.log("Contact form submission:", { name, email, message, at: new Date().toISOString() });
+  const { error } = await resend.emails.send({
+    from: "Tende Contact Form <hello@tende.care>",
+    to: "hello@tende.care",
+    replyTo: email,
+    subject: `Message from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+  });
+
+  if (error) {
+    console.error("Resend error:", error);
+    return NextResponse.json({ error: "Failed to send" }, { status: 500 });
+  }
 
   return NextResponse.json({ ok: true });
 }
