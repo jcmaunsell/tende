@@ -5,13 +5,13 @@ import Footer from "@/components/Footer";
 import DatadogRum from "@/components/DatadogRum";
 
 export const metadata: Metadata = {
-  title: "tende — plant-based beauty",
+  title: "Tende — plant-based beauty",
   description: "Plant-based hair + body care, handcrafted by an organic chemist.",
   openGraph: {
-    title: "tende",
+    title: "Tende",
     description: "Plant-based beauty, rooted in care.",
     url: "https://tende.care",
-    siteName: "tende",
+    siteName: "Tende",
   },
 };
 

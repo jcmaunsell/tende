@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const faqs = [
   {
-    q: "Are tende products truly plant-based?",
+    q: "Are Tende products truly plant-based?",
     a: "All our formulas are crafted with plant-based ingredients, including solid shampoo and conditioner bars, oils, and scrubs.",
   },
   {
@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: "Are your products cruelty-free and vegan?",
-    a: "Absolutely. tende is 100% cruelty-free and vegan — no animal testing is involved at any stage.",
+    a: "Absolutely. Tende is 100% cruelty-free and vegan — no animal testing is involved at any stage.",
   },
   {
     q: "How do I use a shampoo bar?",

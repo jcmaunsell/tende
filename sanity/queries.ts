@@ -48,8 +48,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 export async function getAllEvents(): Promise<SanityEvent[]> {
   try {
     return await client.fetch(
-      `*[_type == "event"] | order(date asc) {
-        _id, title, date, "image": image.asset->url, location, description
+      `*[_type == "event" && date >= now()] | order(date asc) {
+        _id, title, date, "image": coalesce(image.asset->url, imageUrl), location, description
       }`
     );
   } catch {

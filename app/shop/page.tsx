@@ -12,7 +12,7 @@ export default async function ShopPage() {
       <div className="relative h-56 overflow-hidden">
         <Image
           src="/images/bars-overhead.jpg"
-          alt="tende products"
+          alt="Tende products"
           fill
           className="object-cover object-center"
           priority

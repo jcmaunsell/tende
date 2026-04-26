@@ -48,7 +48,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <p className="text-xs self-end font-sans">© {new Date().getFullYear()} tende care. All rights reserved.</p>
+        <p className="text-xs self-end font-sans">© {new Date().getFullYear()} Tende Care. All rights reserved.</p>
       </div>
     </footer>
   );

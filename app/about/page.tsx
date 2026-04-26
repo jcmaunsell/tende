@@ -28,7 +28,7 @@ export default function AboutPage() {
         <div className="aspect-[3/4] overflow-hidden">
           <Image
             src={SAGE_IMG}
-            alt="Sage, founder of tende"
+            alt="Sage, founder of Tende"
             width={900}
             height={1200}
             className="w-full h-full object-cover"
@@ -36,7 +36,7 @@ export default function AboutPage() {
         </div>
         <div>
           <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-8 leading-snug uppercase">
-            I&apos;m Sage, the founder of tende.
+            I&apos;m Sage, the founder of Tende.
           </h2>
           <div className="space-y-5 text-base font-light leading-relaxed text-white/80 font-sans">
             <p>
@@ -44,7 +44,7 @@ export default function AboutPage() {
               enthusiast at heart.
             </p>
             <p>
-              I started tende to create products that are both effective and intentional — where every
+              I started Tende to create products that are both effective and intentional — where every
               ingredient has a purpose, and nothing is added just to fill space.
             </p>
           </div>

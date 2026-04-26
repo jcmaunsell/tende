@@ -19,7 +19,7 @@ export default async function HomePage() {
         <div className="relative flex-[3] min-h-[50vh] flex items-center justify-center">
           <Image
             src="/images/bars-overhead.jpg"
-            alt="tende products"
+            alt="Tende products"
             fill
             className="object-cover object-center"
             priority
@@ -148,7 +148,7 @@ export default async function HomePage() {
         <div className="order-1 md:order-2 aspect-[4/5] overflow-hidden">
           <Image
             src="/images/hair-serums-garden.jpg"
-            alt="tende hair serums"
+            alt="Tende hair serums"
             width={800}
             height={1000}
             className="w-full h-full object-cover"
@@ -197,7 +197,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/bar-sky.jpg"
-            alt="tende bar held against blue sky"
+            alt="Tende bar held against blue sky"
             fill
             className="object-cover object-center"
           />
@@ -206,7 +206,7 @@ export default async function HomePage() {
         <div className="relative z-10 px-6 max-w-lg">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">who we are</p>
           <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-snug uppercase">
-            tende was founded by an organic chemist in search of skincare that nurtures people and their planet.
+            Tende was founded by an organic chemist in search of skincare that nurtures people and their planet.
           </h2>
           <Link
             href="/about"

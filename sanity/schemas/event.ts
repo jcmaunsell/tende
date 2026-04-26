@@ -30,8 +30,14 @@ export default defineType({
       name: "image",
       title: "Event photo",
       type: "image",
-      description: "Optional photo for this event.",
+      description: "Upload a photo, or paste an external URL below instead.",
       options: { hotspot: true },
+    }),
+    defineField({
+      name: "imageUrl",
+      title: "Image URL (external)",
+      type: "url",
+      description: "Paste a direct image URL instead of uploading. Ignored if a photo is uploaded above.",
     }),
     defineField({
       name: "description",

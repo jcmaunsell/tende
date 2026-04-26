@@ -29,7 +29,7 @@ export default async function EventsPage() {
       <div className="relative h-56 overflow-hidden">
         <Image
           src="/images/bars-lineup.jpg"
-          alt="tende products"
+          alt="Tende products"
           fill
           className="object-cover object-center"
           priority
