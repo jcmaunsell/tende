@@ -22,14 +22,14 @@ export default function ProductCard({ product }: { product: Product }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-[var(--muted)]">
-            <span className="font-display text-4xl">t</span>
+            <span className="font-display font-bold text-4xl">t</span>
           </div>
         )}
       </div>
-      <p className="text-xs uppercase tracking-widest text-[var(--muted)] mb-1">{product.category}</p>
-      <h3 className="font-display text-xl text-[var(--foreground)] mb-1">{product.title}</h3>
-      {product.tagline && <p className="text-sm font-light text-[var(--foreground)]/60 mb-2">{product.tagline}</p>}
-      <p className="text-sm text-[var(--wine)]">{formatPrice(product.price)}</p>
+      <p className="text-xs uppercase tracking-widest text-[var(--muted)] mb-1 font-sans">{product.category}</p>
+      <h3 className="font-display font-bold text-base text-[var(--foreground)] mb-1 uppercase">{product.title}</h3>
+      {product.tagline && <p className="text-sm font-light text-[var(--foreground)]/60 mb-2 font-sans">{product.tagline}</p>}
+      <p className="text-sm text-[var(--teal)] font-sans">{formatPrice(product.price)}</p>
     </Link>
   );
 }

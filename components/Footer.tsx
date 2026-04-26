@@ -12,27 +12,27 @@ export default function Footer() {
             height={25}
             className="h-6 w-auto mb-2 opacity-70"
           />
-          <p className="text-xs tracking-wider">garden to palm</p>
+          <p className="text-xs tracking-wider font-sans">garden to palm</p>
         </div>
 
-        <div className="flex gap-10 uppercase tracking-widest text-xs">
+        <div className="flex gap-10 uppercase tracking-widest text-xs font-sans">
           <div className="flex flex-col gap-3">
-            <a href="/shop" className="hover:text-[var(--wine)] transition-colors">Shop</a>
-            <a href="/about" className="hover:text-[var(--wine)] transition-colors">About</a>
+            <a href="/shop" className="hover:text-[var(--teal)] transition-colors">Shop</a>
+            <a href="/about" className="hover:text-[var(--teal)] transition-colors">About</a>
           </div>
           <div className="flex flex-col gap-3">
-            <a href="/faq" className="hover:text-[var(--wine)] transition-colors">FAQ</a>
-            <a href="/events" className="hover:text-[var(--wine)] transition-colors">Upcoming Events</a>
-            <a href="/contact" className="hover:text-[var(--wine)] transition-colors">Contact</a>
+            <a href="/faq" className="hover:text-[var(--teal)] transition-colors">FAQ</a>
+            <a href="/events" className="hover:text-[var(--teal)] transition-colors">Upcoming Events</a>
+            <a href="/contact" className="hover:text-[var(--teal)] transition-colors">Contact</a>
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 text-xs">
+        <div className="flex flex-col gap-3 text-xs font-sans">
           <a
             href="https://www.instagram.com/tende.beauty"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--wine)] transition-colors uppercase tracking-widest"
+            className="hover:text-[var(--teal)] transition-colors uppercase tracking-widest"
           >
             Instagram
           </a>
@@ -40,13 +40,13 @@ export default function Footer() {
             href="https://www.tiktok.com/@tende.care"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--wine)] transition-colors uppercase tracking-widest"
+            className="hover:text-[var(--teal)] transition-colors uppercase tracking-widest"
           >
             TikTok
           </a>
         </div>
 
-        <p className="text-xs self-end">© {new Date().getFullYear()} tende care. All rights reserved.</p>
+        <p className="text-xs self-end font-sans">© {new Date().getFullYear()} tende care. All rights reserved.</p>
       </div>
     </footer>
   );

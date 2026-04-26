@@ -7,8 +7,8 @@ export default function AboutPage() {
     <>
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3">our story</p>
-        <h1 className="font-display text-6xl md:text-7xl text-[var(--foreground)]">garden to palm</h1>
+        <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3 font-sans">our story</p>
+        <h1 className="font-display font-bold text-5xl md:text-6xl text-[var(--foreground)] uppercase">garden to palm</h1>
       </section>
 
       {/* Sage intro */}
@@ -23,10 +23,10 @@ export default function AboutPage() {
           />
         </div>
         <div className="py-4">
-          <h2 className="font-display text-3xl text-[var(--foreground)] mb-6">
+          <h2 className="font-display font-bold text-2xl text-[var(--foreground)] mb-6 uppercase">
             I&apos;m Sage, the founder of tende.
           </h2>
-          <div className="space-y-5 text-base font-light leading-relaxed text-[var(--foreground)]/80">
+          <div className="space-y-5 text-base font-light leading-relaxed text-[var(--foreground)]/80 font-sans">
             <p>
               I&apos;m an organic chemist and cosmetic scientist by training, but also an artist and nature
               enthusiast at heart. I started tende to create products that are both effective and intentional —
@@ -59,14 +59,14 @@ export default function AboutPage() {
             fill
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-[var(--foreground)]/65" />
+          <div className="absolute inset-0 bg-[var(--sage-dark)]/70" />
         </div>
         <div className="relative z-10 px-6 max-w-xl">
-          <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4">what we believe</p>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-6 leading-tight">
+          <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">what we believe</p>
+          <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-snug uppercase">
             Nurturing people and their planet
           </h2>
-          <p className="text-base font-light text-white/80 leading-relaxed">
+          <p className="text-base font-light text-white/80 leading-relaxed font-sans">
             Every formula is made with purposeful, plant-based ingredients. 100% vegan and cruelty-free,
             using only pure essential oils or ECOCERT-certified natural fragrance oils.
           </p>
