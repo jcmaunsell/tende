@@ -88,10 +88,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
                 >
                   {v.fragrance.name}
                   {v.fragrance.notes && (
-                    <span className={[
-                      "block text-[10px] normal-case tracking-normal font-light mt-0.5",
-                      selected ? "text-white/80" : "text-muted",
-                    ].join(" ")}>
+                    <span className="block text-[10px] normal-case tracking-normal font-light mt-0.5 text-muted">
                       {v.fragrance.notes}
                     </span>
                   )}
@@ -131,7 +128,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
               ? "border border-foreground/20 text-muted/50 cursor-not-allowed"
               : hasVariants && selectedId === null
               ? "bg-foreground/40 text-background cursor-not-allowed"
-              : "bg-foreground text-background hover:bg-sage-dark",
+              : "bg-foreground text-background hover:bg-petrol",
           ].join(" ")}
         >
           {isOutOfStock

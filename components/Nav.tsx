@@ -9,11 +9,11 @@ export default function Nav() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-sage-dark text-white/80 text-xs text-center py-2 px-4 tracking-wider">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-petrol text-white/80 text-xs text-center py-2 px-4 tracking-wider">
         Free U.S. shipping on orders over $55 — no code needed
       </div>
 
-      <nav className="fixed top-8 left-0 right-0 z-40 bg-sage-dark">
+      <nav className="fixed top-8 left-0 right-0 z-40 bg-petrol">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image

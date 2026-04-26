@@ -24,7 +24,7 @@ export default async function HomePage() {
             className="object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-sage-dark/50" />
+          <div className="absolute inset-0 bg-petrol/50" />
           <h1 className="relative z-10 font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl text-center uppercase tracking-wider leading-none px-6">
             Science Meets Simplicity
           </h1>
@@ -201,7 +201,7 @@ export default async function HomePage() {
             fill
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-sage-dark/65" />
+          <div className="absolute inset-0 bg-petrol/65" />
         </div>
         <div className="relative z-10 px-6 max-w-lg">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">who we are</p>

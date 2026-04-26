@@ -90,7 +90,7 @@ export default function CartPage() {
       <button
         onClick={handleCheckout}
         disabled={loading}
-        className="w-full py-4 bg-foreground text-background text-sm uppercase tracking-widest hover:bg-sage-dark transition-colors disabled:opacity-50"
+        className="w-full py-4 bg-foreground text-background text-sm uppercase tracking-widest hover:bg-petrol transition-colors disabled:opacity-50"
       >
         {loading ? "Redirecting…" : "Checkout"}
       </button>

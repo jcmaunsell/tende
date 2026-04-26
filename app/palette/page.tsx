@@ -6,7 +6,7 @@ const SWATCHES = [
   { label: "background", var: "--background", cls: "bg-background" },
   { label: "foreground", var: "--foreground", cls: "bg-foreground" },
   { label: "sage", var: "--sage", cls: "bg-sage" },
-  { label: "sage-dark", var: "--sage-dark", cls: "bg-sage-dark" },
+  { label: "petrol", var: "--petrol", cls: "bg-petrol" },
   { label: "teal", var: "--teal", cls: "bg-teal" },
   { label: "parchment", var: "--parchment", cls: "bg-parchment" },
   { label: "muted", var: "--muted", cls: "bg-muted" },
@@ -16,7 +16,7 @@ const CSS_VARS = [
   { label: "background", key: "--background" },
   { label: "foreground", key: "--foreground" },
   { label: "sage", key: "--sage" },
-  { label: "sage-dark", key: "--sage-dark" },
+  { label: "petrol", key: "--petrol" },
   { label: "teal", key: "--teal" },
   { label: "parchment", key: "--parchment" },
   { label: "muted", key: "--muted" },
@@ -97,7 +97,7 @@ export default function PalettePage() {
       <section className="mb-16">
         <h2 className="font-display font-bold text-sm uppercase tracking-widest text-foreground mb-6">Buttons & Chips</h2>
         <div className="flex flex-wrap gap-3 mb-4">
-          <button className="px-6 h-12 bg-foreground text-background text-xs uppercase tracking-widest font-sans hover:bg-sage-dark transition-colors rounded-full">
+          <button className="px-6 h-12 bg-foreground text-background text-xs uppercase tracking-widest font-sans hover:bg-petrol transition-colors rounded-full">
             Add to Cart
           </button>
           <button className="px-6 h-12 border border-foreground/20 text-muted text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full">
@@ -150,7 +150,7 @@ export default function PalettePage() {
           ))}
           <button className="text-xs font-sans uppercase tracking-widest px-3 py-1.5 border bg-foreground text-background border-foreground text-left">
             Frosted Bloom
-            <span className="block normal-case tracking-normal font-light mt-0.5 text-white/80">
+            <span className="block normal-case tracking-normal font-light mt-0.5 text-muted">
               Jasmine & Winter Citrus
             </span>
           </button>
