@@ -16,7 +16,6 @@ const CATEGORIES: { label: string; value: string }[] = [
 ];
 
 interface FragranceOption {
-  raw: string;
   scentName: string;
   notes: string | null;
 }
@@ -34,13 +33,20 @@ export default function ShopProductList({ products }: { products: Product[] }) {
     [products, activeCategory]
   );
 
-  // Fragrance options derived from category-filtered products so chips never dead-end
+  // Fragrance options deduplicated by scentName; notes taken from first variant that has them
   const fragrances = useMemo<FragranceOption[]>(() => {
     const seen = new Map<string, FragranceOption>();
     categoryFiltered.forEach((p) =>
       p.variants?.forEach((v) => {
-        if (!v.fragrance || seen.has(v.fragrance)) return;
-        seen.set(v.fragrance, { raw: v.fragrance, ...parseFragrance(v.fragrance) });
+        if (!v.fragrance) return;
+        const { scentName, notes } = parseFragrance(v.fragrance);
+        const existing = seen.get(scentName);
+        if (!existing) {
+          seen.set(scentName, { scentName, notes });
+        } else if (!existing.notes && notes) {
+          // Upgrade to include notes if we find them on another variant
+          seen.set(scentName, { scentName, notes });
+        }
       })
     );
     return Array.from(seen.values()).sort((a, b) => a.scentName.localeCompare(b.scentName));
@@ -48,7 +54,7 @@ export default function ShopProductList({ products }: { products: Product[] }) {
 
   // Clear stale fragrance selection when switching categories
   useEffect(() => {
-    if (activeFragrance && !fragrances.some((f) => f.raw === activeFragrance)) {
+    if (activeFragrance && !fragrances.some((f) => f.scentName === activeFragrance)) {
       setActiveFragrance(null);
     }
   }, [fragrances, activeFragrance]);
@@ -57,7 +63,11 @@ export default function ShopProductList({ products }: { products: Product[] }) {
     () =>
       categoryFiltered.filter((p) => {
         if (!activeFragrance) return true;
-        return p.variants?.some((v) => v.fragrance === activeFragrance) ?? false;
+        return (
+          p.variants?.some(
+            (v) => v.fragrance && parseFragrance(v.fragrance).scentName === activeFragrance
+          ) ?? false
+        );
       }),
     [categoryFiltered, activeFragrance]
   );
@@ -105,7 +115,7 @@ export default function ShopProductList({ products }: { products: Product[] }) {
         ))}
       </div>
 
-      {/* Fragrance filters — only fragrances available in the active category */}
+      {/* Fragrance filters — deduplicated by scent name, scoped to active category */}
       {fragrances.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-10">
           <FilterBtn active={activeFragrance === null} onClick={() => setActiveFragrance(null)}>
@@ -113,9 +123,11 @@ export default function ShopProductList({ products }: { products: Product[] }) {
           </FilterBtn>
           {fragrances.map((f) => (
             <FilterBtn
-              key={f.raw}
-              active={activeFragrance === f.raw}
-              onClick={() => setActiveFragrance(activeFragrance === f.raw ? null : f.raw)}
+              key={f.scentName}
+              active={activeFragrance === f.scentName}
+              onClick={() =>
+                setActiveFragrance(activeFragrance === f.scentName ? null : f.scentName)
+              }
             >
               {f.scentName}
               {f.notes && (
