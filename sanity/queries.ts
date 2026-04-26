@@ -21,7 +21,8 @@ export async function getFeaturedProducts(): Promise<Product[]> {
       `*[_type == "product" && inStock == true][0...4] | order(_createdAt asc) {
         _id, title, slug, tagline, price,
         "images": images[].asset->url,
-        category, inStock
+        category, inStock,
+        variants[]{ price }
       }`
     );
   } catch {
@@ -36,7 +37,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
         _id, title, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
         category, ingredients, howToUse, inStock, stripePriceId,
-        variants[]{ fragrance, "image": image.asset->url, stripePriceId, inStock }
+        variants[]{ fragrance, "image": image.asset->url, price, stripePriceId, inStock }
       }`,
       { slug }
     );

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { priceRange } from "@/lib/utils";
 
 export default function ProductCard({ product }: { product: Product }) {
   const slug = product.slug.current;
@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <p className="text-xs uppercase tracking-widest text-muted mb-1 font-sans">{product.category}</p>
       <h3 className="font-display font-bold text-base text-foreground mb-1 uppercase">{product.title}</h3>
       {product.tagline && <p className="text-sm font-light text-foreground/60 mb-2 font-sans">{product.tagline}</p>}
-      <p className="text-sm text-teal font-sans">{formatPrice(product.price)}</p>
+      <p className="text-sm text-teal font-sans">{priceRange(product)}</p>
     </Link>
   );
 }

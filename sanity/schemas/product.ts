@@ -127,6 +127,13 @@ export default defineType({
               options: { hotspot: true },
             }),
             defineField({
+              name: "price",
+              title: "Price override (in cents)",
+              type: "number",
+              description: "Optional. Leave blank to use the product base price. Enter in cents, e.g. 2200 for $22.00.",
+              validation: (R) => R.positive().integer(),
+            }),
+            defineField({
               name: "stripePriceId",
               title: "Stripe Price ID",
               type: "string",

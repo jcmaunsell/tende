@@ -1,6 +1,7 @@
 export interface ProductVariant {
   fragrance: string;
   image?: string;
+  price?: number;
   stripePriceId?: string;
   inStock: boolean;
 }
