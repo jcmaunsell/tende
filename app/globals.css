@@ -39,6 +39,15 @@ h1, h2, h3, h4 {
   to { transform: translateX(-50%); }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.25s ease-in-out;
+}
+
 .ticker-track {
   display: flex;
   width: max-content;

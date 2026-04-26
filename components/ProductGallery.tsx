@@ -71,13 +71,14 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
       )}
 
       <div ref={mainRef} className="relative flex-1">
-        <div className="aspect-square bg-parchment overflow-hidden">
+        <div className="aspect-square bg-parchment overflow-hidden relative">
           <Image
+            key={images[active]}
             src={images[active]}
             alt={title}
             width={800}
             height={800}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover animate-fade-in"
             priority
           />
         </div>

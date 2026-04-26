@@ -22,11 +22,21 @@ export default function ProductDetail({ product }: { product: Product }) {
   function handleFragranceChange(fragranceId: string | null) {
     setSelectedId(fragranceId);
     if (!fragranceId) { setActiveIndex(0); return; }
-    const variant = product.variants?.find((v) => v.fragrance._id === fragranceId);
+    const variantIndex = product.variants?.findIndex((v) => v.fragrance._id === fragranceId) ?? -1;
+    const variant = variantIndex >= 0 ? product.variants![variantIndex] : null;
+
     if (variant?.image) {
+      // Variant has a dedicated image — jump straight to it
       const idx = allImages.indexOf(variant.image);
-      if (idx >= 0) setActiveIndex(idx);
+      if (idx >= 0) { setActiveIndex(idx); return; }
     }
+
+    // Fallback: use the variant's position to select from the main gallery
+    // (works when product images are ordered the same as fragrance variants)
+    const fallback = variantIndex >= 0 && variantIndex < (product.images?.length ?? 0)
+      ? variantIndex
+      : 0;
+    setActiveIndex(fallback);
   }
 
   const activeVariant = product.variants?.find((v) => v.fragrance._id === selectedId) ?? null;
