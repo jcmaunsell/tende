@@ -21,7 +21,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
               <li key={i}>
                 <span className="font-display font-bold text-xs uppercase tracking-wide">{name}</span>
                 {detail && (
-                  <span className="block text-sm font-sans font-light text-[var(--foreground)]/70 mt-0.5 leading-relaxed">
+                  <span className="block text-sm font-sans font-light text-foreground/70 mt-0.5 leading-relaxed">
                     {detail}
                   </span>
                 )}
@@ -35,7 +35,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
       key: "howToUse",
       title: "How to Use + Care",
       body: (
-        <p className="text-sm font-sans font-light leading-relaxed text-[var(--foreground)]/80 whitespace-pre-line">
+        <p className="text-sm font-sans font-light leading-relaxed text-foreground/80 whitespace-pre-line">
           {product.howToUse}
         </p>
       ),
@@ -44,7 +44,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
       key: "fullList",
       title: "Full Ingredient List",
       body: (
-        <p className="text-sm font-sans font-light leading-relaxed text-[var(--foreground)]/70">
+        <p className="text-sm font-sans font-light leading-relaxed text-foreground/70">
           {product.ingredients.map((ing) => ing.split(" — ")[0]).join(", ")}
         </p>
       ),
@@ -56,22 +56,22 @@ export default function ProductAccordion({ product }: { product: Product }) {
   return (
     <div className="mt-12">
       {sections.map(({ key, title, body }) => (
-        <div key={key} className="border-t border-[var(--cream)]">
+        <div key={key} className="border-t border-cream">
           <button
             onClick={() => toggle(key)}
             className="w-full flex items-center justify-between py-5 text-left group"
           >
-            <span className="font-display font-bold text-xs uppercase tracking-wider group-hover:text-[var(--teal)] transition-colors">
+            <span className="font-display font-bold text-xs uppercase tracking-wider group-hover:text-teal transition-colors">
               {title}
             </span>
-            <span className="text-xl text-[var(--muted)] leading-none">
+            <span className="text-xl text-muted leading-none">
               {open === key ? "−" : "+"}
             </span>
           </button>
           {open === key && <div className="pb-8">{body}</div>}
         </div>
       ))}
-      <div className="border-t border-[var(--cream)]" />
+      <div className="border-t border-cream" />
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--cream)] mt-24 py-12 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10 text-sm font-light text-[var(--muted)]">
+    <footer className="border-t border-cream mt-24 py-12 px-6">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10 text-sm font-light text-muted">
         <div>
           <Image
             src="/images/logo-black.png"
@@ -11,19 +12,20 @@ export default function Footer() {
             width={72}
             height={25}
             className="h-6 w-auto mb-2 opacity-70"
+            style={{ width: "auto" }}
           />
           <p className="text-xs tracking-wider font-sans">garden to palm</p>
         </div>
 
         <div className="flex gap-10 uppercase tracking-widest text-xs font-sans">
           <div className="flex flex-col gap-3">
-            <a href="/shop" className="hover:text-[var(--teal)] transition-colors">Shop</a>
-            <a href="/about" className="hover:text-[var(--teal)] transition-colors">About</a>
+            <Link href="/shop" className="hover:text-teal transition-colors">Shop</Link>
+            <Link href="/about" className="hover:text-teal transition-colors">About</Link>
           </div>
           <div className="flex flex-col gap-3">
-            <a href="/faq" className="hover:text-[var(--teal)] transition-colors">FAQ</a>
-            <a href="/events" className="hover:text-[var(--teal)] transition-colors">Upcoming Events</a>
-            <a href="/contact" className="hover:text-[var(--teal)] transition-colors">Contact</a>
+            <Link href="/faq" className="hover:text-teal transition-colors">FAQ</Link>
+            <Link href="/events" className="hover:text-teal transition-colors">Upcoming Events</Link>
+            <Link href="/contact" className="hover:text-teal transition-colors">Contact</Link>
           </div>
         </div>
 
@@ -32,7 +34,7 @@ export default function Footer() {
             href="https://www.instagram.com/tende.beauty"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--teal)] transition-colors uppercase tracking-widest"
+            className="hover:text-teal transition-colors uppercase tracking-widest"
           >
             Instagram
           </a>
@@ -40,7 +42,7 @@ export default function Footer() {
             href="https://www.tiktok.com/@tende.care"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[var(--teal)] transition-colors uppercase tracking-widest"
+            className="hover:text-teal transition-colors uppercase tracking-widest"
           >
             TikTok
           </a>

@@ -4,10 +4,7 @@ import { useState } from "react";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import type { Product } from "@/types";
-
-function formatPrice(cents: number) {
-  return (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
-}
+import { formatPrice } from "@/lib/utils";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const images = product.images ?? [];
@@ -26,7 +23,6 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   return (
     <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-      {/* Left: image carousel */}
       <ProductGallery
         images={images}
         title={product.title}
@@ -34,24 +30,23 @@ export default function ProductDetail({ product }: { product: Product }) {
         onActiveChange={setActiveIndex}
       />
 
-      {/* Right: product info */}
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="font-display font-bold text-4xl md:text-5xl text-[var(--foreground)] uppercase leading-none mb-3">
+          <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground uppercase leading-none mb-3">
             {product.title}
           </h1>
-          <p className="font-display font-bold text-xl text-[var(--teal)]">
+          <p className="font-display font-bold text-xl text-teal">
             {product.compareAtPrice ? "From " : ""}{formatPrice(product.price)}
           </p>
           {product.compareAtPrice && (
-            <p className="text-sm font-sans text-[var(--foreground)]/40 line-through">
+            <p className="text-sm font-sans text-foreground/40 line-through">
               {formatPrice(product.compareAtPrice)}
             </p>
           )}
         </div>
 
         {shortDesc && (
-          <p className="text-sm font-sans font-light leading-relaxed text-[var(--foreground)]/70">
+          <p className="text-sm font-sans font-light leading-relaxed text-foreground/70">
             {shortDesc}
           </p>
         )}
@@ -59,7 +54,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         <AddToCartButton product={product} onFragranceChange={handleFragranceChange} />
 
         {product.tagline && (
-          <p className="text-xs font-sans uppercase tracking-widest text-[var(--muted)]">
+          <p className="text-xs font-sans uppercase tracking-widest text-muted">
             {product.tagline}
           </p>
         )}

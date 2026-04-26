@@ -32,8 +32,8 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
 
   if (!images || images.length === 0) {
     return (
-      <div className="aspect-square bg-[var(--cream)] flex items-center justify-center">
-        <span className="font-display font-bold text-8xl text-[var(--muted)]">t</span>
+      <div className="aspect-square bg-cream flex items-center justify-center">
+        <span className="font-display font-bold text-8xl text-muted">t</span>
       </div>
     );
   }
@@ -43,7 +43,6 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
 
   return (
     <div className="flex gap-3">
-      {/* Vertical thumbnail strip — scrolls within the main image height */}
       {images.length > 1 && (
         <div
           className="flex flex-col gap-2 w-[68px] shrink-0 overflow-y-auto"
@@ -55,7 +54,7 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
               onClick={() => setActive(i)}
               className={`aspect-square overflow-hidden transition-opacity shrink-0 ${
                 i === active
-                  ? "ring-1 ring-[var(--foreground)] opacity-100"
+                  ? "ring-1 ring-foreground opacity-100"
                   : "opacity-50 hover:opacity-80"
               }`}
             >
@@ -71,9 +70,8 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
         </div>
       )}
 
-      {/* Main image */}
       <div ref={mainRef} className="relative flex-1">
-        <div className="aspect-square bg-[var(--cream)] overflow-hidden">
+        <div className="aspect-square bg-cream overflow-hidden">
           <Image
             src={images[active]}
             alt={title}
@@ -89,14 +87,14 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
             <button
               onClick={prev}
               aria-label="Previous image"
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-white/70 hover:bg-white transition-colors text-[var(--foreground)]"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-white/70 hover:bg-white transition-colors text-foreground"
             >
               ‹
             </button>
             <button
               onClick={next}
               aria-label="Next image"
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-white/70 hover:bg-white transition-colors text-[var(--foreground)]"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-white/70 hover:bg-white transition-colors text-foreground"
             >
               ›
             </button>

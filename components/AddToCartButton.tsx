@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCart } from "@/store/cart";
 import type { Product } from "@/types";
+import { parseFragrance } from "@/lib/utils";
 
 interface Props {
   product: Product;
@@ -33,7 +34,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
     return (
       <button
         disabled
-        className="w-full h-12 border border-[var(--foreground)]/20 text-[var(--foreground)]/40 text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full"
+        className="w-full h-12 border border-foreground/20 text-foreground/40 text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full"
       >
         Out of Stock
       </button>
@@ -63,28 +64,35 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
       {/* Fragrance picker */}
       {hasVariants && (
         <div>
-          <p className="text-xs font-sans uppercase tracking-widest text-[var(--muted)] mb-2">
+          <p className="text-xs font-sans uppercase tracking-widest text-muted mb-2">
             Fragrance
           </p>
           <div className="flex flex-wrap gap-2">
             {product.variants!.map((v) => {
               const selected = selectedFragrance === v.fragrance;
+              const { scentName, notes } = parseFragrance(v.fragrance);
               return (
                 <button
                   key={v.fragrance}
                   onClick={() => selectFragrance(v.fragrance)}
                   disabled={!v.inStock}
                   className={[
-                    "px-4 h-9 text-xs font-sans uppercase tracking-widest border transition-colors",
+                    "px-4 py-2 text-xs font-sans uppercase tracking-widest border transition-colors text-left",
                     selected
-                      ? "bg-[var(--foreground)] text-[var(--background)] border-[var(--foreground)]"
-                      : "border-[var(--foreground)]/30 text-[var(--foreground)] hover:border-[var(--foreground)]",
-                    !v.inStock
-                      ? "opacity-40 cursor-not-allowed line-through"
-                      : "cursor-pointer",
+                      ? "bg-foreground text-background border-foreground"
+                      : "border-foreground/30 text-foreground hover:border-foreground",
+                    !v.inStock ? "opacity-40 cursor-not-allowed line-through" : "cursor-pointer",
                   ].join(" ")}
                 >
-                  {v.fragrance}
+                  {scentName}
+                  {notes && (
+                    <span className={[
+                      "block text-[10px] normal-case tracking-normal font-light mt-0.5",
+                      selected ? "text-background/70" : "text-muted",
+                    ].join(" ")}>
+                      {notes}
+                    </span>
+                  )}
                 </button>
               );
             })}
@@ -94,10 +102,10 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
 
       {/* Stepper + Add to Cart */}
       <div className="flex gap-2">
-        <div className="flex items-center border border-[var(--foreground)]/20">
+        <div className="flex items-center border border-foreground/20">
           <button
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="w-10 h-12 text-lg font-sans hover:bg-[var(--cream)] transition-colors"
+            className="w-10 h-12 text-lg font-sans hover:bg-cream transition-colors"
             aria-label="Decrease quantity"
           >
             −
@@ -105,7 +113,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           <span className="w-10 text-center text-sm font-sans select-none">{qty}</span>
           <button
             onClick={() => setQty((q) => q + 1)}
-            className="w-10 h-12 text-lg font-sans hover:bg-[var(--cream)] transition-colors"
+            className="w-10 h-12 text-lg font-sans hover:bg-cream transition-colors"
             aria-label="Increase quantity"
           >
             +
@@ -118,10 +126,10 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           className={[
             "flex-1 h-12 text-xs uppercase tracking-widest font-sans rounded-full transition-colors",
             isOutOfStock
-              ? "border border-[var(--foreground)]/20 text-[var(--foreground)]/40 cursor-not-allowed"
+              ? "border border-foreground/20 text-foreground/40 cursor-not-allowed"
               : hasVariants && selectedFragrance === null
-              ? "bg-[var(--foreground)]/40 text-[var(--background)] cursor-not-allowed"
-              : "bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--sage-dark)]",
+              ? "bg-foreground/40 text-background cursor-not-allowed"
+              : "bg-foreground text-background hover:bg-sage-dark",
           ].join(" ")}
         >
           {isOutOfStock

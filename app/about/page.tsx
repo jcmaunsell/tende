@@ -7,10 +7,9 @@ const TICKER_ITEMS = Array(14).fill(`GARDEN TO PALM ${TICKER_SEP} `);
 
 export default function AboutPage() {
   return (
-    <div className="bg-[var(--sage)] min-h-screen">
+    <div className="bg-sage min-h-screen">
 
-      {/* Top ticker */}
-      <div className="overflow-hidden bg-[var(--foreground)] py-4 border-b border-white/10">
+      <div className="overflow-hidden bg-foreground py-4 border-b border-white/10">
         <div className="ticker-track">
           {TICKER_ITEMS.map((item, i) => (
             <span key={i} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
@@ -25,7 +24,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Photo + intro */}
       <section className="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
         <div className="aspect-[3/4] overflow-hidden">
           <Image
@@ -53,8 +51,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Middle ticker */}
-      <div className="overflow-hidden bg-[var(--foreground)] py-4 border-y border-white/10">
+      <div className="overflow-hidden bg-foreground py-4 border-y border-white/10">
         <div className="ticker-track" style={{ animationDirection: "reverse" }}>
           {TICKER_ITEMS.map((item, i) => (
             <span key={i} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
@@ -69,7 +66,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Remaining bio */}
       <section className="max-w-3xl mx-auto px-6 py-16">
         <div className="space-y-6 text-base font-light leading-relaxed text-white/75 font-sans">
           <p>

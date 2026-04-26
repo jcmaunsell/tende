@@ -9,13 +9,11 @@ export default function Nav() {
 
   return (
     <>
-      {/* Announcement bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[var(--sage-dark)] text-white/80 text-xs text-center py-2 px-4 tracking-wider">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-sage-dark text-white/80 text-xs text-center py-2 px-4 tracking-wider">
         Free U.S. shipping on orders over $55 — no code needed
       </div>
 
-      {/* Main nav */}
-      <nav className="fixed top-8 left-0 right-0 z-40 bg-[var(--sage-dark)]">
+      <nav className="fixed top-8 left-0 right-0 z-40 bg-sage-dark">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image
@@ -36,7 +34,7 @@ export default function Nav() {
             <Link href="/cart" className="relative hover:text-white transition-colors">
               Cart
               {count > 0 && (
-                <span className="absolute -top-2 -right-4 bg-[var(--sage)] text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="absolute -top-2 -right-4 bg-sage text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
                   {count}
                 </span>
               )}
