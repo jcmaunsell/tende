@@ -15,8 +15,8 @@ export default async function HomePage() {
   return (
     <>
       {/* Hero — split: image top, sage green bottom */}
-      <section className="flex flex-col min-h-[calc(100vh-88px)]">
-        <div className="relative flex-[3] min-h-[50vh] flex items-center justify-center">
+      <section className="flex flex-col">
+        <div className="relative h-[55vh] flex items-center justify-center">
           <Image
             src="/images/bars-overhead.jpg"
             alt="Tende products"
@@ -30,7 +30,7 @@ export default async function HomePage() {
           </h1>
         </div>
 
-        <div className="bg-sage flex-[2] flex items-center justify-center text-center py-14 px-6">
+        <div className="bg-sage flex items-center justify-center text-center py-16 px-6">
           <div className="max-w-2xl">
             <p className="font-display font-bold text-white text-lg md:text-2xl uppercase tracking-wide leading-snug mb-3">
               Plant-based hair + body care,<br />handcrafted by an organic chemist.
