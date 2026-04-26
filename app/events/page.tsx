@@ -31,7 +31,7 @@ export default async function EventsPage() {
           src="/images/bars-lineup.jpg"
           alt="Tende products"
           fill
-          className="object-cover object-center"
+          className="object-cover object-center blur-sm scale-105"
           priority
         />
         <div className="absolute inset-0 bg-petrol/50" />
