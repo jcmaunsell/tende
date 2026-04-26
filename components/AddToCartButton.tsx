@@ -4,13 +4,21 @@ import { useState } from "react";
 import { useCart } from "@/store/cart";
 import type { Product } from "@/types";
 
-export default function AddToCartButton({ product }: { product: Product }) {
+interface Props {
+  product: Product;
+  onFragranceChange?: (fragrance: string | null) => void;
+}
+
+export default function AddToCartButton({ product, onFragranceChange }: Props) {
   const hasVariants = (product.variants?.length ?? 0) > 0;
   const [qty, setQty] = useState(1);
-  const [selectedFragrance, setSelectedFragrance] = useState<string | null>(
-    hasVariants ? null : null
-  );
+  const [selectedFragrance, setSelectedFragrance] = useState<string | null>(null);
   const addItem = useCart((s) => s.addItem);
+
+  function selectFragrance(fragrance: string) {
+    setSelectedFragrance(fragrance);
+    onFragranceChange?.(fragrance);
+  }
 
   const activeVariant = hasVariants
     ? product.variants!.find((v) => v.fragrance === selectedFragrance)
@@ -64,7 +72,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
               return (
                 <button
                   key={v.fragrance}
-                  onClick={() => setSelectedFragrance(v.fragrance)}
+                  onClick={() => selectFragrance(v.fragrance)}
                   disabled={!v.inStock}
                   className={[
                     "px-4 h-9 text-xs font-sans uppercase tracking-widest border transition-colors",

@@ -1,15 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 interface Props {
   images: string[];
   title: string;
+  activeIndex?: number;
+  onActiveChange?: (index: number) => void;
 }
 
-export default function ProductGallery({ images, title }: Props) {
-  const [active, setActive] = useState(0);
+export default function ProductGallery({ images, title, activeIndex, onActiveChange }: Props) {
+  const [internal, setInternal] = useState(0);
+  const active = activeIndex ?? internal;
+  const setActive = (i: number) => {
+    setInternal(i);
+    onActiveChange?.(i);
+  };
+
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [thumbMaxH, setThumbMaxH] = useState<number | undefined>();
+
+  useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setThumbMaxH(el.offsetHeight));
+    ro.observe(el);
+    setThumbMaxH(el.offsetHeight);
+    return () => ro.disconnect();
+  }, []);
 
   if (!images || images.length === 0) {
     return (
@@ -19,19 +38,22 @@ export default function ProductGallery({ images, title }: Props) {
     );
   }
 
-  const prev = () => setActive((i) => (i - 1 + images.length) % images.length);
-  const next = () => setActive((i) => (i + 1) % images.length);
+  const prev = () => setActive((active - 1 + images.length) % images.length);
+  const next = () => setActive((active + 1) % images.length);
 
   return (
     <div className="flex gap-3">
-      {/* Vertical thumbnail strip */}
+      {/* Vertical thumbnail strip — scrolls within the main image height */}
       {images.length > 1 && (
-        <div className="flex flex-col gap-2 w-[68px] shrink-0">
+        <div
+          className="flex flex-col gap-2 w-[68px] shrink-0 overflow-y-auto"
+          style={thumbMaxH ? { maxHeight: thumbMaxH } : undefined}
+        >
           {images.map((src, i) => (
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`aspect-square overflow-hidden transition-opacity ${
+              className={`aspect-square overflow-hidden transition-opacity shrink-0 ${
                 i === active
                   ? "ring-1 ring-[var(--foreground)] opacity-100"
                   : "opacity-50 hover:opacity-80"
@@ -50,7 +72,7 @@ export default function ProductGallery({ images, title }: Props) {
       )}
 
       {/* Main image */}
-      <div className="relative flex-1">
+      <div ref={mainRef} className="relative flex-1">
         <div className="aspect-square bg-[var(--cream)] overflow-hidden">
           <Image
             src={images[active]}
@@ -62,7 +84,6 @@ export default function ProductGallery({ images, title }: Props) {
           />
         </div>
 
-        {/* Prev / Next arrows */}
         {images.length > 1 && (
           <>
             <button

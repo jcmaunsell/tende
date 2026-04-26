@@ -120,6 +120,13 @@ export default defineType({
               validation: (R) => R.required(),
             }),
             defineField({
+              name: "image",
+              title: "Fragrance photo",
+              type: "image",
+              description: "Optional. When selected, this image becomes the main photo when this scent is chosen.",
+              options: { hotspot: true },
+            }),
+            defineField({
               name: "stripePriceId",
               title: "Stripe Price ID",
               type: "string",

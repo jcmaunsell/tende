@@ -24,6 +24,7 @@ export default function Nav() {
               width={80}
               height={28}
               className="h-7 w-auto"
+              style={{ width: "auto" }}
             />
           </Link>
           <div className="flex items-center gap-6 text-xs font-light tracking-widest uppercase text-white/80">
