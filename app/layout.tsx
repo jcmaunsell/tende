@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import DatadogRum from "@/components/DatadogRum";
 
 export const metadata: Metadata = {
   title: "tende — plant-based beauty",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
+        <DatadogRum />
         <Nav />
         <main className="flex-1 pt-[88px]">{children}</main>
         <Footer />
