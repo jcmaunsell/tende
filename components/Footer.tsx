@@ -23,6 +23,7 @@ export default function Footer() {
           <div className="flex flex-col gap-3">
             <a href="/faq" className="hover:text-[var(--wine)] transition-colors">FAQ</a>
             <a href="/events" className="hover:text-[var(--wine)] transition-colors">Upcoming Events</a>
+            <a href="/contact" className="hover:text-[var(--wine)] transition-colors">Contact</a>
           </div>
         </div>
 

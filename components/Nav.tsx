@@ -31,6 +31,7 @@ export default function Nav() {
             <Link href="/about" className="hover:text-[var(--wine)] transition-colors">About</Link>
             <Link href="/faq" className="hover:text-[var(--wine)] transition-colors">FAQ</Link>
             <Link href="/events" className="hover:text-[var(--wine)] transition-colors">Upcoming Events</Link>
+            <Link href="/contact" className="hover:text-[var(--wine)] transition-colors">Contact</Link>
             <Link href="/cart" className="relative hover:text-[var(--wine)] transition-colors">
               Cart
               {count > 0 && (

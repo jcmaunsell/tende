@@ -32,16 +32,25 @@ const faqs = [
 export default function FAQPage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
-      <p className="text-xs uppercase tracking-[0.3em] text-[var(--sage)] mb-3">questions</p>
+      <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3">questions</p>
       <h1 className="font-display text-5xl text-[var(--foreground)] mb-14">FAQ</h1>
 
-      <div className="space-y-0 divide-y divide-[var(--cream)]">
+      <div className="divide-y divide-[var(--cream)]">
         {faqs.map(({ q, a }) => (
           <div key={q} className="py-8">
             <h2 className="font-display text-xl text-[var(--foreground)] mb-3">{q}</h2>
             <p className="text-sm font-light leading-relaxed text-[var(--foreground)]/70">{a}</p>
           </div>
         ))}
+      </div>
+
+      <div className="mt-14 pt-10 border-t border-[var(--cream)]">
+        <p className="text-sm font-light text-[var(--foreground)]/60">
+          Still have questions?{" "}
+          <a href="/contact" className="text-[var(--wine)] border-b border-[var(--wine)] pb-0.5 hover:opacity-70 transition-opacity">
+            Get in touch.
+          </a>
+        </p>
       </div>
     </div>
   );
