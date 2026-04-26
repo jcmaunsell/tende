@@ -25,7 +25,7 @@ export default function AddToCartButton({ product }: { product: Product }) {
           stripePriceId: product.stripePriceId ?? "",
         })
       }
-      className="w-full py-4 bg-[var(--green)] text-white text-sm uppercase tracking-widest hover:bg-[var(--green)]/90 transition-colors"
+      className="w-full py-4 bg-[var(--wine)] text-white text-sm uppercase tracking-widest hover:bg-[var(--wine)]/90 transition-colors"
     >
       Add to Cart
     </button>

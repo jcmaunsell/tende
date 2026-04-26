@@ -35,7 +35,7 @@ export default function CartPage() {
     return (
       <div className="max-w-2xl mx-auto px-6 py-24 text-center">
         <h1 className="font-display text-4xl mb-4">Your cart is empty</h1>
-        <Link href="/shop" className="text-sm uppercase tracking-widest text-[var(--green)] border-b border-[var(--green)] pb-0.5">
+        <Link href="/shop" className="text-sm uppercase tracking-widest text-[var(--wine)] border-b border-[var(--wine)] pb-0.5">
           Continue Shopping
         </Link>
       </div>
@@ -54,26 +54,26 @@ export default function CartPage() {
                 <Image src={item.image} alt={item.title} width={80} height={80} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <span className="font-display text-2xl text-[var(--sage)]">t</span>
+                  <span className="font-display text-2xl text-[var(--muted)]">t</span>
                 </div>
               )}
             </div>
             <div className="flex-1">
               <h3 className="font-display text-lg">{item.title}</h3>
-              <p className="text-sm text-[var(--green)] mb-3">{formatPrice(item.price)}</p>
+              <p className="text-sm text-[var(--wine)] mb-3">{formatPrice(item.price)}</p>
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                  className="w-7 h-7 border border-[var(--foreground)]/20 text-sm hover:border-[var(--green)] transition-colors"
+                  className="w-7 h-7 border border-[var(--foreground)]/20 text-sm hover:border-[var(--wine)] transition-colors"
                 >−</button>
                 <span className="text-sm w-4 text-center">{item.quantity}</span>
                 <button
                   onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                  className="w-7 h-7 border border-[var(--foreground)]/20 text-sm hover:border-[var(--green)] transition-colors"
+                  className="w-7 h-7 border border-[var(--foreground)]/20 text-sm hover:border-[var(--wine)] transition-colors"
                 >+</button>
                 <button
                   onClick={() => removeItem(item.productId)}
-                  className="ml-4 text-xs uppercase tracking-wider text-[var(--foreground)]/40 hover:text-[var(--clay)] transition-colors"
+                  className="ml-4 text-xs uppercase tracking-wider text-[var(--foreground)]/40 hover:text-[var(--wine)] transition-colors"
                 >Remove</button>
               </div>
             </div>
@@ -84,13 +84,13 @@ export default function CartPage() {
 
       <div className="border-t border-[var(--cream)] pt-6 flex justify-between items-center mb-8">
         <span className="font-display text-xl">Total</span>
-        <span className="text-xl text-[var(--green)]">{formatPrice(total())}</span>
+        <span className="text-xl text-[var(--wine)]">{formatPrice(total())}</span>
       </div>
 
       <button
         onClick={handleCheckout}
         disabled={loading}
-        className="w-full py-4 bg-[var(--green)] text-white text-sm uppercase tracking-widest hover:bg-[var(--green)]/90 transition-colors disabled:opacity-50"
+        className="w-full py-4 bg-[var(--wine)] text-white text-sm uppercase tracking-widest hover:bg-[var(--wine)]/90 transition-colors disabled:opacity-50"
       >
         {loading ? "Redirecting…" : "Checkout"}
       </button>

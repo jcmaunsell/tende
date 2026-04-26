@@ -21,15 +21,15 @@ export default function ProductCard({ product }: { product: Product }) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[var(--sage)]">
+          <div className="w-full h-full flex items-center justify-center text-[var(--muted)]">
             <span className="font-display text-4xl">t</span>
           </div>
         )}
       </div>
-      <p className="text-xs uppercase tracking-widest text-[var(--sage)] mb-1">{product.category}</p>
+      <p className="text-xs uppercase tracking-widest text-[var(--muted)] mb-1">{product.category}</p>
       <h3 className="font-display text-xl text-[var(--foreground)] mb-1">{product.title}</h3>
       {product.tagline && <p className="text-sm font-light text-[var(--foreground)]/60 mb-2">{product.tagline}</p>}
-      <p className="text-sm text-[var(--green)]">{formatPrice(product.price)}</p>
+      <p className="text-sm text-[var(--wine)]">{formatPrice(product.price)}</p>
     </Link>
   );
 }

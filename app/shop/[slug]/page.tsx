@@ -40,19 +40,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             ))
           ) : (
             <div className="aspect-square bg-[var(--cream)] flex items-center justify-center">
-              <span className="font-display text-8xl text-[var(--sage)]">t</span>
+              <span className="font-display text-8xl text-[var(--muted)]">t</span>
             </div>
           )}
         </div>
 
         {/* Details */}
         <div className="py-4">
-          <p className="text-xs uppercase tracking-widest text-[var(--sage)] mb-3">{product.category}</p>
+          <p className="text-xs uppercase tracking-widest text-[var(--muted)] mb-3">{product.category}</p>
           <h1 className="font-display text-4xl md:text-5xl text-[var(--foreground)] mb-3">{product.title}</h1>
           {product.tagline && <p className="text-base font-light text-[var(--foreground)]/60 mb-6">{product.tagline}</p>}
 
           <div className="flex items-baseline gap-3 mb-8">
-            <span className="text-xl text-[var(--green)]">{formatPrice(product.price)}</span>
+            <span className="text-xl text-[var(--wine)]">{formatPrice(product.price)}</span>
             {product.compareAtPrice && (
               <span className="text-sm line-through text-[var(--foreground)]/40">{formatPrice(product.compareAtPrice)}</span>
             )}

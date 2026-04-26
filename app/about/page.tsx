@@ -1,18 +1,17 @@
 import Image from "next/image";
 
 const SAGE_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
-const LANDSCAPE_IMG = "https://images.squarespace-cdn.com/content/v1/5ec321c2af33de48734cc929/26bd8da7-ac38-496e-83f6-211228f17663/20140301_Trade-151_0124-copy.jpg";
 
 export default function AboutPage() {
   return (
     <>
       {/* Header */}
       <section className="max-w-6xl mx-auto px-6 pt-16 pb-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-[var(--sage)] mb-3">our story</p>
+        <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3">our story</p>
         <h1 className="font-display text-6xl md:text-7xl text-[var(--foreground)]">garden to palm</h1>
       </section>
 
-      {/* Sage intro — image + copy side by side */}
+      {/* Sage intro */}
       <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-16 items-start">
         <div className="aspect-[3/4] overflow-hidden">
           <Image
@@ -51,19 +50,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Landscape / values section */}
+      {/* Values */}
       <section className="relative py-28 flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src={LANDSCAPE_IMG}
-            alt="Hudson Valley landscape"
+            src="/images/bars-marble.jpg"
+            alt="tende bars on marble"
             fill
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-[var(--green)]/65" />
+          <div className="absolute inset-0 bg-[var(--foreground)]/65" />
         </div>
         <div className="relative z-10 px-6 max-w-xl">
-          <p className="text-xs uppercase tracking-[0.35em] text-[var(--sage)] mb-4">what we believe</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4">what we believe</p>
           <h2 className="font-display text-4xl md:text-5xl text-white mb-6 leading-tight">
             Nurturing people and their planet
           </h2>
