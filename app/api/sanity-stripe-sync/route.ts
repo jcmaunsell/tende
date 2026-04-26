@@ -5,15 +5,18 @@ import Stripe from "stripe";
 import { createClient } from "@sanity/client";
 import { logger } from "@/lib/logger";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-const sanity = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
-  useCdn: false,
-  apiVersion: "2024-01-01",
-  token: process.env.SANITY_API_TOKEN,
-});
+function getClients() {
+  return {
+    stripe: new Stripe(process.env.STRIPE_SECRET_KEY!),
+    sanity: createClient({
+      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
+      useCdn: false,
+      apiVersion: "2024-01-01",
+      token: process.env.SANITY_API_TOKEN,
+    }),
+  };
+}
 
 function verifySanitySignature(rawBody: string, signature: string, secret: string): boolean {
   // Sanity uses the same signing scheme as Stripe: t=<ts>,v1=<hmac-sha256-hex>
@@ -47,9 +50,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, skipped: true });
   }
 
+  const clients = getClients();
+
   after(async () => {
     try {
-      await syncProductToStripe(documentId);
+      await syncProductToStripe(documentId, clients);
     } catch (err) {
       logger.error("Sanity→Stripe sync failed", {
         documentId,
@@ -61,7 +66,10 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ ok: true });
 }
 
-async function syncProductToStripe(documentId: string) {
+async function syncProductToStripe(
+  documentId: string,
+  { stripe, sanity }: ReturnType<typeof getClients>
+) {
   const product = await sanity.fetch(
     `*[_type == "product" && _id == $id][0] {
       _id, title, price,
@@ -75,7 +83,6 @@ async function syncProductToStripe(documentId: string) {
     return;
   }
 
-  // Find or create Stripe product
   const existing = await stripe.products.search({
     query: `metadata['sanity_id']:'${product._id}'`,
     limit: 1,
