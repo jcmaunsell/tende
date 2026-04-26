@@ -8,7 +8,7 @@ export async function getAllProducts(): Promise<Product[]> {
         _id, title, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
         category, ingredients, howToUse, inStock, stripePriceId,
-        variants[]{ price, compareAtPrice }
+        variants[]{ fragrance, price, compareAtPrice }
       }`
     );
   } catch {
