@@ -2,17 +2,31 @@ import Image from "next/image";
 
 const SAGE_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
 
+const TICKER_SEP = "→";
+const TICKER_ITEMS = Array(14).fill(`GARDEN TO PALM ${TICKER_SEP} `);
+
 export default function AboutPage() {
   return (
-    <>
-      {/* Header */}
-      <section className="max-w-6xl mx-auto px-6 pt-16 pb-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3 font-sans">our story</p>
-        <h1 className="font-display font-bold text-5xl md:text-6xl text-[var(--foreground)] uppercase">garden to palm</h1>
-      </section>
+    <div className="bg-[var(--sage)] min-h-screen">
 
-      {/* Sage intro */}
-      <section className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-16 items-start">
+      {/* Top ticker */}
+      <div className="overflow-hidden bg-[var(--foreground)] py-4 border-b border-white/10">
+        <div className="ticker-track">
+          {TICKER_ITEMS.map((item, i) => (
+            <span key={i} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
+              {item}
+            </span>
+          ))}
+          {TICKER_ITEMS.map((item, i) => (
+            <span key={`b${i}`} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Photo + intro */}
+      <section className="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
         <div className="aspect-[3/4] overflow-hidden">
           <Image
             src={SAGE_IMG}
@@ -22,56 +36,55 @@ export default function AboutPage() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="py-4">
-          <h2 className="font-display font-bold text-2xl text-[var(--foreground)] mb-6 uppercase">
+        <div>
+          <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-8 leading-snug uppercase">
             I&apos;m Sage, the founder of tende.
           </h2>
-          <div className="space-y-5 text-base font-light leading-relaxed text-[var(--foreground)]/80 font-sans">
+          <div className="space-y-5 text-base font-light leading-relaxed text-white/80 font-sans">
             <p>
               I&apos;m an organic chemist and cosmetic scientist by training, but also an artist and nature
-              enthusiast at heart. I started tende to create products that are both effective and intentional —
-              where every ingredient has a purpose, and nothing is added just to fill space.
+              enthusiast at heart.
             </p>
             <p>
-              No fillers. No preservatives. Just pure, purposeful ingredients and a slower, more intentional
-              approach to care.
-            </p>
-            <p>
-              Tende is rooted in the belief that skincare and haircare can be minimal, powerful, and beautiful.
-              Everything is grounded in science and made with plant-based ingredients that care for your body
-              without compromising your health or the planet.
-            </p>
-            <p>
-              I live and formulate in the Hudson Valley, and tende is deeply inspired by the natural landscape
-              and community here. Supporting small-batch production and local business isn&apos;t just a value —
-              it&apos;s a responsibility.
+              I started tende to create products that are both effective and intentional — where every
+              ingredient has a purpose, and nothing is added just to fill space.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="relative py-28 flex items-center justify-center text-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/bars-marble.jpg"
-            alt="tende bars on marble"
-            fill
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-[var(--sage-dark)]/70" />
+      {/* Middle ticker */}
+      <div className="overflow-hidden bg-[var(--foreground)] py-4 border-y border-white/10">
+        <div className="ticker-track" style={{ animationDirection: "reverse" }}>
+          {TICKER_ITEMS.map((item, i) => (
+            <span key={i} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
+              {item}
+            </span>
+          ))}
+          {TICKER_ITEMS.map((item, i) => (
+            <span key={`b${i}`} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
+              {item}
+            </span>
+          ))}
         </div>
-        <div className="relative z-10 px-6 max-w-xl">
-          <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">what we believe</p>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-snug uppercase">
-            Nurturing people and their planet
-          </h2>
-          <p className="text-base font-light text-white/80 leading-relaxed font-sans">
-            Every formula is made with purposeful, plant-based ingredients. 100% vegan and cruelty-free,
-            using only pure essential oils or ECOCERT-certified natural fragrance oils.
+      </div>
+
+      {/* Remaining bio */}
+      <section className="max-w-3xl mx-auto px-6 py-16">
+        <div className="space-y-6 text-base font-light leading-relaxed text-white/75 font-sans">
+          <p>
+            Tende is rooted in the belief that skincare and haircare can be minimal, powerful, and beautiful.
+            Everything is grounded in science and made with plant-based ingredients that care for your body
+            without compromising your health or the planet.
+          </p>
+          <p>
+            I live and formulate in the Hudson Valley, and Tende is deeply inspired by the natural landscape
+            and community here. Supporting small-batch production and local business isn&apos;t just a value —
+            it&apos;s a responsibility.
           </p>
         </div>
       </section>
-    </>
+
+    </div>
   );
 }
