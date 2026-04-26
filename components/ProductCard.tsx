@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         {onSale && (
-          <span className="absolute top-2 right-2 bg-teal text-white text-[10px] uppercase tracking-widest font-sans px-2 py-1">
+          <span className="absolute top-2 right-2 bg-teal text-white text-[9px] uppercase tracking-widest font-sans px-2 py-1 rounded-sm">
             Sale
           </span>
         )}
