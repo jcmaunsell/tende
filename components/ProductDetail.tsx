@@ -8,9 +8,9 @@ import { formatPrice, priceRange } from "@/lib/utils";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedFragrance, setSelectedFragrance] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  // Merge product images + any variant-specific images not already present
+  // Merge product images + variant-specific images not already present
   const allImages = useMemo(() => {
     const base = product.images ?? [];
     const extras = (product.variants ?? [])
@@ -19,17 +19,17 @@ export default function ProductDetail({ product }: { product: Product }) {
     return [...base, ...extras];
   }, [product]);
 
-  function handleFragranceChange(fragrance: string | null) {
-    setSelectedFragrance(fragrance);
-    if (!fragrance) { setActiveIndex(0); return; }
-    const variant = product.variants?.find((v) => v.fragrance === fragrance);
+  function handleFragranceChange(fragranceId: string | null) {
+    setSelectedId(fragranceId);
+    if (!fragranceId) { setActiveIndex(0); return; }
+    const variant = product.variants?.find((v) => v.fragrance._id === fragranceId);
     if (variant?.image) {
       const idx = allImages.indexOf(variant.image);
       if (idx >= 0) setActiveIndex(idx);
     }
   }
 
-  const activeVariant = product.variants?.find((v) => v.fragrance === selectedFragrance) ?? null;
+  const activeVariant = product.variants?.find((v) => v.fragrance._id === selectedId) ?? null;
   const displayPrice = activeVariant?.price ?? product.price;
   const displayCompareAt = activeVariant?.compareAtPrice ?? product.compareAtPrice;
   const hasVariants = (product.variants?.length ?? 0) > 0;
@@ -52,9 +52,9 @@ export default function ProductDetail({ product }: { product: Product }) {
           </h1>
           <div className="flex items-baseline gap-3">
             <p className="font-display font-bold text-xl text-teal">
-              {selectedFragrance || !hasVariants ? formatPrice(displayPrice) : priceRange(product)}
+              {selectedId || !hasVariants ? formatPrice(displayPrice) : priceRange(product)}
             </p>
-            {displayCompareAt && selectedFragrance && (
+            {displayCompareAt && selectedId && (
               <p className="text-sm font-sans text-foreground/40 line-through">
                 {formatPrice(displayCompareAt)}
               </p>

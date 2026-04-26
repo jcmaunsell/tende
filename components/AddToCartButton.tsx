@@ -3,31 +3,30 @@
 import { useState } from "react";
 import { useCart } from "@/store/cart";
 import type { Product } from "@/types";
-import { parseFragrance } from "@/lib/utils";
 
 interface Props {
   product: Product;
-  onFragranceChange?: (fragrance: string | null) => void;
+  onFragranceChange?: (fragranceId: string | null) => void;
 }
 
 export default function AddToCartButton({ product, onFragranceChange }: Props) {
   const hasVariants = (product.variants?.length ?? 0) > 0;
   const [qty, setQty] = useState(1);
-  const [selectedFragrance, setSelectedFragrance] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const addItem = useCart((s) => s.addItem);
 
-  function selectFragrance(fragrance: string) {
-    setSelectedFragrance(fragrance);
-    onFragranceChange?.(fragrance);
+  function selectFragrance(id: string) {
+    setSelectedId(id);
+    onFragranceChange?.(id);
   }
 
   const activeVariant = hasVariants
-    ? product.variants!.find((v) => v.fragrance === selectedFragrance)
+    ? product.variants!.find((v) => v.fragrance._id === selectedId)
     : null;
 
   const canAdd = !hasVariants || (activeVariant?.inStock ?? false);
   const isOutOfStock = hasVariants
-    ? selectedFragrance !== null && !activeVariant?.inStock
+    ? selectedId !== null && !activeVariant?.inStock
     : !product.inStock;
 
   if (!hasVariants && !product.inStock) {
@@ -46,8 +45,11 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
     const stripePriceId = hasVariants
       ? (activeVariant?.stripePriceId ?? "")
       : (product.stripePriceId ?? "");
-
     const price = activeVariant?.price ?? product.price;
+    const fragranceName = activeVariant
+      ? activeVariant.fragrance.name + (activeVariant.fragrance.notes ? ` | ${activeVariant.fragrance.notes}` : "")
+      : undefined;
+
     for (let i = 0; i < qty; i++) {
       addItem({
         productId: product._id,
@@ -55,7 +57,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
         price,
         image: product.images?.[0],
         stripePriceId,
-        fragrance: selectedFragrance ?? undefined,
+        fragrance: fragranceName,
       });
     }
   }
@@ -70,12 +72,11 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           </p>
           <div className="flex flex-wrap gap-2">
             {product.variants!.map((v) => {
-              const selected = selectedFragrance === v.fragrance;
-              const { scentName, notes } = parseFragrance(v.fragrance);
+              const selected = selectedId === v.fragrance._id;
               return (
                 <button
-                  key={v.fragrance}
-                  onClick={() => selectFragrance(v.fragrance)}
+                  key={v.fragrance._id}
+                  onClick={() => selectFragrance(v.fragrance._id)}
                   disabled={!v.inStock}
                   className={[
                     "px-4 py-2 text-xs font-sans uppercase tracking-widest border transition-colors text-left",
@@ -85,13 +86,13 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
                     !v.inStock ? "opacity-40 cursor-not-allowed line-through" : "cursor-pointer",
                   ].join(" ")}
                 >
-                  {scentName}
-                  {notes && (
+                  {v.fragrance.name}
+                  {v.fragrance.notes && (
                     <span className={[
                       "block text-[10px] normal-case tracking-normal font-light mt-0.5",
                       selected ? "text-background/70" : "text-muted",
                     ].join(" ")}>
-                      {notes}
+                      {v.fragrance.notes}
                     </span>
                   )}
                 </button>
@@ -123,19 +124,19 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
 
         <button
           onClick={handleAdd}
-          disabled={isOutOfStock || (hasVariants && selectedFragrance === null)}
+          disabled={isOutOfStock || (hasVariants && selectedId === null)}
           className={[
             "flex-1 h-12 text-xs uppercase tracking-widest font-sans rounded-full transition-colors",
             isOutOfStock
               ? "border border-foreground/20 text-foreground/40 cursor-not-allowed"
-              : hasVariants && selectedFragrance === null
+              : hasVariants && selectedId === null
               ? "bg-foreground/40 text-background cursor-not-allowed"
               : "bg-foreground text-background hover:bg-sage-dark",
           ].join(" ")}
         >
           {isOutOfStock
             ? "Out of Stock"
-            : hasVariants && selectedFragrance === null
+            : hasVariants && selectedId === null
             ? "Select a Fragrance"
             : "Add to Cart"}
         </button>

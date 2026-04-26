@@ -117,9 +117,10 @@ export default defineType({
           fields: [
             defineField({
               name: "fragrance",
-              title: "Fragrance name",
-              type: "string",
-              description: 'e.g. "Lavender", "Unscented", "Citrus & Mint"',
+              title: "Fragrance",
+              type: "reference",
+              to: [{ type: "fragrance" }],
+              description: "Pick from the fragrance list. Add new fragrances under Content → Fragrances.",
               validation: (R) => R.required(),
             }),
             defineField({
@@ -157,7 +158,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: { title: "fragrance", subtitle: "stripePriceId" },
+            select: { title: "fragrance.name", subtitle: "fragrance.notes" },
           },
         },
       ],

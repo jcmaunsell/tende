@@ -1,6 +1,8 @@
 import { client } from "./client";
 import type { Product, SanityEvent } from "@/types";
 
+const FRAGRANCE_PROJECTION = `fragrance->{ _id, name, notes }`;
+
 export async function getAllProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
@@ -8,7 +10,7 @@ export async function getAllProducts(): Promise<Product[]> {
         _id, title, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
         category, ingredients, howToUse, inStock, stripePriceId,
-        variants[]{ fragrance, price, compareAtPrice }
+        variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, price, compareAtPrice }
       }`
     );
   } catch {
@@ -23,7 +25,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
         _id, title, slug, tagline, price,
         "images": images[].asset->url,
         category, inStock,
-        variants[]{ price }
+        variants[]{ price, compareAtPrice }
       }`
     );
   } catch {
@@ -38,7 +40,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
         _id, title, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
         category, ingredients, howToUse, inStock, stripePriceId,
-        variants[]{ fragrance, "image": image.asset->url, price, compareAtPrice, stripePriceId, inStock }
+        variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, "image": image.asset->url, price, compareAtPrice, stripePriceId, inStock }
       }`,
       { slug }
     );

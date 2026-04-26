@@ -2,8 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
-import type { Product } from "@/types";
-import { parseFragrance } from "@/lib/utils";
+import type { Product, Fragrance } from "@/types";
 
 const CATEGORIES: { label: string; value: string }[] = [
   { label: "All", value: "all" },
@@ -15,14 +14,9 @@ const CATEGORIES: { label: string; value: string }[] = [
   { label: "Merch", value: "merch" },
 ];
 
-interface FragranceOption {
-  scentName: string;
-  notes: string | null;
-}
-
 export default function ShopProductList({ products }: { products: Product[] }) {
   const [activeCategory, setActiveCategory] = useState("all");
-  const [activeFragrance, setActiveFragrance] = useState<string | null>(null);
+  const [activeFragranceId, setActiveFragranceId] = useState<string | null>(null);
 
   // Category-filtered products (before fragrance filter)
   const categoryFiltered = useMemo(
@@ -33,43 +27,32 @@ export default function ShopProductList({ products }: { products: Product[] }) {
     [products, activeCategory]
   );
 
-  // Fragrance options deduplicated by scentName; notes taken from first variant that has them
-  const fragrances = useMemo<FragranceOption[]>(() => {
-    const seen = new Map<string, FragranceOption>();
+  // Unique fragrances in the active category, ordered by name
+  const fragrances = useMemo<Fragrance[]>(() => {
+    const seen = new Map<string, Fragrance>();
     categoryFiltered.forEach((p) =>
       p.variants?.forEach((v) => {
-        if (!v.fragrance) return;
-        const { scentName, notes } = parseFragrance(v.fragrance);
-        const existing = seen.get(scentName);
-        if (!existing) {
-          seen.set(scentName, { scentName, notes });
-        } else if (!existing.notes && notes) {
-          // Upgrade to include notes if we find them on another variant
-          seen.set(scentName, { scentName, notes });
-        }
+        if (!v.fragrance?._id || seen.has(v.fragrance._id)) return;
+        seen.set(v.fragrance._id, v.fragrance);
       })
     );
-    return Array.from(seen.values()).sort((a, b) => a.scentName.localeCompare(b.scentName));
+    return Array.from(seen.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [categoryFiltered]);
 
-  // Clear stale fragrance selection when switching categories
+  // Clear stale fragrance selection when category changes
   useEffect(() => {
-    if (activeFragrance && !fragrances.some((f) => f.scentName === activeFragrance)) {
-      setActiveFragrance(null);
+    if (activeFragranceId && !fragrances.some((f) => f._id === activeFragranceId)) {
+      setActiveFragranceId(null);
     }
-  }, [fragrances, activeFragrance]);
+  }, [fragrances, activeFragranceId]);
 
   const filtered = useMemo(
     () =>
       categoryFiltered.filter((p) => {
-        if (!activeFragrance) return true;
-        return (
-          p.variants?.some(
-            (v) => v.fragrance && parseFragrance(v.fragrance).scentName === activeFragrance
-          ) ?? false
-        );
+        if (!activeFragranceId) return true;
+        return p.variants?.some((v) => v.fragrance?._id === activeFragranceId) ?? false;
       }),
-    [categoryFiltered, activeFragrance]
+    [categoryFiltered, activeFragranceId]
   );
 
   const activeCats = CATEGORIES.filter(
@@ -115,21 +98,19 @@ export default function ShopProductList({ products }: { products: Product[] }) {
         ))}
       </div>
 
-      {/* Fragrance filters — deduplicated by scent name, scoped to active category */}
+      {/* Fragrance filters */}
       {fragrances.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-10">
-          <FilterBtn active={activeFragrance === null} onClick={() => setActiveFragrance(null)}>
+          <FilterBtn active={activeFragranceId === null} onClick={() => setActiveFragranceId(null)}>
             Any Fragrance
           </FilterBtn>
           {fragrances.map((f) => (
             <FilterBtn
-              key={f.scentName}
-              active={activeFragrance === f.scentName}
-              onClick={() =>
-                setActiveFragrance(activeFragrance === f.scentName ? null : f.scentName)
-              }
+              key={f._id}
+              active={activeFragranceId === f._id}
+              onClick={() => setActiveFragranceId(activeFragranceId === f._id ? null : f._id)}
             >
-              {f.scentName}
+              {f.name}
               {f.notes && (
                 <span className="block normal-case tracking-normal font-light mt-0.5 opacity-70">
                   {f.notes}

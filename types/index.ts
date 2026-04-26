@@ -1,5 +1,11 @@
+export interface Fragrance {
+  _id: string;
+  name: string;
+  notes?: string;
+}
+
 export interface ProductVariant {
-  fragrance: string;
+  fragrance: Fragrance;
   image?: string;
   price?: number;
   compareAtPrice?: number;
