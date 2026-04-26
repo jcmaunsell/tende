@@ -86,7 +86,14 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
                     !v.inStock ? "opacity-40 cursor-not-allowed line-through" : "cursor-pointer",
                   ].join(" ")}
                 >
-                  {v.fragrance.name}
+                  <span className="flex items-center gap-2">
+                    {v.fragrance.name}
+                    {v.compareAtPrice && (
+                      <span className="text-[9px] uppercase tracking-widest px-1.5 py-0.5 bg-teal text-white rounded-sm font-sans normal-case">
+                        Sale
+                      </span>
+                    )}
+                  </span>
                   {v.fragrance.notes && (
                     <span className="block text-[10px] normal-case tracking-normal font-light mt-0.5 text-muted">
                       {v.fragrance.notes}
