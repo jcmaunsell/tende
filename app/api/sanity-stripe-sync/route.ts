@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
+import { createHmac, timingSafeEqual } from "crypto";
 import Stripe from "stripe";
 import { createClient } from "@sanity/client";
 import { logger } from "@/lib/logger";
@@ -14,16 +15,31 @@ const sanity = createClient({
   token: process.env.SANITY_API_TOKEN,
 });
 
+function verifySanitySignature(rawBody: string, signature: string, secret: string): boolean {
+  // Sanity uses the same signing scheme as Stripe: t=<ts>,v1=<hmac-sha256-hex>
+  const parts = Object.fromEntries(signature.split(",").map((p) => p.split("=")));
+  if (!parts.t || !parts.v1) return false;
+  const expected = createHmac("sha256", secret)
+    .update(`${parts.t}.${rawBody}`)
+    .digest("hex");
+  try {
+    return timingSafeEqual(Buffer.from(expected), Buffer.from(parts.v1));
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest) {
-  // Validate webhook secret
-  const auth = req.headers.get("authorization");
-  const expected = `Bearer ${process.env.SANITY_WEBHOOK_SECRET}`;
-  if (!auth || auth !== expected) {
-    after(() => logger.warn("Sanity webhook rejected: invalid secret"));
+  const rawBody = await req.text();
+  const signature = req.headers.get("sanity-webhook-signature") ?? "";
+  const secret = process.env.SANITY_WEBHOOK_SECRET ?? "";
+
+  if (!signature || !verifySanitySignature(rawBody, signature, secret)) {
+    after(() => logger.warn("Sanity webhook rejected: invalid signature"));
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await req.json();
+  const body = JSON.parse(rawBody);
   const documentId: string = body._id;
   const documentType: string = body._type;
 
