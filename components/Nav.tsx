@@ -12,7 +12,7 @@ export default function Nav() {
 
       <nav className="fixed top-8 left-0 right-0 z-40 bg-petrol">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Image
               src="/images/logo-white.png"
               alt="tende"
@@ -22,7 +22,7 @@ export default function Nav() {
               style={{ width: "auto" }}
             />
           </Link>
-          <div className="flex items-center gap-6 text-xs font-light tracking-widest uppercase text-white/80">
+          <div className="hidden md:flex items-center gap-6 text-xs font-light tracking-widest uppercase text-white/80">
             <Link href="/shop" className="hover:text-white transition-colors">Shop</Link>
             <Link href="/about" className="hover:text-white transition-colors">About</Link>
             <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
