@@ -26,6 +26,7 @@ export interface SanityEvent {
   _id: string;
   title: string;
   date: string;
+  image?: string;
   location?: string;
   description?: string;
 }

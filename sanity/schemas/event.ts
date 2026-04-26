@@ -27,6 +27,13 @@ export default defineType({
       description: "Street address or venue name — shown directly to visitors.",
     }),
     defineField({
+      name: "image",
+      title: "Event photo",
+      type: "image",
+      description: "Optional photo for this event.",
+      options: { hotspot: true },
+    }),
+    defineField({
       name: "description",
       title: "Details",
       type: "text",

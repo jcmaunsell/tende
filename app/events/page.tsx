@@ -11,6 +11,14 @@ function formatDate(iso: string) {
   });
 }
 
+function formatTime(iso: string) {
+  return new Date(iso).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 export const revalidate = 3600;
 
 export default async function EventsPage() {
@@ -48,13 +56,35 @@ export default async function EventsPage() {
             on Instagram to stay in the loop.
           </p>
         ) : (
-          <div className="space-y-10">
+          <div className="space-y-12">
             {events.map((event) => (
-              <div key={event._id} className="border-b border-cream pb-10">
-                <p className="text-xs uppercase tracking-widest text-muted mb-2 font-sans">{formatDate(event.date)}</p>
-                <h2 className="font-display font-bold text-xl text-foreground mb-1 uppercase">{event.title}</h2>
+              <div key={event._id} className="border-b border-cream pb-12">
+                {event.image && (
+                  <div className="relative aspect-[16/7] w-full mb-5 overflow-hidden rounded-sm">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      fill
+                      className="object-cover object-center"
+                    />
+                  </div>
+                )}
+                <p className="text-xs uppercase tracking-widest text-muted mb-2 font-sans">
+                  {formatDate(event.date)} · {formatTime(event.date)}
+                </p>
+                <h2 className="font-display font-bold text-xl text-foreground mb-3 uppercase">{event.title}</h2>
                 {event.location && (
-                  <p className="text-sm font-light text-foreground/60 mb-3 font-sans">{event.location}</p>
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(event.location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-light text-teal hover:underline transition-colors mb-3 font-sans"
+                  >
+                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+                      <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
+                    </svg>
+                    {event.location}
+                  </a>
                 )}
                 {event.description && (
                   <p className="text-sm font-light leading-relaxed text-foreground/70 font-sans">{event.description}</p>

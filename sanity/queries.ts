@@ -49,7 +49,7 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
   try {
     return await client.fetch(
       `*[_type == "event"] | order(date asc) {
-        _id, title, date, location, description
+        _id, title, date, "image": image.asset->url, location, description
       }`
     );
   } catch {
