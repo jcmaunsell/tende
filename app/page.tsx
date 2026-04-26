@@ -30,7 +30,7 @@ export default async function HomePage() {
           <h1 className="font-display text-5xl md:text-7xl text-[var(--foreground)] leading-tight mb-5">
             Science meets Simplicity
           </h1>
-          <p className="max-w-md text-base font-light text-[var(--foreground)]/75 mb-10 leading-relaxed">
+          <p className="max-w-md mx-auto text-base font-light text-[var(--foreground)]/75 mb-10 leading-relaxed">
             Plant-based hair + body care, handcrafted by an organic chemist.
           </p>
           <div className="flex flex-wrap gap-6 justify-center">
