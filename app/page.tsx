@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
-import { getFeaturedProducts } from "@/sanity/queries";
+import { getFeaturedProducts, getSiteSettings } from "@/sanity/queries";
 
 export const revalidate = 60;
 
@@ -9,8 +9,15 @@ const TICKER_TEXT = "garden to palm";
 const TICKER_SEP = "✦";
 const TICKER_ITEMS = Array(14).fill(`${TICKER_TEXT} ${TICKER_SEP} `);
 
+const FALLBACK_TESTIMONIALS = [
+  { quote: "My hair has never felt so clean and light. I'll never go back to liquid shampoo.", author: "Maya R." },
+  { quote: "The Atlas Rose scrub is everything. My skin is so soft and the scent is incredible.", author: "Jordan T." },
+  { quote: "Love knowing exactly what's in every product. No mystery ingredients, just results.", author: "Sam L." },
+];
+
 export default async function HomePage() {
-  const products = await getFeaturedProducts();
+  const [products, settings] = await Promise.all([getFeaturedProducts(), getSiteSettings()]);
+  const testimonials = settings?.testimonials?.length ? settings.testimonials : FALLBACK_TESTIMONIALS;
 
   return (
     <>
@@ -177,11 +184,7 @@ export default async function HomePage() {
         <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
         <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
         <div className="grid md:grid-cols-3 gap-10">
-          {[
-            { quote: "My hair has never felt so clean and light. I'll never go back to liquid shampoo.", author: "Maya R." },
-            { quote: "The Atlas Rose scrub is everything. My skin is so soft and the scent is incredible.", author: "Jordan T." },
-            { quote: "Love knowing exactly what's in every product. No mystery ingredients, just results.", author: "Sam L." },
-          ].map(({ quote, author }) => (
+          {testimonials.map(({ quote, author }) => (
             <div key={author} className="text-left">
               <p className="font-sans text-base leading-relaxed text-muted mb-4">
                 &ldquo;{quote}&rdquo;

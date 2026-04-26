@@ -52,7 +52,8 @@ for (const product of products) {
   if (product.variants && product.variants.length > 0) {
     // Per-variant prices
     for (const variant of product.variants) {
-      const unitAmount = variant.price ?? product.price;
+      const dollars = variant.price ?? product.price;
+      const unitAmount = Math.round(dollars * 100);
       const label = `${product.title} — ${variant.fragranceName}`;
 
       // Check if this variant already has a price
@@ -69,7 +70,7 @@ for (const product of products) {
         metadata: { sanity_id: product._id, variant_key: variant._key },
       });
 
-      console.log(`  ✓ ${variant.fragranceName}: ${price.id} ($${unitAmount / 100})`);
+      console.log(`  ✓ ${variant.fragranceName}: ${price.id} ($${dollars})`);
 
       // Write back to Sanity
       await sanity
@@ -86,13 +87,13 @@ for (const product of products) {
 
     const price = await stripe.prices.create({
       product: stripeProduct.id,
-      unit_amount: product.price,
+      unit_amount: Math.round(product.price * 100),
       currency: "usd",
       nickname: product.title,
       metadata: { sanity_id: product._id },
     });
 
-    console.log(`  ✓ ${price.id} ($${product.price / 100})`);
+    console.log(`  ✓ ${price.id} ($${product.price})`);
 
     await sanity.patch(product._id).set({ stripePriceId: price.id }).commit();
   }

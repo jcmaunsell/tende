@@ -1,5 +1,4 @@
-function fmt(cents: number): string {
-  const dollars = cents / 100;
+function fmt(dollars: number): string {
   const isWhole = dollars % 1 === 0;
   return dollars.toLocaleString("en-US", {
     style: "currency",
@@ -9,8 +8,8 @@ function fmt(cents: number): string {
   });
 }
 
-export function formatPrice(cents: number): string {
-  return fmt(cents);
+export function formatPrice(dollars: number): string {
+  return fmt(dollars);
 }
 
 export function priceRange(product: { price: number; variants?: Array<{ price?: number }> }): string {

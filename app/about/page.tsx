@@ -1,11 +1,22 @@
 import Image from "next/image";
+import { getSiteSettings } from "@/sanity/queries";
 
-const SAGE_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
+const FALLBACK_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
+const FALLBACK_BIO = [
+  "I'm an organic chemist and cosmetic scientist by training, but also an artist and nature enthusiast at heart.",
+  "I started Tende to create products that are both effective and intentional — where every ingredient has a purpose, and nothing is added just to fill space.",
+];
 
 const TICKER_SEP = "✦";
 const TICKER_ITEMS = Array(14).fill(`garden to palm ${TICKER_SEP} `);
 
-export default function AboutPage() {
+export const revalidate = 3600;
+
+export default async function AboutPage() {
+  const settings = await getSiteSettings();
+  const photoUrl = settings?.founderPhoto ?? FALLBACK_IMG;
+  const bio = settings?.founderBio?.length ? settings.founderBio : FALLBACK_BIO;
+
   return (
     <div className="bg-sage min-h-screen">
 
@@ -20,7 +31,7 @@ export default function AboutPage() {
             }}
           >
             <Image
-              src={SAGE_IMG}
+              src={photoUrl}
               alt="Sage, founder of Tende"
               width={900}
               height={1200}
@@ -33,14 +44,9 @@ export default function AboutPage() {
             I&apos;m Sage, the founder of Tende.
           </h2>
           <div className="space-y-5 text-base font-light leading-relaxed text-white/80 font-sans">
-            <p>
-              I&apos;m an organic chemist and cosmetic scientist by training, but also an artist and nature
-              enthusiast at heart.
-            </p>
-            <p>
-              I started Tende to create products that are both effective and intentional — where every
-              ingredient has a purpose, and nothing is added just to fill space.
-            </p>
+            {bio.map((paragraph, i) => (
+              <p key={i}>{paragraph}</p>
+            ))}
           </div>
         </div>
       </section>

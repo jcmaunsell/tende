@@ -30,6 +30,13 @@ export interface Product {
   variants?: ProductVariant[];
 }
 
+export interface Market {
+  _id: string;
+  name: string;
+  location?: string;
+  website?: string;
+}
+
 export interface SanityEvent {
   _id: string;
   title: string;
@@ -37,6 +44,14 @@ export interface SanityEvent {
   image?: string;
   location?: string;
   description?: string;
+  market?: Market;
+}
+
+export interface SiteSettings {
+  founderPhoto?: string;
+  founderBio?: string[];
+  faqs?: { question: string; answer: string }[];
+  testimonials?: { quote: string; author: string }[];
 }
 
 export interface CartItem {

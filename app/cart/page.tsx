@@ -3,11 +3,11 @@
 import { useCart } from "@/store/cart";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { formatPrice } from "@/lib/utils";
 
-export default function CartPage() {
+function CartContent() {
   const { items, updateQuantity, removeItem, total, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
@@ -116,5 +116,13 @@ export default function CartPage() {
         {loading ? "Redirecting…" : "Checkout"}
       </button>
     </div>
+  );
+}
+
+export default function CartPage() {
+  return (
+    <Suspense>
+      <CartContent />
+    </Suspense>
   );
 }

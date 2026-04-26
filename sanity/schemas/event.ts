@@ -6,11 +6,23 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
+      name: "market",
+      title: "Market (optional)",
+      type: "reference",
+      to: [{ type: "market" }],
+      description: "For recurring markets — pick from your saved markets list and the name + location auto-fill. Leave blank for a one-off event.",
+    }),
+    defineField({
       name: "title",
       title: "Event name",
       type: "string",
-      description: 'E.g. "Brooklyn Flea Market" or "Harlem Pop-Up".',
-      validation: (R) => R.required(),
+      description: 'Leave blank to use the market name. Or enter a custom name (e.g. "Brooklyn Flea — Holiday Edition").',
+      validation: (R) =>
+        R.custom((value, context) => {
+          const market = (context.document as Record<string, unknown>)?.market;
+          if (!value && !market) return "Enter an event name, or choose a market above.";
+          return true;
+        }),
     }),
     defineField({
       name: "date",
@@ -24,7 +36,7 @@ export default defineType({
       name: "location",
       title: "Location",
       type: "string",
-      description: "Street address or venue name — shown directly to visitors.",
+      description: "Leave blank to use the market's default location. Or enter a different address for this event.",
     }),
     defineField({
       name: "image",
@@ -48,12 +60,12 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: "title", subtitle: "date" },
-    prepare({ title, subtitle }) {
+    select: { title: "title", marketName: "market.name", subtitle: "date" },
+    prepare({ title, marketName, subtitle }) {
       const dateStr = subtitle
         ? new Date(subtitle).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
         : "No date set";
-      return { title, subtitle: dateStr };
+      return { title: title || marketName || "Untitled event", subtitle: dateStr };
     },
   },
   orderings: [

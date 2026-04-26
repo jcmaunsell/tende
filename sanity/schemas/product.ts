@@ -61,23 +61,24 @@ export default defineType({
     // ── Pricing ────────────────────────────────────────────────────────────
     defineField({
       name: "price",
-      title: "Price (in cents)",
+      title: "Price ($)",
       type: "number",
-      description: "Enter the price in cents — e.g. enter 2400 for $24.00.",
-      validation: (R) => R.required().positive().integer(),
+      description: "Enter the price in dollars — e.g. enter 24 for $24.00.",
+      validation: (R) => R.required().positive(),
     }),
     defineField({
       name: "compareAtPrice",
-      title: "Compare-at price (in cents)",
+      title: "Compare-at price ($)",
       type: "number",
-      description: "Optional. If set, shown as a crossed-out original price. Enter in cents.",
-      validation: (R) => R.positive().integer(),
+      description: "Optional. If set, shown as a crossed-out original price. Enter in dollars.",
+      validation: (R) => R.positive(),
     }),
     defineField({
       name: "stripePriceId",
       title: "Stripe Price ID",
       type: "string",
-      description: 'Found in your Stripe dashboard under Products → [this product] → Pricing. Looks like "price_1Abc…". Required for checkout to work.',
+      description: "Set automatically when you publish. Do not edit manually.",
+      readOnly: true,
     }),
 
     // ── Product details ────────────────────────────────────────────────────
@@ -132,23 +133,24 @@ export default defineType({
             }),
             defineField({
               name: "price",
-              title: "Price override (in cents)",
+              title: "Price override ($)",
               type: "number",
-              description: "Optional. Leave blank to use the product base price. Enter in cents, e.g. 2200 for $22.00.",
-              validation: (R) => R.positive().integer(),
+              description: "Optional. Leave blank to use the product base price. Enter in dollars, e.g. 22 for $22.00.",
+              validation: (R) => R.positive(),
             }),
             defineField({
               name: "compareAtPrice",
-              title: "Compare-at price (in cents)",
+              title: "Compare-at price ($)",
               type: "number",
-              description: "Optional. If set, shown as a crossed-out original price for this scent. Enter in cents.",
-              validation: (R) => R.positive().integer(),
+              description: "Optional. If set, shown as a crossed-out original price for this scent. Enter in dollars.",
+              validation: (R) => R.positive(),
             }),
             defineField({
               name: "stripePriceId",
               title: "Stripe Price ID",
               type: "string",
-              description: 'The price_… ID for this specific scent in Stripe.',
+              description: "Set automatically when you publish. Do not edit manually.",
+              readOnly: true,
             }),
             defineField({
               name: "inStock",
