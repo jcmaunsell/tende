@@ -23,7 +23,7 @@ const events = [
     date: "2026-05-02T10:00:00-04:00",
     location: "196 Main Street, New Paltz, NY 12561",
     imageUrl: "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/1776803883168-ZGXKBG9S2E2VPEM2UKIO/HVOMprofile.webp",
-    description: "Voted Best Market in the Hudson Valley three years running, the Beacon Farmers Market is your go-to spot for fresh, local produce and handmade goods. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care made with sustainability and intention. Support local, shop small, and enjoy a vibrant community atmosphere every week!",
+    description: "Hudson Valley Open Market is New Paltz's weekly outdoor farmers and makers market, bringing together 25–30 local farms, fresh bread, handmade goods, and specialty finds — all sourced within a 100-mile radius — plus live music every Saturday. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care.",
   },
   {
     title: "Beacon Farmers Market",
@@ -37,7 +37,7 @@ const events = [
     date: "2026-05-09T10:00:00-04:00",
     location: "110 Front Street, Hudson, NY 12534",
     imageUrl: "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/1776805635600-ZJSWM58K9C0Y3GV9C403/2026+Spring+Market+Flyer+.jpg",
-    description: null,
+    description: "Basilica Farm & Flea is part farmers market, part flea market, and part craft fair — held inside the cavernous, sustainably renovated Basilica Hudson with over 10,000 square feet of regional vendors selling handmade goods, collected wares, and locally sourced food. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care.",
   },
   {
     title: "Beacon Farmers Market",
@@ -51,14 +51,14 @@ const events = [
     date: "2026-05-23T10:00:00-04:00",
     location: "196 Main Street, New Paltz, NY 12561",
     imageUrl: "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/1776803883168-ZGXKBG9S2E2VPEM2UKIO/HVOMprofile.webp",
-    description: "Voted Best Market in the Hudson Valley three years running, the Beacon Farmers Market is your go-to spot for fresh, local produce and handmade goods. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care made with sustainability and intention. Support local, shop small, and enjoy a vibrant community atmosphere every week!",
+    description: "Hudson Valley Open Market is New Paltz's weekly outdoor farmers and makers market, bringing together 25–30 local farms, fresh bread, handmade goods, and specialty finds — all sourced within a 100-mile radius — plus live music every Saturday. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care.",
   },
   {
     title: "Hudson Farmers Market",
     date: "2026-05-30T09:00:00-04:00",
-    location: "Hudson, NY 12534",
+    location: "6th Street & Columbia Street, Hudson, NY 12534",
     imageUrl: "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/1763399427869-PVFP8K53RSCFNPOB5GLU/HFM%2BLOGO.webp",
-    description: null,
+    description: "Columbia County's largest and longest-running farmers market, now in its 29th season, the Hudson Farmers Market sets up every Saturday at the corner of 6th and Columbia Streets with 30+ vendors offering produce, baked goods, meat, dairy, flowers, and more. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care.",
   },
   {
     title: "Beacon Farmers Market",
@@ -79,7 +79,7 @@ const events = [
     date: "2026-06-13T10:00:00-04:00",
     location: "196 Main Street, New Paltz, NY 12561",
     imageUrl: "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/1776803883168-ZGXKBG9S2E2VPEM2UKIO/HVOMprofile.webp",
-    description: "Voted Best Market in the Hudson Valley three years running, the Beacon Farmers Market is your go-to spot for fresh, local produce and handmade goods. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care made with sustainability and intention. Support local, shop small, and enjoy a vibrant community atmosphere every week!",
+    description: "Hudson Valley Open Market is New Paltz's weekly outdoor farmers and makers market, bringing together 25–30 local farms, fresh bread, handmade goods, and specialty finds — all sourced within a 100-mile radius — plus live music every Saturday. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care.",
   },
   {
     title: "Ellenville Farmers Market",
@@ -107,7 +107,7 @@ const events = [
     date: "2026-07-11T10:00:00-04:00",
     location: "196 Main Street, New Paltz, NY 12561",
     imageUrl: "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/1776803883168-ZGXKBG9S2E2VPEM2UKIO/HVOMprofile.webp",
-    description: "Voted Best Market in the Hudson Valley three years running, the Beacon Farmers Market is your go-to spot for fresh, local produce and handmade goods. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care made with sustainability and intention. Support local, shop small, and enjoy a vibrant community atmosphere every week!",
+    description: "Hudson Valley Open Market is New Paltz's weekly outdoor farmers and makers market, bringing together 25–30 local farms, fresh bread, handmade goods, and specialty finds — all sourced within a 100-mile radius — plus live music every Saturday. Stop by the Tende booth to meet Sage and explore handcrafted, plant-based hair and body care.",
   },
   {
     title: "Beacon Farmers Market",
