@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-export default defineType({
+const siteSettings = defineType({
   name: "siteSettings",
   title: "Site Settings",
   type: "document",
@@ -60,5 +60,10 @@ export default defineType({
     }),
   ],
   preview: { prepare: () => ({ title: "Site Settings" }) },
-  __experimental_actions: ["update", "publish"],
 });
+
+// Prevent creating or deleting this singleton document via the Studio UI.
+// __experimental_actions is not in Sanity's TS types but is supported at runtime.
+(siteSettings as unknown as Record<string, unknown>).__experimental_actions = ["update", "publish"];
+
+export default siteSettings;

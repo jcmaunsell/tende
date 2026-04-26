@@ -13,10 +13,12 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
   const hasVariants = (product.variants?.length ?? 0) > 0;
   const [qty, setQty] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [fragranceOpen, setFragranceOpen] = useState(false);
   const addItem = useCart((s) => s.addItem);
 
   function selectFragrance(id: string) {
     setSelectedId(id);
+    setFragranceOpen(false);
     onFragranceChange?.(id);
   }
 
@@ -67,10 +69,49 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
       {/* Fragrance picker */}
       {hasVariants && (
         <div>
-          <p className="text-xs font-sans uppercase tracking-widest text-muted mb-2">
+          {/* Mobile toggle — hidden on md+ */}
+          <button
+            type="button"
+            onClick={() => setFragranceOpen((o) => !o)}
+            className="md:hidden w-full flex items-center justify-between border border-foreground/30 px-4 py-3 text-xs font-sans uppercase tracking-widest text-foreground"
+          >
+            <span>
+              {activeVariant ? (
+                <>
+                  <span className="normal-case font-normal">{activeVariant.fragrance.name}</span>
+                  {activeVariant.fragrance.notes && (
+                    <span className="ml-1 text-muted font-light normal-case tracking-normal">
+                      — {activeVariant.fragrance.notes}
+                    </span>
+                  )}
+                </>
+              ) : (
+                "Select fragrance"
+              )}
+            </span>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+              className={`flex-shrink-0 transition-transform ${fragranceOpen ? "rotate-180" : ""}`}
+            >
+              <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          {/* Desktop label — hidden on mobile */}
+          <p className="hidden md:block text-xs font-sans uppercase tracking-widest text-muted mb-2">
             Fragrance
           </p>
-          <div className="flex flex-wrap gap-2">
+
+          {/* Variant buttons — collapsible on mobile, always visible on md+ */}
+          <div className={[
+            "flex-wrap gap-2 mt-1 md:mt-0",
+            fragranceOpen ? "flex" : "hidden",
+            "md:flex",
+          ].join(" ")}>
             {product.variants!.map((v) => {
               const selected = selectedId === v.fragrance._id;
               return (
