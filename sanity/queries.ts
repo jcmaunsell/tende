@@ -25,7 +25,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
         _id, title, slug, tagline, price,
         "images": images[].asset->url,
         category, inStock,
-        variants[]{ price, compareAtPrice }
+        variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, price, compareAtPrice }
       }`
     );
   } catch {
