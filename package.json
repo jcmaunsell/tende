@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@next-community/adapter-vercel": "^0.0.0",
     "@sanity/vision": "^5.22.0",
     "next": "16.2.4",
     "next-sanity": "^12.3.0",
@@ -20,9 +21,12 @@
   },
   "overrides": {
     "uuid": "^14.0.0",
-    "js-yaml": "^4.1.1"
+    "js-yaml": "^4.1.1",
+    "minimatch": "^10.0.0",
+    "smol-toml": "^1.3.1"
   },
   "devDependencies": {
+    "@vercel/build-utils": "*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
