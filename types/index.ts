@@ -28,6 +28,10 @@ export interface Product {
   inStock: boolean;
   stripePriceId?: string;
   variants?: ProductVariant[];
+  weight?: number;
+  length?: number;
+  width?: number;
+  height?: number;
 }
 
 export interface Market {

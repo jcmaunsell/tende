@@ -28,6 +28,8 @@ export async function POST(req: NextRequest) {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
+      shipping_address_collection: { allowed_countries: ["US"] },
+      phone_number_collection: { enabled: true },
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart?success=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
     });

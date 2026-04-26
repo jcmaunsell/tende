@@ -67,6 +67,26 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
   }
 }
 
+export async function getProductsByStripePriceIds(
+  priceIds: string[]
+): Promise<Array<{ _id: string; title: string; weight?: number; length?: number; width?: number; height?: number; stripePriceId?: string; variants?: Array<{ stripePriceId?: string }> }>> {
+  try {
+    return await client.fetch(
+      `*[_type == "product" && (
+        stripePriceId in $ids ||
+        count(variants[stripePriceId in $ids]) > 0
+      )] {
+        _id, title, weight, length, width, height,
+        stripePriceId,
+        variants[]{ stripePriceId }
+      }`,
+      { ids: priceIds }
+    );
+  } catch {
+    return [];
+  }
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     return await client.fetch(

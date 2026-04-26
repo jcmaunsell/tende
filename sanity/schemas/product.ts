@@ -58,6 +58,33 @@ export default defineType({
       initialValue: true,
     }),
 
+    // ── Shipping ───────────────────────────────────────────────────────────
+    defineField({
+      name: "weight",
+      title: "Weight (lbs)",
+      type: "number",
+      description: "Shipping weight in pounds — e.g. 0.165 for a shampoo bar.",
+      validation: (R) => R.positive(),
+    }),
+    defineField({
+      name: "length",
+      title: "Length (in)",
+      type: "number",
+      validation: (R) => R.positive(),
+    }),
+    defineField({
+      name: "width",
+      title: "Width (in)",
+      type: "number",
+      validation: (R) => R.positive(),
+    }),
+    defineField({
+      name: "height",
+      title: "Height (in)",
+      type: "number",
+      validation: (R) => R.positive(),
+    }),
+
     // ── Pricing ────────────────────────────────────────────────────────────
     defineField({
       name: "price",

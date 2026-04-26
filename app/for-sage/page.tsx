@@ -149,14 +149,19 @@ export default function ForSagePage() {
 
       <Section title="When a customer orders">
         <Step n={1}>The customer adds items to their cart and clicks Checkout.</Step>
-        <Step n={2}>They&apos;re taken to Stripe&apos;s secure checkout page to enter their payment details.</Step>
-        <Step n={3}>Stripe sends the customer an email receipt automatically.</Step>
-        <Step n={4}>You can see all orders in your <Link href="https://dashboard.stripe.com/payments">Stripe dashboard</Link> under Payments.</Step>
+        <Step n={2}>Stripe&apos;s secure checkout page collects their payment, shipping address, and phone number.</Step>
+        <Step n={3}>Once payment is confirmed, the site automatically calculates the package dimensions based on what was ordered, purchases a USPS shipping label, and emails it directly to you.</Step>
+        <Step n={4}>Your email will include: the order summary, the shipping address, a link to print the label, and the tracking number. The customer receives a separate email with their tracking number automatically.</Step>
+        <Step n={5}>Print the label, pack the order, and drop it off at USPS.</Step>
+        <Tip>
+          <strong>No manual label creation needed.</strong> The label is purchased and emailed to you automatically the moment the order comes in.
+        </Tip>
         <Tip>
           You&apos;re currently in <strong>test mode</strong> in Stripe, which means no real money moves and you
           can use card number <code className="bg-parchment px-1 py-0.5 rounded text-xs">4242 4242 4242 4242</code> to test checkout.
           When you&apos;re ready to go live, James will switch Stripe to live mode.
         </Tip>
+        <p>You can see all orders in your <Link href="https://dashboard.stripe.com/payments">Stripe dashboard</Link> under Payments.</p>
       </Section>
 
       <Section title="Contact form">
@@ -182,6 +187,27 @@ export default function ForSagePage() {
           <strong>Anything else</strong> — reach out to James. The site is on GitHub and Vercel,
           so most issues can be diagnosed and fixed quickly.
         </p>
+      </Section>
+
+      <Section title="How your products show up on Google">
+        <p>
+          Each product page is set up so Google can find it. When someone searches for something like
+          &ldquo;plant-based shampoo bar bergamot&rdquo; or &ldquo;Atlas Rose body scrub,&rdquo; your product pages
+          can show up in results with your product image, title, and description.
+        </p>
+        <p>
+          The most important thing you can do for SEO is write good, specific product descriptions in Sanity Studio.
+          Describe what the product <em>does</em>, what it <em>smells like</em>, who it&apos;s <em>for</em>, and what&apos;s
+          <em> in it</em>. The more specific and genuine, the better.
+        </p>
+        <p>
+          The <strong>Tagline</strong> field on each product is what shows as the short preview text in search results — keep it
+          to one clear sentence.
+        </p>
+        <Tip>
+          Google takes time — it can take a few weeks after launch for product pages to start appearing in search.
+          You don&apos;t need to do anything technical; the site handles the rest automatically.
+        </Tip>
       </Section>
 
       <Section title="Before the site goes live">
@@ -230,6 +256,14 @@ export default function ForSagePage() {
             {
               done: false,
               item: "Remove or password-protect the /for-sage and /palette pages if you'd prefer customers can't find them.",
+            },
+            {
+              done: false,
+              item: "Set up EasyPost: create a free account at easypost.com, grab a live API key, and give it to James. He'll add your shipping address and the key to the site — after that, labels are auto-generated the moment an order is placed.",
+            },
+            {
+              done: false,
+              item: "Submit the site to Google Search Console (search.google.com/search-console) so Google knows the new site exists and starts indexing your product pages.",
             },
           ].map(({ done, item }, i) => (
             <div key={i} className="flex gap-3 items-start">
