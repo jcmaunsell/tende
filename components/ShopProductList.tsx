@@ -122,7 +122,7 @@ export default function ShopProductList({ products }: { products: Product[] }) {
       )}
 
       {filtered.length === 0 ? (
-        <p className="text-center py-24 text-foreground/40 font-sans font-light">
+        <p className="text-center py-24 text-muted/50 font-sans font-light">
           No products match those filters.
         </p>
       ) : (

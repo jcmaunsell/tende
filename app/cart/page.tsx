@@ -73,7 +73,7 @@ export default function CartPage() {
                 >+</button>
                 <button
                   onClick={() => removeItem(item.productId, item.fragrance)}
-                  className="ml-4 text-xs uppercase tracking-wider text-foreground/40 hover:text-teal transition-colors"
+                  className="ml-4 text-xs uppercase tracking-wider text-muted/50 hover:text-teal transition-colors"
                 >Remove</button>
               </div>
             </div>

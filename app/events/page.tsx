@@ -43,7 +43,7 @@ export default async function EventsPage() {
 
       <div className="max-w-3xl mx-auto px-6 py-16">
         {events.length === 0 ? (
-          <p className="text-foreground/40 font-sans font-light">
+          <p className="text-muted/50 font-sans font-light">
             No upcoming events. Follow{" "}
             <a
               href="https://www.instagram.com/tende.beauty"
@@ -93,7 +93,7 @@ export default async function EventsPage() {
                     </a>
                   )}
                   {event.description && (
-                    <p className="text-sm font-light leading-relaxed text-foreground/70 font-sans">{event.description}</p>
+                    <p className="text-sm font-light leading-relaxed text-muted font-sans">{event.description}</p>
                   )}
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default async function EventsPage() {
         )}
 
         <div className="mt-16 pt-10 border-t border-cream">
-          <p className="text-xs font-sans font-light text-foreground/50">
+          <p className="text-xs font-sans font-light text-muted/60">
             Sage manages events in{" "}
             <Link href="/studio" className="text-teal hover:underline">
               Sanity Studio

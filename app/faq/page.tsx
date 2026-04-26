@@ -41,13 +41,13 @@ export default function FAQPage() {
         {faqs.map(({ q, a }) => (
           <div key={q} className="py-8">
             <h2 className="font-display text-xl text-foreground mb-3">{q}</h2>
-            <p className="text-sm font-light leading-relaxed text-foreground/70">{a}</p>
+            <p className="text-sm font-light leading-relaxed text-muted">{a}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-14 pt-10 border-t border-cream">
-        <p className="text-sm font-light text-foreground/60">
+        <p className="text-sm font-light text-muted/80">
           Still have questions?{" "}
           <Link href="/contact" className="text-teal border-b border-teal pb-0.5 hover:opacity-70 transition-opacity">
             Get in touch.

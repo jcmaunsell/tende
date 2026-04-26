@@ -33,7 +33,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
     return (
       <button
         disabled
-        className="w-full h-12 border border-foreground/20 text-foreground/40 text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full"
+        className="w-full h-12 border border-foreground/20 text-muted/50 text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full"
       >
         Out of Stock
       </button>
@@ -128,7 +128,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           className={[
             "flex-1 h-12 text-xs uppercase tracking-widest font-sans rounded-full transition-colors",
             isOutOfStock
-              ? "border border-foreground/20 text-foreground/40 cursor-not-allowed"
+              ? "border border-foreground/20 text-muted/50 cursor-not-allowed"
               : hasVariants && selectedId === null
               ? "bg-foreground/40 text-background cursor-not-allowed"
               : "bg-foreground text-background hover:bg-sage-dark",

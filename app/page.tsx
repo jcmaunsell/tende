@@ -88,7 +88,7 @@ export default async function HomePage() {
           <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-6 leading-snug uppercase">
             Pure botanicals,<br />zero excess.
           </h2>
-          <p className="text-base leading-relaxed text-foreground/70 mb-8 font-sans font-light">
+          <p className="text-base leading-relaxed text-muted mb-8 font-sans font-light">
             Each formula is made with purposeful, plant-based ingredients and exclusive essential oil blends
             to support scalp health, smooth strands, and soften skin.
           </p>
@@ -131,10 +131,10 @@ export default async function HomePage() {
           <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-6 leading-snug uppercase">
             Crafted with Chemistry.<br />Grounded in Nature.
           </h2>
-          <p className="text-base leading-relaxed text-foreground/70 mb-4 font-sans font-light">
+          <p className="text-base leading-relaxed text-muted mb-4 font-sans font-light">
             No fillers. No preservatives. Just pure, purposeful ingredients and a slower, more intentional approach to care.
           </p>
-          <p className="text-base leading-relaxed text-foreground/70 mb-8 font-sans font-light">
+          <p className="text-base leading-relaxed text-muted mb-8 font-sans font-light">
             Our products use either pure essential oils or ECOCERT-certified natural fragrance oils —
             and every formula is 100% vegan and cruelty-free.
           </p>
@@ -183,7 +183,7 @@ export default async function HomePage() {
             { quote: "Love knowing exactly what's in every product. No mystery ingredients, just results.", author: "Sam L." },
           ].map(({ quote, author }) => (
             <div key={author} className="text-left">
-              <p className="font-sans text-base leading-relaxed text-foreground/80 mb-4">
+              <p className="font-sans text-base leading-relaxed text-muted mb-4">
                 &ldquo;{quote}&rdquo;
               </p>
               <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>

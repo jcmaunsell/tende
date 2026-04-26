@@ -55,7 +55,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               {selectedId || !hasVariants ? formatPrice(displayPrice) : priceRange(product)}
             </p>
             {displayCompareAt && selectedId && (
-              <p className="text-sm font-sans text-foreground/40 line-through">
+              <p className="text-sm font-sans text-muted/50 line-through">
                 {formatPrice(displayCompareAt)}
               </p>
             )}
@@ -63,7 +63,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
 
         {shortDesc && (
-          <p className="text-sm font-sans font-light leading-relaxed text-foreground/70">
+          <p className="text-sm font-sans font-light leading-relaxed text-muted">
             {shortDesc}
           </p>
         )}
