@@ -58,7 +58,7 @@ export default async function EventsPage() {
         ) : (
           <div className="space-y-10">
             {events.map((event) => (
-              <div key={event._id} className="border-b border-cream pb-10 flex gap-6 items-start">
+              <div key={event._id} className="border-b border-parchment pb-10 flex gap-6 items-start">
                 {event.image && (
                   <div className="w-44 flex-shrink-0">
                     <Image
@@ -101,7 +101,7 @@ export default async function EventsPage() {
           </div>
         )}
 
-        <div className="mt-16 pt-10 border-t border-cream">
+        <div className="mt-16 pt-10 border-t border-parchment">
           <p className="text-xs font-sans font-light text-muted/60">
             Sage manages events in{" "}
             <Link href="/studio" className="text-teal hover:underline">

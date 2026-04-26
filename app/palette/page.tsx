@@ -8,7 +8,7 @@ const SWATCHES = [
   { label: "sage", var: "--sage", cls: "bg-sage" },
   { label: "sage-dark", var: "--sage-dark", cls: "bg-sage-dark" },
   { label: "teal", var: "--teal", cls: "bg-teal" },
-  { label: "cream", var: "--cream", cls: "bg-cream" },
+  { label: "parchment", var: "--parchment", cls: "bg-parchment" },
   { label: "muted", var: "--muted", cls: "bg-muted" },
 ];
 
@@ -18,7 +18,7 @@ const CSS_VARS = [
   { label: "sage", key: "--sage" },
   { label: "sage-dark", key: "--sage-dark" },
   { label: "teal", key: "--teal" },
-  { label: "cream", key: "--cream" },
+  { label: "parchment", key: "--parchment" },
   { label: "muted", key: "--muted" },
 ];
 
@@ -120,7 +120,7 @@ export default function PalettePage() {
       <section className="mb-16">
         <h2 className="font-display font-bold text-sm uppercase tracking-widest text-foreground mb-6">Product Card</h2>
         <div className="w-48">
-          <div className="relative aspect-square bg-cream mb-4 flex items-center justify-center">
+          <div className="relative aspect-square bg-parchment mb-4 flex items-center justify-center">
             <span className="font-display font-bold text-6xl text-muted">t</span>
             <span className="absolute top-2 right-2 bg-teal text-white text-[10px] uppercase tracking-widest font-sans px-2 py-1">
               Sale

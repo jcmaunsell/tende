@@ -32,7 +32,7 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
 
   if (!images || images.length === 0) {
     return (
-      <div className="aspect-square bg-cream flex items-center justify-center">
+      <div className="aspect-square bg-parchment flex items-center justify-center">
         <span className="font-display font-bold text-8xl text-muted">t</span>
       </div>
     );
@@ -71,7 +71,7 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
       )}
 
       <div ref={mainRef} className="relative flex-1">
-        <div className="aspect-square bg-cream overflow-hidden">
+        <div className="aspect-square bg-parchment overflow-hidden">
           <Image
             src={images[active]}
             alt={title}

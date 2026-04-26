@@ -45,8 +45,8 @@ export default function CartPage() {
 
       <div className="space-y-6 mb-10">
         {items.map((item) => (
-          <div key={`${item.productId}|${item.fragrance ?? ""}`} className="flex gap-4 items-start pb-6 border-b border-cream">
-            <div className="w-20 h-20 bg-cream flex-shrink-0 overflow-hidden">
+          <div key={`${item.productId}|${item.fragrance ?? ""}`} className="flex gap-4 items-start pb-6 border-b border-parchment">
+            <div className="w-20 h-20 bg-parchment flex-shrink-0 overflow-hidden">
               {item.image ? (
                 <Image src={item.image} alt={item.title} width={80} height={80} className="w-full h-full object-cover" />
               ) : (
@@ -82,7 +82,7 @@ export default function CartPage() {
         ))}
       </div>
 
-      <div className="border-t border-cream pt-6 flex justify-between items-center mb-8">
+      <div className="border-t border-parchment pt-6 flex justify-between items-center mb-8">
         <span className="font-display text-xl">Total</span>
         <span className="text-xl text-teal">{formatPrice(total())}</span>
       </div>

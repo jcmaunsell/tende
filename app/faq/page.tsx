@@ -37,7 +37,7 @@ export default function FAQPage() {
       <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3">questions</p>
       <h1 className="font-display text-5xl text-foreground mb-14">FAQ</h1>
 
-      <div className="divide-y divide-cream">
+      <div className="divide-y divide-parchment">
         {faqs.map(({ q, a }) => (
           <div key={q} className="py-8">
             <h2 className="font-display text-xl text-foreground mb-3">{q}</h2>
@@ -46,7 +46,7 @@ export default function FAQPage() {
         ))}
       </div>
 
-      <div className="mt-14 pt-10 border-t border-cream">
+      <div className="mt-14 pt-10 border-t border-parchment">
         <p className="text-sm font-light text-muted/80">
           Still have questions?{" "}
           <Link href="/contact" className="text-teal border-b border-teal pb-0.5 hover:opacity-70 transition-opacity">

@@ -57,7 +57,7 @@ export default async function HomePage() {
       </section>
 
       {/* Ticker */}
-      <div className="overflow-hidden border-y border-cream py-3 bg-background">
+      <div className="overflow-hidden border-y border-parchment py-3 bg-background">
         <div className="ticker-track">
           {TICKER_ITEMS.map((item, i) => (
             <span key={i} className="font-sans text-xs uppercase tracking-widest text-muted whitespace-nowrap px-3">
@@ -103,7 +103,7 @@ export default async function HomePage() {
 
       {/* Featured Products */}
       {products.length > 0 && (
-        <section className="bg-cream py-24">
+        <section className="bg-parchment py-24">
           <div className="max-w-6xl mx-auto px-6">
             <p className="text-xs uppercase tracking-[0.3em] text-muted text-center mb-3 font-sans">the collection</p>
             <h2 className="font-display font-bold text-3xl text-foreground mb-14 text-center uppercase">Shop the Collection</h2>
@@ -157,7 +157,7 @@ export default async function HomePage() {
       </section>
 
       {/* Second ticker */}
-      <div className="overflow-hidden border-y border-cream py-3 bg-background">
+      <div className="overflow-hidden border-y border-parchment py-3 bg-background">
         <div className="ticker-track">
           {TICKER_ITEMS.map((item, i) => (
             <span key={i} className="font-sans text-xs uppercase tracking-widest text-muted whitespace-nowrap px-3">

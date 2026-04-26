@@ -37,7 +37,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <ProductDetail product={product} />
 
       {/* Tagline banner */}
-      <div className="mt-16 py-8 border-y border-[var(--cream)]">
+      <div className="mt-16 py-8 border-y border-[var(--parchment)]">
         <p className="font-display font-bold text-sm uppercase tracking-wide text-[var(--foreground)] leading-relaxed">
           Thoughtfully formulated without sulfates, parabens or artificial fragrances —{" "}
           from <em className="not-italic font-bold">garden to palm</em>.

@@ -7,7 +7,7 @@
   --sage: #7b9c87;
   --sage-dark: #213c3e;
   --teal: #536c6b;
-  --cream: #e4ede7;
+  --parchment: #ede8d0;
   --muted: #c9c4bc;
 }
 
@@ -17,7 +17,7 @@
   --color-sage: var(--sage);
   --color-sage-dark: var(--sage-dark);
   --color-teal: var(--teal);
-  --color-cream: var(--cream);
+  --color-parchment: var(--parchment);
   --color-muted: var(--muted);
   --font-display: "Unbounded", sans-serif;
   --font-sans: "Space Grotesk", system-ui, sans-serif;

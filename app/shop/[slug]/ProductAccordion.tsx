@@ -56,7 +56,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
   return (
     <div className="mt-12">
       {sections.map(({ key, title, body }) => (
-        <div key={key} className="border-t border-cream">
+        <div key={key} className="border-t border-parchment">
           <button
             onClick={() => toggle(key)}
             className="w-full flex items-center justify-between py-5 text-left group"
@@ -71,7 +71,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
           {open === key && <div className="pb-8">{body}</div>}
         </div>
       ))}
-      <div className="border-t border-cream" />
+      <div className="border-t border-parchment" />
     </div>
   );
 }

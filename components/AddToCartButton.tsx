@@ -107,7 +107,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
         <div className="flex items-center border border-foreground/20">
           <button
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="w-10 h-12 text-lg font-sans hover:bg-cream transition-colors"
+            className="w-10 h-12 text-lg font-sans hover:bg-parchment transition-colors"
             aria-label="Decrease quantity"
           >
             −
@@ -115,7 +115,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           <span className="w-10 text-center text-sm font-sans select-none">{qty}</span>
           <button
             onClick={() => setQty((q) => q + 1)}
-            className="w-10 h-12 text-lg font-sans hover:bg-cream transition-colors"
+            className="w-10 h-12 text-lg font-sans hover:bg-parchment transition-colors"
             aria-label="Increase quantity"
           >
             +
