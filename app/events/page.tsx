@@ -60,7 +60,7 @@ export default async function EventsPage() {
             {events.map((event) => (
               <div key={event._id} className="border-b border-parchment pb-10 flex gap-6 items-start">
                 {event.image && (
-                  <div className="w-44 flex-shrink-0">
+                  <div className="w-44 flex-shrink-0 overflow-hidden rounded-2xl">
                     <Image
                       src={event.image}
                       alt={event.title}
