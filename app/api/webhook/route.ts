@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const sig = req.headers.get("stripe-signature");
 
   if (!sig) {
-    after(() => logger.warn("webhook.rejected", { reason: "missing_signature" }));
+    after(() => logger.warn("Stripe webhook rejected due to missing signature"));
     return NextResponse.json({ error: "Missing Stripe signature" }, { status: 400 });
   }
 
@@ -20,13 +20,13 @@ export async function POST(req: NextRequest) {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Webhook error";
-    after(() => logger.error("webhook.signature_failed", { error: message }));
+    after(() => logger.error("Stripe webhook signature verification failed", { error: message }));
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    after(() => logger.info("order.completed", {
+    after(() => logger.info("Order completed", {
       session_id: session.id,
       customer_email: session.customer_email,
       amount_total: session.amount_total,

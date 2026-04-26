@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const { items }: { items: CartItem[] } = await req.json();
 
   if (!items || items.length === 0) {
-    after(() => logger.warn("checkout.rejected", { reason: "empty_cart" }));
+    after(() => logger.warn("Checkout rejected due to empty cart"));
     return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
   }
 
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     .map((item) => ({ price: item.stripePriceId, quantity: item.quantity }));
 
   if (lineItems.length === 0) {
-    after(() => logger.warn("checkout.rejected", { reason: "no_stripe_price_ids" }));
+    after(() => logger.warn("Checkout rejected because no items had a Stripe price ID"));
     return NextResponse.json({ error: "No valid Stripe price IDs in cart" }, { status: 400 });
   }
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
     });
 
-    after(() => logger.info("checkout.session_created", {
+    after(() => logger.info("Checkout session created", {
       session_id: session.id,
       item_count: items.length,
     }));
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
-    after(() => logger.error("checkout.stripe_error", { error: message }));
+    after(() => logger.error("Stripe checkout session creation failed", { error: message }));
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
