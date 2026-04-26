@@ -99,6 +99,45 @@ export default defineType({
       description: "Step-by-step instructions shown on the product page.",
       rows: 3,
     }),
+
+    // ── Fragrance variants ─────────────────────────────────────────────────
+    defineField({
+      name: "variants",
+      title: "Fragrance variants",
+      type: "array",
+      description: "Add one entry per scent. If left empty, the product has no fragrance choice and uses the Stripe Price ID above.",
+      of: [
+        {
+          type: "object",
+          name: "variant",
+          title: "Variant",
+          fields: [
+            defineField({
+              name: "fragrance",
+              title: "Fragrance name",
+              type: "string",
+              description: 'e.g. "Lavender", "Unscented", "Citrus & Mint"',
+              validation: (R) => R.required(),
+            }),
+            defineField({
+              name: "stripePriceId",
+              title: "Stripe Price ID",
+              type: "string",
+              description: 'The price_… ID for this specific scent in Stripe.',
+            }),
+            defineField({
+              name: "inStock",
+              title: "In stock?",
+              type: "boolean",
+              initialValue: true,
+            }),
+          ],
+          preview: {
+            select: { title: "fragrance", subtitle: "stripePriceId" },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: { title: "title", subtitle: "category", media: "images.0" },

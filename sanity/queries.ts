@@ -35,7 +35,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       `*[_type == "product" && slug.current == $slug][0] {
         _id, title, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
-        category, ingredients, howToUse, inStock, stripePriceId
+        category, ingredients, howToUse, inStock, stripePriceId,
+        variants[]{ fragrance, stripePriceId, inStock }
       }`,
       { slug }
     );

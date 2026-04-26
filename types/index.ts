@@ -1,3 +1,9 @@
+export interface ProductVariant {
+  fragrance: string;
+  stripePriceId?: string;
+  inStock: boolean;
+}
+
 export interface Product {
   _id: string;
   title: string;
@@ -12,6 +18,7 @@ export interface Product {
   howToUse?: string;
   inStock: boolean;
   stripePriceId?: string;
+  variants?: ProductVariant[];
 }
 
 export interface SanityEvent {
@@ -29,4 +36,5 @@ export interface CartItem {
   image?: string;
   stripePriceId: string;
   quantity: number;
+  fragrance?: string;
 }

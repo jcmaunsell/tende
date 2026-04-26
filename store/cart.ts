@@ -4,11 +4,15 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { CartItem } from "@/types";
 
+function sameItem(a: CartItem, b: Omit<CartItem, "quantity">) {
+  return a.productId === b.productId && (a.fragrance ?? "") === (b.fragrance ?? "");
+}
+
 interface CartStore {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "quantity">) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  removeItem: (productId: string, fragrance?: string) => void;
+  updateQuantity: (productId: string, quantity: number, fragrance?: string) => void;
   clearCart: () => void;
   total: () => number;
   count: () => number;
@@ -20,24 +24,34 @@ export const useCart = create<CartStore>()(
       items: [],
       addItem: (item) =>
         set((state) => {
-          const existing = state.items.find((i) => i.productId === item.productId);
+          const existing = state.items.find((i) => sameItem(i, item));
           if (existing) {
             return {
               items: state.items.map((i) =>
-                i.productId === item.productId ? { ...i, quantity: i.quantity + 1 } : i
+                sameItem(i, item) ? { ...i, quantity: i.quantity + 1 } : i
               ),
             };
           }
           return { items: [...state.items, { ...item, quantity: 1 }] };
         }),
-      removeItem: (productId) =>
-        set((state) => ({ items: state.items.filter((i) => i.productId !== productId) })),
-      updateQuantity: (productId, quantity) =>
+      removeItem: (productId, fragrance) =>
+        set((state) => ({
+          items: state.items.filter(
+            (i) => !(i.productId === productId && (i.fragrance ?? "") === (fragrance ?? ""))
+          ),
+        })),
+      updateQuantity: (productId, quantity, fragrance) =>
         set((state) => ({
           items:
             quantity <= 0
-              ? state.items.filter((i) => i.productId !== productId)
-              : state.items.map((i) => (i.productId === productId ? { ...i, quantity } : i)),
+              ? state.items.filter(
+                  (i) => !(i.productId === productId && (i.fragrance ?? "") === (fragrance ?? ""))
+                )
+              : state.items.map((i) =>
+                  i.productId === productId && (i.fragrance ?? "") === (fragrance ?? "")
+                    ? { ...i, quantity }
+                    : i
+                ),
         })),
       clearCart: () => set({ items: [] }),
       total: () => get().items.reduce((sum, i) => sum + i.price * i.quantity, 0),
