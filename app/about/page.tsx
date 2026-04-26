@@ -2,27 +2,12 @@ import Image from "next/image";
 
 const SAGE_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
 
-const TICKER_SEP = "→";
-const TICKER_ITEMS = Array(14).fill(`GARDEN TO PALM ${TICKER_SEP} `);
+const TICKER_SEP = "✦";
+const TICKER_ITEMS = Array(14).fill(`garden to palm ${TICKER_SEP} `);
 
 export default function AboutPage() {
   return (
     <div className="bg-sage min-h-screen">
-
-      <div className="overflow-hidden bg-foreground py-4 border-b border-white/10">
-        <div className="ticker-track">
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={i} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
-              {item}
-            </span>
-          ))}
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={`b${i}`} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
 
       <section className="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
         <div className="aspect-[3/4] overflow-hidden">
@@ -51,15 +36,15 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="overflow-hidden bg-foreground py-4 border-y border-white/10">
-        <div className="ticker-track" style={{ animationDirection: "reverse" }}>
+      <div className="overflow-hidden border-y border-white/10 py-3">
+        <div className="ticker-track">
           {TICKER_ITEMS.map((item, i) => (
-            <span key={i} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
+            <span key={i} className="font-sans text-xs uppercase tracking-widest text-white/50 whitespace-nowrap px-3">
               {item}
             </span>
           ))}
           {TICKER_ITEMS.map((item, i) => (
-            <span key={`b${i}`} className="font-display font-bold text-xs text-white uppercase tracking-widest whitespace-nowrap px-4">
+            <span key={`b${i}`} className="font-sans text-xs uppercase tracking-widest text-white/50 whitespace-nowrap px-3">
               {item}
             </span>
           ))}
