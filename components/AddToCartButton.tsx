@@ -47,11 +47,12 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
       ? (activeVariant?.stripePriceId ?? "")
       : (product.stripePriceId ?? "");
 
+    const price = activeVariant?.price ?? product.price;
     for (let i = 0; i < qty; i++) {
       addItem({
         productId: product._id,
         title: product.title,
-        price: product.price,
+        price,
         image: product.images?.[0],
         stripePriceId,
         fragrance: selectedFragrance ?? undefined,

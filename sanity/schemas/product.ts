@@ -40,9 +40,12 @@ export default defineType({
       description: "Used to filter products on the shop page.",
       options: {
         list: [
-          { title: "Hair", value: "hair" },
-          { title: "Body", value: "body" },
-          { title: "Scalp", value: "scalp" },
+          { title: "Skincare", value: "skincare" },
+          { title: "Hair Care", value: "hair" },
+          { title: "Body Care", value: "body" },
+          { title: "Scalp Care", value: "scalp" },
+          { title: "Accessories", value: "accessories" },
+          { title: "Merch", value: "merch" },
         ],
         layout: "radio",
       },
@@ -131,6 +134,13 @@ export default defineType({
               title: "Price override (in cents)",
               type: "number",
               description: "Optional. Leave blank to use the product base price. Enter in cents, e.g. 2200 for $22.00.",
+              validation: (R) => R.positive().integer(),
+            }),
+            defineField({
+              name: "compareAtPrice",
+              title: "Compare-at price (in cents)",
+              type: "number",
+              description: "Optional. If set, shown as a crossed-out original price for this scent. Enter in cents.",
               validation: (R) => R.positive().integer(),
             }),
             defineField({

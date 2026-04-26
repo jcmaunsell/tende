@@ -1,30 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import type { Product } from "@/types";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, priceRange } from "@/lib/utils";
 
 export default function ProductDetail({ product }: { product: Product }) {
-  const images = product.images ?? [];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedFragrance, setSelectedFragrance] = useState<string | null>(null);
+
+  // Merge product images + any variant-specific images not already present
+  const allImages = useMemo(() => {
+    const base = product.images ?? [];
+    const extras = (product.variants ?? [])
+      .map((v) => v.image)
+      .filter((img): img is string => !!img && !base.includes(img));
+    return [...base, ...extras];
+  }, [product]);
 
   function handleFragranceChange(fragrance: string | null) {
+    setSelectedFragrance(fragrance);
     if (!fragrance) { setActiveIndex(0); return; }
     const variant = product.variants?.find((v) => v.fragrance === fragrance);
     if (variant?.image) {
-      const idx = images.indexOf(variant.image);
+      const idx = allImages.indexOf(variant.image);
       if (idx >= 0) setActiveIndex(idx);
     }
   }
+
+  const activeVariant = product.variants?.find((v) => v.fragrance === selectedFragrance) ?? null;
+  const displayPrice = activeVariant?.price ?? product.price;
+  const displayCompareAt = activeVariant?.compareAtPrice ?? product.compareAtPrice;
+  const hasVariants = (product.variants?.length ?? 0) > 0;
 
   const shortDesc = product.description?.split("\n")[0] ?? null;
 
   return (
     <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
       <ProductGallery
-        images={images}
+        images={allImages}
         title={product.title}
         activeIndex={activeIndex}
         onActiveChange={setActiveIndex}
@@ -35,14 +50,16 @@ export default function ProductDetail({ product }: { product: Product }) {
           <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground uppercase leading-none mb-3">
             {product.title}
           </h1>
-          <p className="font-display font-bold text-xl text-teal">
-            {product.compareAtPrice ? "From " : ""}{formatPrice(product.price)}
-          </p>
-          {product.compareAtPrice && (
-            <p className="text-sm font-sans text-foreground/40 line-through">
-              {formatPrice(product.compareAtPrice)}
+          <div className="flex items-baseline gap-3">
+            <p className="font-display font-bold text-xl text-teal">
+              {selectedFragrance || !hasVariants ? formatPrice(displayPrice) : priceRange(product)}
             </p>
-          )}
+            {displayCompareAt && selectedFragrance && (
+              <p className="text-sm font-sans text-foreground/40 line-through">
+                {formatPrice(displayCompareAt)}
+              </p>
+            )}
+          </div>
         </div>
 
         {shortDesc && (

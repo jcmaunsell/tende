@@ -2,6 +2,7 @@ export interface ProductVariant {
   fragrance: string;
   image?: string;
   price?: number;
+  compareAtPrice?: number;
   stripePriceId?: string;
   inStock: boolean;
 }
@@ -15,7 +16,7 @@ export interface Product {
   price: number;
   compareAtPrice?: number;
   images?: string[];
-  category?: "hair" | "body" | "scalp";
+  category?: "skincare" | "hair" | "body" | "scalp" | "accessories" | "merch";
   ingredients?: string[];
   howToUse?: string;
   inStock: boolean;

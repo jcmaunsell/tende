@@ -5,10 +5,13 @@ import { priceRange } from "@/lib/utils";
 
 export default function ProductCard({ product }: { product: Product }) {
   const slug = product.slug.current;
+  const onSale =
+    !!product.compareAtPrice ||
+    (product.variants?.some((v) => v.compareAtPrice) ?? false);
 
   return (
     <Link href={`/shop/${slug}`} className="group block">
-      <div className="aspect-square bg-cream overflow-hidden mb-4">
+      <div className="relative aspect-square bg-cream overflow-hidden mb-4">
         {product.images?.[0] ? (
           <Image
             src={product.images[0]}
@@ -21,6 +24,11 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="w-full h-full flex items-center justify-center text-muted">
             <span className="font-display font-bold text-4xl">t</span>
           </div>
+        )}
+        {onSale && (
+          <span className="absolute top-2 right-2 bg-teal text-white text-[10px] uppercase tracking-widest font-sans px-2 py-1">
+            Sale
+          </span>
         )}
       </div>
       <p className="text-xs uppercase tracking-widest text-muted mb-1 font-sans">{product.category}</p>

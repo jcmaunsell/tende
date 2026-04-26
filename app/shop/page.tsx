@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ProductCard from "@/components/ProductCard";
+import ShopProductList from "@/components/ShopProductList";
 import { getAllProducts } from "@/sanity/queries";
 
 export const revalidate = 60;
@@ -25,20 +25,7 @@ export default async function ShopPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-16">
-        <p className="text-xs font-sans text-foreground/50 mb-12 uppercase tracking-widest">
-          {products.length} product{products.length !== 1 ? "s" : ""}
-        </p>
-        {products.length === 0 ? (
-          <p className="text-center py-24 text-foreground/40 font-sans font-light">
-            Products coming soon.
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {products.map((p) => (
-              <ProductCard key={p._id} product={p} />
-            ))}
-          </div>
-        )}
+        <ShopProductList products={products} />
       </div>
     </>
   );
