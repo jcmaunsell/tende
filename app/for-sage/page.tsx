@@ -54,16 +54,21 @@ export default function ForSagePage() {
           How your website works
         </h1>
         <p className="text-sm font-light font-sans text-foreground/70 leading-relaxed">
-          A plain-language guide to managing tende.care — adding products, updating prices,
+          A plain-language guide to managing your website — adding products, updating prices,
           announcing events, and understanding what happens when a customer orders.
         </p>
+        <div className="mt-4 bg-parchment/60 border-l-2 border-teal px-4 py-3 text-sm font-sans text-foreground/70 leading-relaxed">
+          <strong>Right now</strong> the new site lives at{" "}
+          <a href="https://tende-beta.vercel.app" target="_blank" rel="noopener noreferrer" className="text-teal underline underline-offset-2">tende-beta.vercel.app</a>.
+          The old Squarespace site is still at tende.care until the DNS is switched over.
+        </div>
       </div>
 
       <Section title="Your content lives in Sanity Studio">
         <p>
           Everything you see on the website — products, fragrances, events — is managed through
           Sanity Studio. You can access it at{" "}
-          <Link href="https://tende.care/studio">tende.care/studio</Link> or directly at{" "}
+          <Link href="https://tende-beta.vercel.app/studio">tende-beta.vercel.app/studio</Link> or directly at{" "}
           <Link href="https://sanity.io/manage">sanity.io/manage</Link>.
         </p>
         <p>
@@ -157,7 +162,7 @@ export default function ForSagePage() {
       <Section title="Contact form">
         <p>
           When someone submits the contact form at{" "}
-          <Link href="https://tende.care/contact">tende.care/contact</Link>, their message
+          <Link href="https://tende-beta.vercel.app/contact">tende-beta.vercel.app/contact</Link>, their message
           arrives in your inbox at <strong>hello@tende.care</strong>. The reply-to address is set
           to the sender, so you can reply directly from your email client.
         </p>
@@ -216,7 +221,11 @@ export default function ForSagePage() {
             },
             {
               done: false,
-              item: "Point the DNS for tende.care to Vercel (or confirm it's already done) and verify SSL is active.",
+              item: "Switch the DNS for tende.care to point at Vercel instead of Squarespace. James will handle this — once done, tende.care will load the new site and tende-beta.vercel.app will still work as a backup.",
+            },
+            {
+              done: false,
+              item: "After DNS switches, update NEXT_PUBLIC_SITE_URL from tende-beta.vercel.app to tende.care, and re-register the Sanity webhook with the tende.care URL.",
             },
             {
               done: false,
