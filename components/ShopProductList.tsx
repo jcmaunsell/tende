@@ -112,7 +112,7 @@ export default function ShopProductList({ products }: { products: Product[] }) {
             >
               {f.name}
               {f.notes && (
-                <span className="block normal-case tracking-normal font-light mt-0.5 opacity-70">
+                <span className="block normal-case tracking-normal font-light mt-0.5 text-white/80">
                   {f.notes}
                 </span>
               )}

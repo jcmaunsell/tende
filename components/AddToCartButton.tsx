@@ -90,7 +90,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
                   {v.fragrance.notes && (
                     <span className={[
                       "block text-[10px] normal-case tracking-normal font-light mt-0.5",
-                      selected ? "text-background/70" : "text-muted",
+                      selected ? "text-white/80" : "text-muted",
                     ].join(" ")}>
                       {v.fragrance.notes}
                     </span>
