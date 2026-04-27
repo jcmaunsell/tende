@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       line_items: lineItems,
       shipping_address_collection: { allowed_countries: ["US"] },
       phone_number_collection: { enabled: true },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart?success=true`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
     });
 

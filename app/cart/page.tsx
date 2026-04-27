@@ -3,33 +3,12 @@
 import { useCart } from "@/store/cart";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
 import { formatPrice } from "@/lib/utils";
 
 function CartContent() {
-  const { items, updateQuantity, removeItem, total, clearCart } = useCart();
+  const { items, updateQuantity, removeItem, total } = useCart();
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const success = searchParams.get("success") === "true";
-
-  useEffect(() => {
-    if (success) clearCart();
-  }, [success]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (success) {
-    return (
-      <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-        <p className="font-display text-4xl mb-4">Order placed!</p>
-        <p className="text-sm font-light text-muted font-sans mb-8">
-          You&apos;ll receive a confirmation email from Stripe shortly.
-        </p>
-        <Link href="/shop" className="text-sm uppercase tracking-widest text-teal border-b border-teal pb-0.5">
-          Continue Shopping
-        </Link>
-      </div>
-    );
-  }
 
   async function handleCheckout() {
     if (items.length === 0) return;
