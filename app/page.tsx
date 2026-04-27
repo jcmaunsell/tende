@@ -17,7 +17,7 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="flex flex-col">
-        <div className="relative h-[55vh] flex items-center justify-center">
+        <div className="relative h-[55vh] flex items-end justify-center pb-16">
           <Image
             src="/images/bars-overhead.jpg"
             alt="Tende products"
