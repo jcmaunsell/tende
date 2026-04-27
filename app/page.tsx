@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import Ticker from "@/components/Ticker";
+import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { getFeaturedProducts, getSiteSettings } from "@/sanity/queries";
 
 export const revalidate = 60;
@@ -121,16 +122,7 @@ export default async function HomePage() {
           <div className="max-w-4xl mx-auto px-6 text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-petrol mb-3 font-sans">reviews</p>
             <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
-            <div className="grid md:grid-cols-3 gap-10">
-              {testimonials.map(({ quote, author }) => (
-                <div key={author} className="text-left">
-                  <p className="font-sans text-base leading-relaxed text-petrol mb-4">
-                    &ldquo;{quote}&rdquo;
-                  </p>
-                  <p className="text-xs uppercase tracking-widest text-petrol font-sans">— {author}</p>
-                </div>
-              ))}
-            </div>
+            <TestimonialCarousel testimonials={testimonials} />
           </div>
         </section>
       )}
