@@ -119,8 +119,7 @@ export default async function OrderConfirmationPage({
 
       {/* What's next */}
       <div className="bg-parchment/50 px-5 py-4 text-sm font-sans font-light text-foreground/70 leading-relaxed mb-10">
-        Your order is on its way to being packed. A shipping label will be generated and you&apos;ll
-        receive a separate email with your tracking number once it ships.
+        You&apos;ll receive a separate email with tracking information once your order ships.
       </div>
 
       <div className="text-center">
