@@ -21,7 +21,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
               <li key={i}>
                 <span className="font-display font-bold text-xs uppercase tracking-wide">{name}</span>
                 {detail && (
-                  <span className="block text-sm font-sans font-light text-muted mt-0.5 leading-relaxed">
+                  <span className="block text-sm font-sans font-light text-petrol mt-0.5 leading-relaxed">
                     {detail}
                   </span>
                 )}
@@ -35,7 +35,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
       key: "howToUse",
       title: "How to Use + Care",
       body: (
-        <p className="text-sm font-sans font-light leading-relaxed text-muted whitespace-pre-line">
+        <p className="text-sm font-sans font-light leading-relaxed text-petrol whitespace-pre-line">
           {product.howToUse}
         </p>
       ),
@@ -44,7 +44,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
       key: "fullList",
       title: "Full Ingredient List",
       body: (
-        <p className="text-sm font-sans font-light leading-relaxed text-muted">
+        <p className="text-sm font-sans font-light leading-relaxed text-petrol">
           {product.ingredients.map((ing) => ing.split(" — ")[0]).join(", ")}
         </p>
       ),
@@ -64,7 +64,7 @@ export default function ProductAccordion({ product }: { product: Product }) {
             <span className="font-display font-bold text-xs uppercase tracking-wider group-hover:text-teal transition-colors">
               {title}
             </span>
-            <span className="text-xl text-muted leading-none">
+            <span className="text-xl text-petrol leading-none">
               {open === key ? "−" : "+"}
             </span>
           </button>

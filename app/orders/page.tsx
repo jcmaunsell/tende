@@ -14,7 +14,7 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 const STATUS_COLOR: Record<string, string> = {
-  processing: "text-muted",
+  processing: "text-petrol",
   shipped: "text-teal",
   delivered: "text-teal",
 };
@@ -33,13 +33,13 @@ export default async function OrdersPage({
   return (
     <div className="max-w-xl mx-auto px-6 py-20">
       <h1 className="font-display text-4xl mb-3">Track your order</h1>
-      <p className="text-sm font-sans font-light text-muted mb-10">
+      <p className="text-sm font-sans font-light text-petrol mb-10">
         Enter your order ID and the email address used at checkout.
       </p>
 
       <form method="get" action="/orders" className="space-y-4 mb-10">
         <div>
-          <label className="block text-xs uppercase tracking-widest font-sans text-muted mb-1">
+          <label className="block text-xs uppercase tracking-widest font-sans text-petrol mb-1">
             Order ID
           </label>
           <input
@@ -52,7 +52,7 @@ export default async function OrdersPage({
           />
         </div>
         <div>
-          <label className="block text-xs uppercase tracking-widest font-sans text-muted mb-1">
+          <label className="block text-xs uppercase tracking-widest font-sans text-petrol mb-1">
             Email address
           </label>
           <input
@@ -82,21 +82,21 @@ export default async function OrdersPage({
         <div className="space-y-6">
           <div className="flex justify-between items-baseline">
             <p className="font-display text-2xl">{order.orderId}</p>
-            <p className={`text-sm font-sans uppercase tracking-widest ${STATUS_COLOR[order.status] ?? "text-muted"}`}>
+            <p className={`text-sm font-sans uppercase tracking-widest ${STATUS_COLOR[order.status] ?? "text-petrol"}`}>
               {STATUS_LABEL[order.status] ?? order.status}
             </p>
           </div>
 
           <div className="border border-parchment">
             <div className="px-5 py-3 border-b border-parchment">
-              <p className="text-xs uppercase tracking-widest font-sans text-muted">Order summary</p>
+              <p className="text-xs uppercase tracking-widest font-sans text-petrol">Order summary</p>
             </div>
             <div className="divide-y divide-parchment">
               {order.items.map((item, i) => (
                 <div key={i} className="px-5 py-3 flex justify-between items-baseline gap-4">
                   <span className="text-sm font-sans text-foreground">
                     {item.quantity > 1 && (
-                      <span className="text-muted mr-1">{item.quantity}×</span>
+                      <span className="text-petrol mr-1">{item.quantity}×</span>
                     )}
                     {item.name}
                   </span>
@@ -107,7 +107,7 @@ export default async function OrdersPage({
               ))}
             </div>
             <div className="px-5 py-3 border-t border-parchment flex justify-between items-baseline">
-              <span className="text-sm font-sans font-light text-muted uppercase tracking-widest">Total</span>
+              <span className="text-sm font-sans font-light text-petrol uppercase tracking-widest">Total</span>
               <span className="font-display font-bold text-lg text-foreground">
                 {formatPrice(order.totalCents / 100)}
               </span>
@@ -117,7 +117,7 @@ export default async function OrdersPage({
           {order.shippingAddress && (
             <div className="border border-parchment">
               <div className="px-5 py-3 border-b border-parchment">
-                <p className="text-xs uppercase tracking-widest font-sans text-muted">Shipping to</p>
+                <p className="text-xs uppercase tracking-widest font-sans text-petrol">Shipping to</p>
               </div>
               <div className="px-5 py-3 text-sm font-sans font-light text-foreground/80 leading-relaxed">
                 <p>{order.shippingAddress.name}</p>
@@ -130,7 +130,7 @@ export default async function OrdersPage({
           {order.trackingNumber && (
             <div className="border border-parchment">
               <div className="px-5 py-3 border-b border-parchment">
-                <p className="text-xs uppercase tracking-widest font-sans text-muted">Tracking</p>
+                <p className="text-xs uppercase tracking-widest font-sans text-petrol">Tracking</p>
               </div>
               <div className="px-5 py-3">
                 <p className="text-sm font-sans text-foreground mb-1">{order.shippingService}</p>
@@ -147,7 +147,7 @@ export default async function OrdersPage({
           )}
 
           {!order.trackingNumber && order.status === "processing" && (
-            <p className="text-sm font-sans font-light text-muted">
+            <p className="text-sm font-sans font-light text-petrol">
               Your order is being prepared. Tracking information will appear here once it ships.
             </p>
           )}

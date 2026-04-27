@@ -49,7 +49,7 @@ export default function ForSagePage() {
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
       <div className="mb-12">
-        <p className="text-xs uppercase tracking-widest text-muted font-sans mb-3">Just for you</p>
+        <p className="text-xs uppercase tracking-widest text-petrol font-sans mb-3">Just for you</p>
         <h1 className="font-display font-bold text-4xl uppercase text-foreground mb-4">
           How your website works
         </h1>
@@ -276,7 +276,7 @@ export default function ForSagePage() {
         </div>
       </Section>
 
-      <div className="mt-16 pt-8 border-t border-parchment text-xs text-muted font-sans text-center">
+      <div className="mt-16 pt-8 border-t border-parchment text-xs text-petrol font-sans text-center">
         This page is just for you — it&apos;s not linked anywhere on the site.
       </div>
     </div>

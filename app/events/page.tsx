@@ -43,7 +43,7 @@ export default async function EventsPage() {
 
       <div className="max-w-3xl mx-auto px-6 py-16">
         {events.length === 0 ? (
-          <p className="text-muted/50 font-sans font-light">
+          <p className="text-petrol/50 font-sans font-light">
             No upcoming events. Follow{" "}
             <a
               href="https://www.instagram.com/tende.beauty"
@@ -72,10 +72,10 @@ export default async function EventsPage() {
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs uppercase tracking-widest text-muted mb-1 font-sans">
+                  <p className="text-xs uppercase tracking-widest text-petrol mb-1 font-sans">
                     {formatDate(event.date)}
                   </p>
-                  <p className="text-xs uppercase tracking-widest text-muted mb-2 font-sans">
+                  <p className="text-xs uppercase tracking-widest text-petrol mb-2 font-sans">
                     {formatTime(event.date)}
                   </p>
                   <h2 className="font-display font-bold text-xl text-foreground mb-2 uppercase">{event.title}</h2>
@@ -93,7 +93,7 @@ export default async function EventsPage() {
                     </a>
                   )}
                   {event.description && (
-                    <p className="text-sm font-light leading-relaxed text-muted font-sans">{event.description}</p>
+                    <p className="text-sm font-light leading-relaxed text-petrol font-sans">{event.description}</p>
                   )}
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default async function EventsPage() {
         )}
 
         <div className="mt-16 pt-10 border-t border-parchment">
-          <p className="text-xs font-sans font-light text-muted/60">
+          <p className="text-xs font-sans font-light text-petrol/60">
             Sage manages events in{" "}
             <Link href="/studio" className="text-teal hover:underline">
               Sanity Studio

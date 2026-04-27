@@ -19,20 +19,20 @@ export default async function FAQPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
-      <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3">questions</p>
+      <p className="text-xs uppercase tracking-[0.3em] text-petrol mb-3">questions</p>
       <h1 className="font-display text-5xl text-foreground mb-14">FAQ</h1>
 
       <div className="divide-y divide-parchment">
         {faqs.map(({ question, answer }) => (
           <div key={question} className="py-8">
             <h2 className="font-display text-xl text-foreground mb-3">{question}</h2>
-            <p className="text-sm font-light leading-relaxed text-muted">{answer}</p>
+            <p className="text-sm font-light leading-relaxed text-petrol">{answer}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-14 pt-10 border-t border-parchment">
-        <p className="text-sm font-light text-muted/80">
+        <p className="text-sm font-light text-petrol/80">
           Still have questions?{" "}
           <Link href="/contact" className="text-teal border-b border-teal pb-0.5 hover:opacity-70 transition-opacity">
             Get in touch.

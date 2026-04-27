@@ -110,7 +110,7 @@ export default function ShopProductList({ products }: { products: Product[] }) {
             >
               {f.name}
               {f.notes && (
-                <span className="block normal-case tracking-normal font-light mt-0.5 text-muted">
+                <span className="block normal-case tracking-normal font-light mt-0.5 text-petrol">
                   {f.notes}
                 </span>
               )}
@@ -120,7 +120,7 @@ export default function ShopProductList({ products }: { products: Product[] }) {
       )}
 
       {filtered.length === 0 ? (
-        <p className="text-center py-24 text-muted/50 font-sans font-light">
+        <p className="text-center py-24 text-petrol/50 font-sans font-light">
           No products match those filters.
         </p>
       ) : (

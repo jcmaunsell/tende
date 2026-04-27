@@ -31,7 +31,7 @@ function Field({ label, value, onChange, required, placeholder, maxLength }: {
 }) {
   return (
     <div>
-      <label className="block text-xs uppercase tracking-widest font-sans text-muted mb-1">
+      <label className="block text-xs uppercase tracking-widest font-sans text-petrol mb-1">
         {label}{required && <span className="text-teal ml-0.5">*</span>}
       </label>
       <input
@@ -72,21 +72,21 @@ function CartStep({ onContinue }: { onContinue: () => void }) {
                 <Image src={item.image} alt={item.title} width={80} height={80} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <span className="font-display text-2xl text-muted">t</span>
+                  <span className="font-display text-2xl text-petrol">t</span>
                 </div>
               )}
             </div>
             <div className="flex-1">
               <h3 className="font-display text-lg">{item.title}</h3>
               {item.fragrance && (
-                <p className="text-xs font-sans uppercase tracking-widest text-muted mb-1">{item.fragrance}</p>
+                <p className="text-xs font-sans uppercase tracking-widest text-petrol mb-1">{item.fragrance}</p>
               )}
               <p className="text-sm text-teal mb-3">{formatPrice(item.price)}</p>
               <div className="flex items-center gap-3">
                 <button onClick={() => updateQuantity(item.productId, item.quantity - 1, item.fragrance)} className="w-7 h-7 border border-foreground/20 text-sm hover:border-teal transition-colors">−</button>
                 <span className="text-sm w-4 text-center">{item.quantity}</span>
                 <button onClick={() => updateQuantity(item.productId, item.quantity + 1, item.fragrance)} className="w-7 h-7 border border-foreground/20 text-sm hover:border-teal transition-colors">+</button>
-                <button onClick={() => removeItem(item.productId, item.fragrance)} className="ml-4 text-xs uppercase tracking-wider text-muted/50 hover:text-teal transition-colors">Remove</button>
+                <button onClick={() => removeItem(item.productId, item.fragrance)} className="ml-4 text-xs uppercase tracking-wider text-petrol/50 hover:text-teal transition-colors">Remove</button>
               </div>
             </div>
             <p className="text-sm text-foreground">{formatPrice(item.price * item.quantity)}</p>
@@ -101,7 +101,7 @@ function CartStep({ onContinue }: { onContinue: () => void }) {
       <p className="text-xs font-sans text-right mb-6">
         {total() >= FREE_SHIPPING_THRESHOLD
           ? <span className="text-teal">Free standard shipping on this order</span>
-          : <span className="text-muted">+ shipping · Free standard shipping on orders over {formatPrice(FREE_SHIPPING_THRESHOLD)}</span>
+          : <span className="text-petrol">+ shipping · Free standard shipping on orders over {formatPrice(FREE_SHIPPING_THRESHOLD)}</span>
         }
       </p>
 
@@ -139,7 +139,7 @@ function AddressStep({
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
-      <button onClick={onBack} className="text-xs uppercase tracking-widest text-muted mb-8 hover:text-teal transition-colors">← Back to Cart</button>
+      <button onClick={onBack} className="text-xs uppercase tracking-widest text-petrol mb-8 hover:text-teal transition-colors">← Back to Cart</button>
       <h1 className="font-display text-4xl mb-10">Shipping Address</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -186,9 +186,9 @@ function ConfirmStep({
 }) {
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
-      <button onClick={onBack} className="text-xs uppercase tracking-widest text-muted mb-8 hover:text-teal transition-colors">← Back</button>
+      <button onClick={onBack} className="text-xs uppercase tracking-widest text-petrol mb-8 hover:text-teal transition-colors">← Back</button>
       <h1 className="font-display text-4xl mb-3">Confirm Address</h1>
-      <p className="text-sm font-sans font-light text-muted mb-10">USPS suggests a slight correction. Which would you like to use?</p>
+      <p className="text-sm font-sans font-light text-petrol mb-10">USPS suggests a slight correction. Which would you like to use?</p>
 
       <div className="space-y-4">
         <button
@@ -196,7 +196,7 @@ function ConfirmStep({
           disabled={loading}
           className="w-full text-left border border-parchment p-5 hover:border-foreground/40 transition-colors disabled:opacity-50"
         >
-          <p className="text-xs uppercase tracking-widest font-sans text-muted mb-2">You entered</p>
+          <p className="text-xs uppercase tracking-widest font-sans text-petrol mb-2">You entered</p>
           <p className="text-sm font-sans text-foreground">{entered.street1}{entered.street2 ? `, ${entered.street2}` : ""}</p>
           <p className="text-sm font-sans text-foreground">{entered.city}, {entered.state} {entered.zip}</p>
         </button>
@@ -231,7 +231,7 @@ function ShippingStep({
 }) {
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
-      <button onClick={onBack} className="text-xs uppercase tracking-widest text-muted mb-8 hover:text-teal transition-colors">← Back</button>
+      <button onClick={onBack} className="text-xs uppercase tracking-widest text-petrol mb-8 hover:text-teal transition-colors">← Back</button>
       <h1 className="font-display text-4xl mb-10">Shipping Method</h1>
 
       <div className="space-y-3 mb-10">
@@ -248,7 +248,7 @@ function ShippingStep({
             <div className="flex-1">
               <p className="text-sm font-sans font-medium text-foreground">{rate.service}</p>
               {rate.estimatedDays && (
-                <p className="text-xs font-sans text-muted">{rate.estimatedDays} business day{rate.estimatedDays !== 1 ? "s" : ""}</p>
+                <p className="text-xs font-sans text-petrol">{rate.estimatedDays} business day{rate.estimatedDays !== 1 ? "s" : ""}</p>
               )}
             </div>
             <p className="text-sm font-sans text-teal font-medium">

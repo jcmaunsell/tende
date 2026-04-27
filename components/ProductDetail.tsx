@@ -68,7 +68,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               {selectedId || !hasVariants ? formatPrice(displayPrice) : priceRange(product)}
             </p>
             {displayCompareAt && selectedId && (
-              <p className="text-sm font-sans text-muted/50 line-through">
+              <p className="text-sm font-sans text-petrol/50 line-through">
                 {formatPrice(displayCompareAt)}
               </p>
             )}
@@ -76,7 +76,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
 
         {shortDesc && (
-          <p className="text-sm font-sans font-light leading-relaxed text-muted">
+          <p className="text-sm font-sans font-light leading-relaxed text-petrol">
             {shortDesc}
           </p>
         )}
@@ -84,7 +84,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         <AddToCartButton product={product} onFragranceChange={handleFragranceChange} />
 
         {product.tagline && (
-          <p className="text-xs font-sans uppercase tracking-widest text-muted">
+          <p className="text-xs font-sans uppercase tracking-widest text-petrol">
             {product.tagline}
           </p>
         )}

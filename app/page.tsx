@@ -140,15 +140,15 @@ export default async function HomePage() {
       {testimonials.length > 0 && (
         <section id="testimonials" className="bg-parchment py-24">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-petrol mb-3 font-sans">reviews</p>
             <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
             <div className="grid md:grid-cols-3 gap-10">
               {testimonials.map(({ quote, author }) => (
                 <div key={author} className="text-left">
-                  <p className="font-sans text-base leading-relaxed text-muted mb-4">
+                  <p className="font-sans text-base leading-relaxed text-petrol mb-4">
                     &ldquo;{quote}&rdquo;
                   </p>
-                  <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
+                  <p className="text-xs uppercase tracking-widest text-petrol font-sans">— {author}</p>
                 </div>
               ))}
             </div>

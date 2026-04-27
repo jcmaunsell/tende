@@ -36,7 +36,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
     return (
       <button
         disabled
-        className="w-full h-12 border border-foreground/20 text-muted/50 text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full"
+        className="w-full h-12 border border-foreground/20 text-petrol/50 text-xs uppercase tracking-widest font-sans cursor-not-allowed rounded-full"
       >
         Out of Stock
       </button>
@@ -83,7 +83,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
                 <>
                   <span className="normal-case font-normal">{activeVariant.fragrance.name}</span>
                   {activeVariant.fragrance.notes && (
-                    <span className="ml-1 text-muted font-light normal-case tracking-normal">
+                    <span className="ml-1 text-petrol font-light normal-case tracking-normal">
                       — {activeVariant.fragrance.notes}
                     </span>
                   )}
@@ -105,7 +105,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           </button>
 
           {/* Desktop label — hidden on mobile */}
-          <p className="hidden md:block text-xs font-sans uppercase tracking-widest text-muted mb-2">
+          <p className="hidden md:block text-xs font-sans uppercase tracking-widest text-petrol mb-2">
             Fragrance
           </p>
 
@@ -139,7 +139,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
                     )}
                   </span>
                   {v.fragrance.notes && (
-                    <span className="block text-[10px] normal-case tracking-normal font-light mt-0.5 text-muted">
+                    <span className="block text-[10px] normal-case tracking-normal font-light mt-0.5 text-petrol">
                       {v.fragrance.notes}
                     </span>
                   )}
@@ -176,7 +176,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
           className={[
             "flex-1 h-12 text-xs uppercase tracking-widest font-sans rounded-full transition-colors",
             isOutOfStock
-              ? "border border-foreground/20 text-muted/50 cursor-not-allowed"
+              ? "border border-foreground/20 text-petrol/50 cursor-not-allowed"
               : hasVariants && selectedId === null
               ? "bg-foreground/40 text-background cursor-not-allowed"
               : added

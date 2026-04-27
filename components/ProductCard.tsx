@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-muted">
+          <div className="w-full h-full flex items-center justify-center text-petrol">
             <span className="font-display font-bold text-4xl">t</span>
           </div>
         )}
@@ -31,14 +31,14 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         )}
       </div>
-      <p className="text-xs uppercase tracking-widest text-muted mb-1 font-sans">{product.category}</p>
+      <p className="text-xs uppercase tracking-widest text-petrol mb-1 font-sans">{product.category}</p>
       <h3 className="font-display font-bold text-base text-foreground uppercase leading-tight">
         {product.title}
         {product.subtitle && (
           <span className="block font-light text-sm normal-case tracking-normal text-foreground/60">{product.subtitle}</span>
         )}
       </h3>
-      {product.tagline && <p className="text-sm font-light text-muted/80 mb-2 font-sans">{product.tagline}</p>}
+      {product.tagline && <p className="text-sm font-light text-petrol/80 mb-2 font-sans">{product.tagline}</p>}
       <p className="text-sm text-teal font-sans">{priceRange(product)}</p>
     </Link>
   );

@@ -58,12 +58,12 @@ export default async function OrderConfirmationPage({
         </div>
         <h1 className="font-display font-bold text-3xl uppercase text-foreground mb-2">Order confirmed</h1>
         {session.metadata?.order_id && (
-          <p className="text-xs font-sans uppercase tracking-widest text-muted mb-1">
+          <p className="text-xs font-sans uppercase tracking-widest text-petrol mb-1">
             Order {session.metadata.order_id}
           </p>
         )}
         {customer?.email && (
-          <p className="text-sm font-light font-sans text-muted">
+          <p className="text-sm font-light font-sans text-petrol">
             A receipt has been sent to <strong>{customer.email}</strong>
           </p>
         )}
@@ -72,14 +72,14 @@ export default async function OrderConfirmationPage({
       {/* Order summary */}
       <div className="border border-parchment mb-6">
         <div className="px-5 py-3 border-b border-parchment">
-          <p className="text-xs uppercase tracking-widest font-sans text-muted">Order summary</p>
+          <p className="text-xs uppercase tracking-widest font-sans text-petrol">Order summary</p>
         </div>
         <div className="divide-y divide-parchment">
           {lineItems.map((li) => (
             <div key={li.id} className="px-5 py-3 flex justify-between items-baseline gap-4">
               <span className="text-sm font-sans text-foreground">
                 {li.quantity && li.quantity > 1 && (
-                  <span className="text-muted mr-1">{li.quantity}×</span>
+                  <span className="text-petrol mr-1">{li.quantity}×</span>
                 )}
                 {(li.price as Stripe.Price | null)?.nickname ?? li.description ?? "Product"}
               </span>
@@ -91,14 +91,14 @@ export default async function OrderConfirmationPage({
         </div>
         {(session.shipping_cost?.amount_total ?? 0) > 0 && (
           <div className="px-5 py-3 border-t border-parchment flex justify-between items-baseline">
-            <span className="text-sm font-sans font-light text-muted uppercase tracking-widest">Shipping</span>
+            <span className="text-sm font-sans font-light text-petrol uppercase tracking-widest">Shipping</span>
             <span className="text-sm font-sans text-teal flex-shrink-0">
               {((session.shipping_cost!.amount_total!) / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
             </span>
           </div>
         )}
         <div className="px-5 py-3 border-t border-parchment flex justify-between items-baseline">
-          <span className="text-sm font-sans font-light text-muted uppercase tracking-widest">Total</span>
+          <span className="text-sm font-sans font-light text-petrol uppercase tracking-widest">Total</span>
           <span className="font-display font-bold text-lg text-foreground">{total}</span>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default async function OrderConfirmationPage({
       {shipping && (
         <div className="border border-parchment mb-10">
           <div className="px-5 py-3 border-b border-parchment">
-            <p className="text-xs uppercase tracking-widest font-sans text-muted">Shipping to</p>
+            <p className="text-xs uppercase tracking-widest font-sans text-petrol">Shipping to</p>
           </div>
           <div className="px-5 py-3 text-sm font-sans font-light text-foreground/80 leading-relaxed">
             <p>{shipping.name}</p>
@@ -136,7 +136,7 @@ export default async function OrderConfirmationPage({
         <div>
           <Link
             href="/shop"
-            className="text-xs uppercase tracking-widest font-sans text-muted border-b border-muted pb-0.5 hover:text-foreground hover:border-foreground transition-colors"
+            className="text-xs uppercase tracking-widest font-sans text-petrol border-b border-muted pb-0.5 hover:text-foreground hover:border-foreground transition-colors"
           >
             Continue shopping
           </Link>

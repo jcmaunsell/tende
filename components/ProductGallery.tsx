@@ -33,7 +33,7 @@ export default function ProductGallery({ images, title, activeIndex, onActiveCha
   if (!images || images.length === 0) {
     return (
       <div className="aspect-square bg-parchment flex items-center justify-center">
-        <span className="font-display font-bold text-8xl text-muted">t</span>
+        <span className="font-display font-bold text-8xl text-petrol">t</span>
       </div>
     );
   }
