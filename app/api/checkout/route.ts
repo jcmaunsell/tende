@@ -21,14 +21,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No valid Stripe price IDs in cart" }, { status: 400 });
   }
 
+  const origin = new URL(req.url).origin;
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items: lineItems,
       shipping_address_collection: { allowed_countries: ["US"] },
       phone_number_collection: { enabled: true },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cart`,
+      success_url: `${origin}/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/cart`,
     });
 
     after(() => logger.info("Checkout session created", {
