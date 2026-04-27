@@ -44,13 +44,13 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/about"
-                className="text-xs uppercase tracking-widest text-white/70 border border-white/30 px-6 py-3 hover:border-white/60 hover:text-white transition-colors"
+                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-white hover:text-sage transition-colors"
               >
                 Our Story
               </Link>
               <Link
                 href="#testimonials"
-                className="text-xs uppercase tracking-widest text-white/70 border border-white/30 px-6 py-3 hover:border-white/60 hover:text-white transition-colors"
+                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-white hover:text-sage transition-colors"
               >
                 What People Are Saying
               </Link>
