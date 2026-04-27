@@ -83,8 +83,7 @@ export default async function HomePage() {
       {products.length > 0 && (
         <section className="bg-parchment py-24">
           <div className="max-w-6xl mx-auto px-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted text-center mb-3 font-sans">the collection</p>
-            <h2 className="font-display font-bold text-3xl text-foreground mb-14 text-center uppercase">Shop the Collection</h2>
+            <h2 className="font-display font-bold text-3xl text-foreground mb-14 text-center uppercase">The Collection</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {products.map((p) => (
                 <ProductCard key={p._id} product={p} />
