@@ -38,19 +38,19 @@ export default async function HomePage() {
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/shop"
-                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-white hover:text-sage transition-colors"
+                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
               >
                 Shop the Collection
               </Link>
               <Link
                 href="/about"
-                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-white hover:text-sage transition-colors"
+                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
               >
                 Our Story
               </Link>
               <Link
                 href="#testimonials"
-                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-white hover:text-sage transition-colors"
+                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
               >
                 What People Are Saying
               </Link>
@@ -63,7 +63,7 @@ export default async function HomePage() {
 
       {/* Featured Products */}
       {products.length > 0 && (
-        <section className="bg-white py-24">
+        <section className="bg-parchment py-24">
           <div className="max-w-6xl mx-auto px-6">
             <p className="text-xs uppercase tracking-[0.3em] text-muted text-center mb-3 font-sans">the collection</p>
             <h2 className="font-display font-bold text-3xl text-foreground mb-14 text-center uppercase">Shop the Collection</h2>
@@ -118,20 +118,18 @@ export default async function HomePage() {
 
       {/* Reviews — only shown when Sage has added real testimonials in Studio */}
       {testimonials.length > 0 && (
-        <section id="testimonials" className="bg-white py-24">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
-            <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
-            <div className="grid md:grid-cols-3 gap-10">
-              {testimonials.map(({ quote, author }) => (
-                <div key={author} className="text-left">
-                  <p className="font-sans text-base leading-relaxed text-muted mb-4">
-                    &ldquo;{quote}&rdquo;
-                  </p>
-                  <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
-                </div>
-              ))}
-            </div>
+        <section id="testimonials" className="max-w-4xl mx-auto px-6 py-24 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
+          <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
+          <div className="grid md:grid-cols-3 gap-10">
+            {testimonials.map(({ quote, author }) => (
+              <div key={author} className="text-left">
+                <p className="font-sans text-base leading-relaxed text-muted mb-4">
+                  &ldquo;{quote}&rdquo;
+                </p>
+                <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
+              </div>
+            ))}
           </div>
         </section>
       )}
