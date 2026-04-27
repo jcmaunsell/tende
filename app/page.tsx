@@ -11,6 +11,7 @@ export default async function HomePage() {
   const testimonials = settings?.testimonials ?? [];
   const heroHeadline = settings?.heroHeadline ?? "Science Meets Simplicity";
   const heroSubheadline = settings?.heroSubheadline ?? "Plant-based hair + body care, handcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
+  const [heroTagline, heroBrandline] = heroSubheadline.split("\n\n");
 
   return (
     <>
@@ -25,9 +26,14 @@ export default async function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-petrol/50" />
-          <h1 className="relative z-10 font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl text-center uppercase tracking-wider leading-none px-6">
-            {heroHeadline}
-          </h1>
+          <div className="relative z-10 text-center px-6">
+            <h1 className="font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl uppercase tracking-wider leading-none mb-4">
+              {heroHeadline}
+            </h1>
+            <p className="font-sans text-white/80 text-sm md:text-base font-light tracking-wide">
+              {heroTagline}
+            </p>
+          </div>
         </div>
 
         <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
@@ -78,8 +84,8 @@ export default async function HomePage() {
 
       {/* Brand statement */}
       <div className="bg-sage py-14 px-6 text-center">
-        <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug whitespace-pre-line">
-          {heroSubheadline}
+        <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug">
+          {heroBrandline}
         </p>
       </div>
 
