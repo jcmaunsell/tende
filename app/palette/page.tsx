@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SWATCHES = [
   { label: "background", var: "--background", cls: "bg-background" },
@@ -25,6 +25,16 @@ const CSS_VARS = [
 export default function PalettePage() {
   const [values, setValues] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    const computed = getComputedStyle(document.documentElement);
+    const initial: Record<string, string> = {};
+    CSS_VARS.forEach(({ key }) => {
+      initial[key] = computed.getPropertyValue(key).trim() || "#000000";
+    });
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setValues(initial);
+  }, []);
+
   function handleChange(key: string, value: string) {
     setValues((prev) => ({ ...prev, [key]: value }));
     document.documentElement.style.setProperty(key, value);
@@ -46,12 +56,7 @@ export default function PalettePage() {
             <label key={key} className="flex items-center gap-3">
               <input
                 type="color"
-                defaultValue={(() => {
-                  if (typeof window !== "undefined") {
-                    return getComputedStyle(document.documentElement).getPropertyValue(key).trim() || "#000000";
-                  }
-                  return "#000000";
-                })()}
+                value={values[key] ?? "#000000"}
                 onChange={(e) => handleChange(key, e.target.value)}
                 className="w-10 h-10 rounded cursor-pointer border border-foreground/20 bg-transparent p-0.5"
               />
