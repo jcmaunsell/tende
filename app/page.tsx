@@ -10,7 +10,7 @@ export default async function HomePage() {
   const [products, settings] = await Promise.all([getFeaturedProducts(), getSiteSettings()]);
   const testimonials = settings?.testimonials ?? [];
   const heroHeadline = settings?.heroHeadline ?? "Science Meets Simplicity";
-  const heroSubheadline = settings?.heroSubheadline ?? "Plant-based hair + body care,\nhandcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
+  const heroSubheadline = settings?.heroSubheadline ?? "Plant-based hair + body care, handcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
 
   return (
     <>
@@ -32,7 +32,7 @@ export default async function HomePage() {
 
         <div className="bg-sage flex items-center justify-center text-center py-16 px-6">
           <div className="max-w-2xl">
-            <p className="font-display font-bold text-white text-lg md:text-2xl uppercase tracking-wide leading-snug whitespace-pre-line mb-10">
+            <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug whitespace-pre-line mb-10">
               {heroSubheadline}
             </p>
             <div className="flex flex-wrap gap-8 justify-center">
