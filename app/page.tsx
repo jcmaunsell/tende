@@ -61,35 +61,6 @@ export default async function HomePage() {
 
       <Ticker />
 
-      {/* Pure botanicals */}
-      <section className="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
-        <div className="aspect-square overflow-hidden">
-          <Image
-            src="/images/atlas-rose-products.jpg"
-            alt="Atlas Rose body oil and scrub"
-            width={800}
-            height={800}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted mb-4 font-sans">our approach</p>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-6 leading-snug uppercase">
-            Pure botanicals,<br />zero excess.
-          </h2>
-          <p className="text-base leading-relaxed text-muted mb-8 font-sans font-light">
-            Each formula is made with purposeful, plant-based ingredients and exclusive essential oil blends
-            to support scalp health, smooth strands, and soften skin.
-          </p>
-          <Link
-            href="/about"
-            className="text-xs uppercase tracking-widest text-foreground border-b border-foreground pb-0.5 hover:text-teal hover:border-teal transition-colors"
-          >
-            Our Story
-          </Link>
-        </div>
-      </section>
-
       {/* Featured Products */}
       {products.length > 0 && (
         <section className="bg-white py-24">
@@ -128,10 +99,10 @@ export default async function HomePage() {
             and every formula is 100% vegan and cruelty-free.
           </p>
           <Link
-            href="/shop"
+            href="/about"
             className="text-xs uppercase tracking-widest text-foreground border-b border-foreground pb-0.5 hover:text-teal hover:border-teal transition-colors"
           >
-            Shop the Collection
+            Our Story
           </Link>
         </div>
         <div className="order-1 md:order-2 aspect-[4/5] overflow-hidden">
@@ -145,22 +116,22 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <Ticker />
-
       {/* Reviews — only shown when Sage has added real testimonials in Studio */}
       {testimonials.length > 0 && (
-        <section id="testimonials" className="max-w-4xl mx-auto px-6 py-24 text-center">
-          <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
-          <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
-          <div className="grid md:grid-cols-3 gap-10">
-            {testimonials.map(({ quote, author }) => (
-              <div key={author} className="text-left">
-                <p className="font-sans text-base leading-relaxed text-muted mb-4">
-                  &ldquo;{quote}&rdquo;
-                </p>
-                <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
-              </div>
-            ))}
+        <section id="testimonials" className="bg-white py-24">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
+            <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
+            <div className="grid md:grid-cols-3 gap-10">
+              {testimonials.map(({ quote, author }) => (
+                <div key={author} className="text-left">
+                  <p className="font-sans text-base leading-relaxed text-muted mb-4">
+                    &ldquo;{quote}&rdquo;
+                  </p>
+                  <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       )}
