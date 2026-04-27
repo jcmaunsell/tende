@@ -190,25 +190,24 @@ function ConfirmStep({
       <h1 className="font-display text-4xl mb-3">Confirm Address</h1>
       <p className="text-sm font-sans font-light text-muted mb-10">USPS suggests a slight correction. Which would you like to use?</p>
 
-      <div className="space-y-4 mb-10">
-        <div className="border border-parchment p-5">
+      <div className="space-y-4">
+        <button
+          onClick={onUseOriginal}
+          disabled={loading}
+          className="w-full text-left border border-parchment p-5 hover:border-foreground/40 transition-colors disabled:opacity-50"
+        >
           <p className="text-xs uppercase tracking-widest font-sans text-muted mb-2">You entered</p>
           <p className="text-sm font-sans text-foreground">{entered.street1}{entered.street2 ? `, ${entered.street2}` : ""}</p>
           <p className="text-sm font-sans text-foreground">{entered.city}, {entered.state} {entered.zip}</p>
-        </div>
-        <div className="border border-teal p-5">
-          <p className="text-xs uppercase tracking-widest font-sans text-teal mb-2">Suggested</p>
+        </button>
+        <button
+          onClick={onUseSuggested}
+          disabled={loading}
+          className="w-full text-left border border-teal p-5 hover:bg-teal/5 transition-colors disabled:opacity-50"
+        >
+          <p className="text-xs uppercase tracking-widest font-sans text-teal mb-2">{loading ? "Getting rates…" : "Suggested"}</p>
           <p className="text-sm font-sans text-foreground">{suggested.street1}{suggested.street2 ? `, ${suggested.street2}` : ""}</p>
           <p className="text-sm font-sans text-foreground">{suggested.city}, {suggested.state} {suggested.zip}</p>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <button onClick={onUseSuggested} disabled={loading} className="w-full py-4 bg-foreground text-background text-sm uppercase tracking-widest hover:bg-petrol transition-colors disabled:opacity-50">
-          {loading ? "Getting rates…" : "Use Suggested Address"}
-        </button>
-        <button onClick={onUseOriginal} disabled={loading} className="w-full py-4 border border-foreground/30 text-foreground text-sm uppercase tracking-widest hover:border-foreground transition-colors disabled:opacity-50">
-          Continue With My Address
         </button>
       </div>
     </div>

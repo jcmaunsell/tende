@@ -121,7 +121,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
   const notifyEmail = process.env.SAGE_NOTIFICATION_EMAIL;
   if (notifyEmail && process.env.RESEND_API_KEY) {
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "orders@tende.care";
+    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "hello@tende.care";
 
     const itemsHtml = lineItems
       .map((li) => {
@@ -179,7 +179,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
   // ── Email customer with tracking ────────────────────────────────────────
   if (label && customer?.email && process.env.RESEND_API_KEY) {
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "orders@tende.care";
+    const fromEmail = process.env.RESEND_FROM_EMAIL ?? "hello@tende.care";
 
     await resend.emails.send({
       from: fromEmail,
