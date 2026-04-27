@@ -87,27 +87,6 @@ export default async function HomePage() {
         </p>
       </div>
 
-      {/* Featured Products */}
-      {products.length > 0 && (
-        <section className="bg-parchment py-24">
-          <div className="max-w-6xl mx-auto px-6">
-            <h2 className="font-display font-bold text-3xl text-foreground mb-14 text-center uppercase">The Collection</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {products.map((p) => (
-                <ProductCard key={p._id} product={p} />
-              ))}
-            </div>
-            <div className="text-center mt-14">
-              <Link
-                href="/shop"
-                className="text-xs uppercase tracking-widest text-foreground border-b border-foreground pb-0.5 hover:text-teal hover:border-teal transition-colors"
-              >
-                View All Products
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Crafted with Chemistry — full-bleed image moment */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
