@@ -1,28 +1,31 @@
-// EasyPost REST API integration for purchasing USPS shipping labels.
-// Weight in EasyPost is always in oz; dimensions in inches.
+// Shippo REST API integration for purchasing USPS shipping labels.
+// Shippo weight unit: oz; dimensions: inches.
 
-const EP_BASE = "https://api.easypost.com/v2";
+const SHIPPO_BASE = "https://api.goshippo.com";
 
-function epAuth() {
-  return "Basic " + Buffer.from(`${process.env.EASYPOST_API_KEY}:`).toString("base64");
+function shippoHeaders() {
+  return {
+    Authorization: `ShippoToken ${process.env.SHIPPO_API_KEY}`,
+    "Content-Type": "application/json",
+  };
 }
 
-async function epPost<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${EP_BASE}${path}`, {
+async function shippoPost<T>(path: string, body: unknown): Promise<T> {
+  const res = await fetch(`${SHIPPO_BASE}${path}`, {
     method: "POST",
-    headers: { Authorization: epAuth(), "Content-Type": "application/json" },
+    headers: shippoHeaders(),
     body: JSON.stringify(body),
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`EasyPost ${res.status}: ${text}`);
+    throw new Error(`Shippo ${res.status}: ${text}`);
   }
   return res.json() as Promise<T>;
 }
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-interface EasyPostAddress {
+interface ShippoAddress {
   name: string;
   street1: string;
   street2?: string;
@@ -34,21 +37,25 @@ interface EasyPostAddress {
   email?: string;
 }
 
-interface EasyPostRate {
-  id: string;
-  carrier: string;
-  service: string;
-  rate: string;
+interface ShippoRate {
+  object_id: string;
+  provider: string;
+  servicelevel: { name: string; token: string };
+  amount: string;
+  currency: string;
 }
 
-interface EasyPostShipment {
-  id: string;
-  rates: EasyPostRate[];
+interface ShippoShipment {
+  object_id: string;
+  rates: ShippoRate[];
 }
 
-interface PurchasedShipment {
-  postage_label: { label_url: string };
-  tracking_code: string;
+interface ShippoTransaction {
+  object_state: string;
+  tracking_number: string;
+  label_url: string;
+  tracking_url_provider: string;
+  messages: Array<{ text: string }>;
 }
 
 // ── Box sizes ──────────────────────────────────────────────────────────────
@@ -76,8 +83,7 @@ export function calcParcel(items: ParcelItem[]) {
   );
   const totalVolumeIn3 = items.reduce(
     (sum, item) =>
-      sum +
-      (item.length ?? 4) * (item.width ?? 4) * (item.height ?? 2) * item.quantity,
+      sum + (item.length ?? 4) * (item.width ?? 4) * (item.height ?? 2) * item.quantity,
     0
   );
 
@@ -95,7 +101,7 @@ export function calcParcel(items: ParcelItem[]) {
 
 // ── Shipping address builder ───────────────────────────────────────────────
 
-export function fromAddress(): EasyPostAddress {
+export function fromAddress(): ShippoAddress {
   return {
     name:    process.env.SHIPPING_FROM_NAME    ?? "Tende Beauty",
     street1: process.env.SHIPPING_FROM_STREET1 ?? "",
@@ -108,47 +114,54 @@ export function fromAddress(): EasyPostAddress {
 }
 
 // ── Rate selection ─────────────────────────────────────────────────────────
-// Prefer USPS First Class (cheapest for < 15.999 oz), then cheapest USPS
-// Priority, then cheapest from any carrier.
+// Prefer USPS Ground Advantage (cheapest for lighter parcels), then cheapest
+// USPS rate, then cheapest overall.
 
-function selectRate(rates: EasyPostRate[]): EasyPostRate {
-  const sorted = [...rates].sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
-  const usps = sorted.filter((r) => r.carrier === "USPS");
-  const firstClass = usps.find((r) => r.service.includes("First"));
-  return firstClass ?? usps[0] ?? sorted[0];
+function selectRate(rates: ShippoRate[]): ShippoRate {
+  const sorted = [...rates].sort((a, b) => parseFloat(a.amount) - parseFloat(b.amount));
+  const usps = sorted.filter((r) => r.provider === "USPS");
+  const groundAdvantage = usps.find((r) => r.servicelevel.token.includes("ground_advantage"));
+  return groundAdvantage ?? usps[0] ?? sorted[0];
 }
 
 // ── Public API ─────────────────────────────────────────────────────────────
 
 export async function purchaseLabel(
-  toAddress: EasyPostAddress,
+  toAddress: ShippoAddress,
   parcel: { weightOz: number; length: number; width: number; height: number }
 ): Promise<{ labelUrl: string; trackingCode: string; carrier: string; service: string; rateDollars: string }> {
-  const shipment = await epPost<EasyPostShipment>("/shipments", {
-    shipment: {
-      to_address: toAddress,
-      from_address: fromAddress(),
-      parcel: {
-        weight: parcel.weightOz,
-        length: parcel.length,
-        width: parcel.width,
-        height: parcel.height,
-      },
-    },
+  const shipment = await shippoPost<ShippoShipment>("/shipments", {
+    address_from: fromAddress(),
+    address_to: toAddress,
+    parcels: [{
+      length: String(parcel.length),
+      width:  String(parcel.width),
+      height: String(parcel.height),
+      distance_unit: "in",
+      weight: String(parcel.weightOz),
+      mass_unit: "oz",
+    }],
+    async: false,
   });
 
   const rate = selectRate(shipment.rates);
 
-  const purchased = await epPost<PurchasedShipment>(
-    `/shipments/${shipment.id}/buy`,
-    { rate: { id: rate.id } }
-  );
+  const transaction = await shippoPost<ShippoTransaction>("/transactions", {
+    rate: rate.object_id,
+    label_file_type: "PDF",
+    async: false,
+  });
+
+  if (transaction.object_state !== "VALID") {
+    const msg = transaction.messages?.[0]?.text ?? "Unknown error";
+    throw new Error(`Shippo label purchase failed: ${msg}`);
+  }
 
   return {
-    labelUrl:     purchased.postage_label.label_url,
-    trackingCode: purchased.tracking_code,
-    carrier:      rate.carrier,
-    service:      rate.service,
-    rateDollars:  rate.rate,
+    labelUrl:     transaction.label_url,
+    trackingCode: transaction.tracking_number,
+    carrier:      rate.provider,
+    service:      rate.servicelevel.name,
+    rateDollars:  rate.amount,
   };
 }

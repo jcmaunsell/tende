@@ -259,7 +259,7 @@ export default function ForSagePage() {
             },
             {
               done: false,
-              item: "Set up EasyPost: create a free account at easypost.com, grab a live API key, and give it to James. He'll add your shipping address and the key to the site — after that, labels are auto-generated the moment an order is placed.",
+              item: "Set up Shippo: create a free account at goshippo.com, grab an API key, and give it to James. He'll add your shipping address and the key to the site — after that, labels are auto-generated the moment an order is placed.",
             },
             {
               done: false,

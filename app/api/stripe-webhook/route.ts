@@ -97,7 +97,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
   // ── Generate shipping label ──────────────────────────────────────────────
   let label: Awaited<ReturnType<typeof purchaseLabel>> | null = null;
 
-  if (process.env.EASYPOST_API_KEY) {
+  if (process.env.SHIPPO_API_KEY) {
     try {
       label = await purchaseLabel(toAddress, parcel);
       logger.info("Shipping label purchased", {
@@ -114,7 +114,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
       });
     }
   } else {
-    logger.warn("EASYPOST_API_KEY not set — skipping label generation", { session_id: session.id });
+    logger.warn("SHIPPO_API_KEY not set — skipping label generation", { session_id: session.id });
   }
 
   // ── Email Sage ──────────────────────────────────────────────────────────
@@ -147,7 +147,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
     const labelSection = label
       ? `<p><strong>Label:</strong> <a href="${label.labelUrl}">${label.carrier} ${label.service} — $${label.rateDollars}</a></p>
          <p><strong>Tracking:</strong> ${label.trackingCode}</p>`
-      : `<p style="color:#c0392b">Label not generated — create manually in EasyPost or USPS.</p>`;
+      : `<p style="color:#c0392b">Label not generated — create manually in Shippo or USPS.</p>`;
 
     const parcelInfo = `${parcel.length}×${parcel.width}×${parcel.height} in, ${(parcel.weightOz / 16).toFixed(2)} lbs`;
 
