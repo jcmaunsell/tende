@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useCart } from "@/store/cart";
 
 const NAV_LINKS = [
   { href: "/shop", label: "Shop" },
@@ -12,8 +13,30 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ];
 
+function CartIcon({ count }: { count: number }) {
+  return (
+    <Link
+      href="/cart"
+      aria-label={count > 0 ? `Cart — ${count} item${count === 1 ? "" : "s"}` : "Cart"}
+      className="relative flex items-center text-white/80 hover:text-white transition-colors"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3 6h18" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+        <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      {count > 0 && (
+        <span className="absolute -top-2 -right-2 bg-sage text-white text-[9px] font-sans rounded-full w-4 h-4 flex items-center justify-center">
+          {count}
+        </span>
+      )}
+    </Link>
+  );
+}
+
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const count = useCart((s) => s.items.reduce((sum, i) => sum + i.quantity, 0));
 
   return (
     <>
@@ -34,23 +57,27 @@ export default function Nav() {
             />
           </Link>
 
-          {/* Desktop links */}
+          {/* Desktop links + cart */}
           <div className="hidden md:flex items-center gap-6 text-xs font-light tracking-widest uppercase text-white/80">
             {NAV_LINKS.map(({ href, label }) => (
               <Link key={href} href={href} className="hover:text-white transition-colors">{label}</Link>
             ))}
+            <CartIcon count={count} />
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 p-2 text-white/80"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Close menu" : "Open menu"}
-          >
-            <span className={`block w-5 h-px bg-current transition-transform origin-center ${open ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-5 h-px bg-current transition-opacity ${open ? "opacity-0" : ""}`} />
-            <span className={`block w-5 h-px bg-current transition-transform origin-center ${open ? "-rotate-45 -translate-y-2" : ""}`} />
-          </button>
+          {/* Mobile: cart + hamburger */}
+          <div className="md:hidden flex items-center gap-4">
+            <CartIcon count={count} />
+            <button
+              className="flex flex-col gap-1.5 p-2 text-white/80"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+            >
+              <span className={`block w-5 h-px bg-current transition-transform origin-center ${open ? "rotate-45 translate-y-2" : ""}`} />
+              <span className={`block w-5 h-px bg-current transition-opacity ${open ? "opacity-0" : ""}`} />
+              <span className={`block w-5 h-px bg-current transition-transform origin-center ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+            </button>
+          </div>
         </div>
 
         {/* Mobile dropdown */}
