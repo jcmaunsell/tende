@@ -27,7 +27,7 @@ export default async function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-petrol/50" />
-          <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center">
+          <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center translate-y-8">
             <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
               {heroHeadline}
             </h1>
