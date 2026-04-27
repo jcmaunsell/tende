@@ -21,6 +21,12 @@ export default defineType({
       validation: (R) => R.required(),
     }),
     defineField({
+      name: "subtitle",
+      title: "Subtitle",
+      type: "string",
+      description: 'Optional second line for the product name (e.g. "Clarifying & Renewal"). Shown below the title in a lighter style.',
+    }),
+    defineField({
       name: "tagline",
       title: "Tagline",
       type: "string",

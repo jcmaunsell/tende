@@ -16,6 +16,7 @@ export interface ProductVariant {
 export interface Product {
   _id: string;
   title: string;
+  subtitle?: string;
   slug: { current: string };
   tagline?: string;
   description?: string;

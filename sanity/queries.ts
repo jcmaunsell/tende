@@ -7,7 +7,7 @@ export async function getAllProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
       `*[_type == "product"] | order(_createdAt asc) {
-        _id, title, slug, tagline, description, price, compareAtPrice,
+        _id, title, subtitle, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
         category, ingredients, howToUse, inStock, stripePriceId,
         variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, price, compareAtPrice }
@@ -22,7 +22,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
       `*[_type == "product" && inStock == true][0...4] | order(_createdAt asc) {
-        _id, title, slug, tagline, price,
+        _id, title, subtitle, slug, tagline, price,
         "images": images[].asset->url,
         category, inStock,
         variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, price, compareAtPrice }
@@ -37,7 +37,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     return await client.fetch(
       `*[_type == "product" && slug.current == $slug][0] {
-        _id, title, slug, tagline, description, price, compareAtPrice,
+        _id, title, subtitle, slug, tagline, description, price, compareAtPrice,
         "images": images[].asset->url,
         category, ingredients, howToUse, inStock, stripePriceId,
         variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, "image": image.asset->url, price, compareAtPrice, stripePriceId, inStock }

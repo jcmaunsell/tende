@@ -57,9 +57,12 @@ export default function ProductDetail({ product }: { product: Product }) {
 
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground uppercase leading-none mb-3">
+          <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground uppercase leading-none mb-1">
             {product.title}
           </h1>
+          {product.subtitle && (
+            <p className="font-display font-light text-xl md:text-2xl text-foreground/50 mb-3">{product.subtitle}</p>
+          )}
           <div className="flex items-baseline gap-3">
             <p className="font-display font-bold text-xl text-teal">
               {selectedId || !hasVariants ? formatPrice(displayPrice) : priceRange(product)}
