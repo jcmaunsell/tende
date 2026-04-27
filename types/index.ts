@@ -61,6 +61,7 @@ export interface SiteSettings {
   founderPhoto?: string;
   founderBio?: string[];
   brandStory?: string[];
+  galleryImages?: { image: string; alt?: string }[];
   faqs?: { question: string; answer: string }[];
   testimonials?: { quote: string; author: string }[];
 }

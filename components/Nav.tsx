@@ -8,9 +8,9 @@ import { useCart } from "@/store/cart";
 const NAV_LINKS = [
   { href: "/shop", label: "Shop" },
   { href: "/about", label: "About" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/faq", label: "FAQ" },
   { href: "/events", label: "Upcoming Events" },
-  { href: "/contact", label: "Contact" },
 ];
 
 function CartIcon({ count }: { count: number }) {

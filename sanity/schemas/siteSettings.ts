@@ -78,6 +78,31 @@ const siteSettings = defineType({
       ],
     }),
 
+    // ── Gallery ─────────────────────────────────────────────────────────────
+    defineField({
+      name: "galleryImages",
+      title: "Gallery",
+      type: "array",
+      description: "Photos shown on the /gallery page. Drag to reorder.",
+      of: [
+        {
+          type: "object",
+          name: "galleryImage",
+          fields: [
+            defineField({ name: "image", title: "Image", type: "image", options: { hotspot: true }, validation: (R) => R.required() }),
+            defineField({ name: "alt", title: "Alt text", type: "string", description: "Describe the image for screen readers." }),
+          ],
+          preview: {
+            select: { media: "image", title: "alt" },
+            prepare(value: Record<string, unknown>) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              return { media: value.image as any, title: (value.alt as string | undefined) ?? "Gallery image" };
+            },
+          },
+        },
+      ],
+    }),
+
     // ── Testimonials ───────────────────────────────────────────────────────
     defineField({
       name: "testimonials",

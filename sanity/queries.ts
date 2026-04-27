@@ -195,6 +195,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         "founderPhoto": founderPhoto.asset->url,
         founderBio,
         brandStory,
+        "galleryImages": galleryImages[]{ "image": image.asset->url, alt },
         faqs[]{ question, answer },
         testimonials[]{ quote, author }
       }`
