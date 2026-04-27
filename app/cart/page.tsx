@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, Suspense } from "react";
 import { formatPrice } from "@/lib/utils";
-import type { RateOption } from "@/lib/shipping";
+import type { RateOption, AddressSuggestion } from "@/lib/shipping";
 
 const FREE_SHIPPING_THRESHOLD = 55;
 
@@ -169,6 +169,52 @@ function AddressStep({
   );
 }
 
+function ConfirmStep({
+  entered,
+  suggested,
+  onUseSuggested,
+  onUseOriginal,
+  onBack,
+  loading,
+}: {
+  entered: Address;
+  suggested: AddressSuggestion;
+  onUseSuggested: () => void;
+  onUseOriginal: () => void;
+  onBack: () => void;
+  loading: boolean;
+}) {
+  return (
+    <div className="max-w-2xl mx-auto px-6 py-16">
+      <button onClick={onBack} className="text-xs uppercase tracking-widest text-muted mb-8 hover:text-teal transition-colors">← Back</button>
+      <h1 className="font-display text-4xl mb-3">Confirm Address</h1>
+      <p className="text-sm font-sans font-light text-muted mb-10">USPS suggests a slight correction. Which would you like to use?</p>
+
+      <div className="space-y-4 mb-10">
+        <div className="border border-parchment p-5">
+          <p className="text-xs uppercase tracking-widest font-sans text-muted mb-2">You entered</p>
+          <p className="text-sm font-sans text-foreground">{entered.street1}{entered.street2 ? `, ${entered.street2}` : ""}</p>
+          <p className="text-sm font-sans text-foreground">{entered.city}, {entered.state} {entered.zip}</p>
+        </div>
+        <div className="border border-teal p-5">
+          <p className="text-xs uppercase tracking-widest font-sans text-teal mb-2">Suggested</p>
+          <p className="text-sm font-sans text-foreground">{suggested.street1}{suggested.street2 ? `, ${suggested.street2}` : ""}</p>
+          <p className="text-sm font-sans text-foreground">{suggested.city}, {suggested.state} {suggested.zip}</p>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <button onClick={onUseSuggested} disabled={loading} className="w-full py-4 bg-foreground text-background text-sm uppercase tracking-widest hover:bg-petrol transition-colors disabled:opacity-50">
+          {loading ? "Getting rates…" : "Use Suggested Address"}
+        </button>
+        <button onClick={onUseOriginal} disabled={loading} className="w-full py-4 border border-foreground/30 text-foreground text-sm uppercase tracking-widest hover:border-foreground transition-colors disabled:opacity-50">
+          Continue With My Address
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function ShippingStep({
   rates,
   selectedId,
@@ -226,8 +272,9 @@ function ShippingStep({
 
 function CartContent() {
   const { items, total } = useCart();
-  const [step, setStep] = useState<"cart" | "address" | "shipping">("cart");
+  const [step, setStep] = useState<"cart" | "address" | "confirm" | "shipping">("cart");
   const [address, setAddress] = useState<Address>(EMPTY_ADDRESS);
+  const [suggestion, setSuggestion] = useState<AddressSuggestion | null>(null);
   const [rates, setRates] = useState<RateOption[]>([]);
   const [selectedRateId, setSelectedRateId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -235,22 +282,16 @@ function CartContent() {
 
   const isFree = total() >= FREE_SHIPPING_THRESHOLD;
 
-  async function handleAddressSubmit() {
-    if (!address.name || !address.street1 || !address.city || !address.state || !address.zip) {
-      setError("Please fill in all required fields.");
-      return;
-    }
-    setError(null);
+  async function fetchRates(addr: Address) {
     setLoading(true);
     try {
       const res = await fetch("/api/shipping-rates", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, address }),
+        body: JSON.stringify({ items, address: { ...addr, country: "US" } }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to get shipping rates");
-      // If order qualifies for free shipping, zero out the cheapest rate
       const fetchedRates: RateOption[] = data.rates;
       if (isFree && fetchedRates.length > 0) {
         fetchedRates[0] = { ...fetchedRates[0], amountDollars: "0.00" };
@@ -263,6 +304,48 @@ function CartContent() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleAddressSubmit() {
+    if (!address.name || !address.street1 || !address.city || !address.state || !address.zip) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+    setError(null);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/validate-address", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address: { ...address, country: "US" } }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Address validation failed");
+
+      if (!data.valid) {
+        setError(data.messages?.[0] ?? "Address not found — please double-check your entry.");
+        return;
+      }
+
+      if (data.suggested) {
+        setSuggestion(data.suggested);
+        setStep("confirm");
+        return;
+      }
+
+      await fetchRates(address);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not validate address. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleUseSuggested() {
+    if (!suggestion) return;
+    const updated = { ...address, ...suggestion };
+    setAddress(updated);
+    await fetchRates(updated);
   }
 
   async function checkout(rate: { service: string; amountCents: number }) {
@@ -303,6 +386,19 @@ function CartContent() {
         onSubmit={handleAddressSubmit}
         loading={loading}
         error={error}
+      />
+    );
+  }
+
+  if (step === "confirm" && suggestion) {
+    return (
+      <ConfirmStep
+        entered={address}
+        suggested={suggestion}
+        onUseSuggested={handleUseSuggested}
+        onUseOriginal={() => fetchRates(address)}
+        onBack={() => { setSuggestion(null); setStep("address"); }}
+        loading={loading}
       />
     );
   }

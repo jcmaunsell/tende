@@ -58,6 +58,28 @@ interface ShippoShipment {
   rates: ShippoRate[];
 }
 
+interface ShippoAddressResponse {
+  name: string;
+  street1: string;
+  street2?: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  validation_results?: {
+    is_valid: boolean;
+    messages: Array<{ text: string }>;
+  };
+}
+
+export interface AddressSuggestion {
+  street1: string;
+  street2?: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
 interface ShippoTransaction {
   object_state: string;
   tracking_number: string;
@@ -132,7 +154,56 @@ function selectRate(rates: ShippoRate[]): ShippoRate {
   return groundAdvantage ?? usps[0] ?? sorted[0];
 }
 
+// ── Address helpers ────────────────────────────────────────────────────────
+
+function toTitleCase(s: string): string {
+  return s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function normalizeForCompare(s: string): string {
+  return s.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
 // ── Public API ─────────────────────────────────────────────────────────────
+
+export async function validateAddress(address: ShippoAddress): Promise<{
+  valid: boolean;
+  messages: string[];
+  suggested?: AddressSuggestion;
+}> {
+  const result = await shippoPost<ShippoAddressResponse>("/addresses", {
+    name: address.name,
+    street1: address.street1,
+    street2: address.street2,
+    city: address.city,
+    state: address.state,
+    zip: address.zip,
+    country: address.country ?? "US",
+    validate: true,
+  });
+
+  const valid = result.validation_results?.is_valid ?? false;
+  const messages = (result.validation_results?.messages ?? []).map((m) => m.text);
+
+  if (!valid) return { valid, messages };
+
+  const suggested: AddressSuggestion = {
+    street1: toTitleCase(result.street1),
+    street2: result.street2 ? toTitleCase(result.street2) : undefined,
+    city:    toTitleCase(result.city),
+    state:   result.state,
+    zip:     result.zip.slice(0, 5),
+  };
+
+  const hasCorrection =
+    normalizeForCompare(suggested.street1) !== normalizeForCompare(address.street1) ||
+    normalizeForCompare(suggested.street2 ?? "") !== normalizeForCompare(address.street2 ?? "") ||
+    normalizeForCompare(suggested.city) !== normalizeForCompare(address.city) ||
+    suggested.state.toUpperCase() !== (address.state ?? "").toUpperCase() ||
+    suggested.zip !== (address.zip ?? "").slice(0, 5);
+
+  return { valid, messages, suggested: hasCorrection ? suggested : undefined };
+}
 
 export async function getRates(
   toAddress: ShippoAddress,
