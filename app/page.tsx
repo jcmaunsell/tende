@@ -31,7 +31,7 @@ export default async function HomePage() {
             <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
               {heroHeadline}
             </h1>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center backdrop-blur-md bg-white/10 px-8 py-5 rounded-sm">
               <Link
                 href="/shop"
                 className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
