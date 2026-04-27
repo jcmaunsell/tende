@@ -50,7 +50,7 @@ export default defineType({
           fields: [
             defineField({ name: "name", title: "Name", type: "string" }),
             defineField({ name: "quantity", title: "Quantity", type: "number" }),
-            defineField({ name: "priceCents", title: "Price (cents)", type: "number" }),
+            defineField({ name: "lineTotalCents", title: "Line total (cents)", type: "number" }),
           ],
           preview: {
             select: { title: "name", subtitle: "quantity" },

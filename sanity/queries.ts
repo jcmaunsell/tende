@@ -119,7 +119,7 @@ export async function getProductsByStripePriceIds(priceIds: string[]): Promise<P
 export interface OrderItem {
   name: string;
   quantity: number;
-  priceCents: number;
+  lineTotalCents: number;
 }
 
 export interface OrderAddress {

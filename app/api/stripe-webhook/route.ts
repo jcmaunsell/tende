@@ -127,7 +127,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
         items: lineItems.map((li) => ({
           name: (li.price as Stripe.Price | null)?.nickname ?? li.description ?? "Product",
           quantity: li.quantity ?? 1,
-          priceCents: li.amount_total ?? 0,
+          lineTotalCents: li.amount_total ?? 0,
         })),
         shippingAddress: {
           name: toAddress.name,

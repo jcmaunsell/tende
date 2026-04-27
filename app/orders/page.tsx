@@ -101,7 +101,7 @@ export default async function OrdersPage({
                     {item.name}
                   </span>
                   <span className="text-sm font-sans text-teal flex-shrink-0">
-                    {formatPrice(item.priceCents / 100)}
+                    {formatPrice(item.lineTotalCents / 100)}
                   </span>
                 </div>
               ))}
