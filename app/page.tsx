@@ -33,7 +33,7 @@ export default async function HomePage() {
 
         <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
           <div className="max-w-2xl">
-            <p className="font-sans text-white/90 text-base md:text-lg font-light tracking-wide mb-8">
+            <p className="font-display font-bold text-white text-xl md:text-2xl uppercase tracking-wide leading-snug mb-8">
               {heroTagline}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
