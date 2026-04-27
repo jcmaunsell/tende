@@ -8,7 +8,7 @@ export default function Ticker({ variant = "default" }: { variant?: "default" | 
         {[...ITEMS, ...ITEMS].map((item, i) => (
           <span
             key={i}
-            className={`font-sans text-xs uppercase tracking-widest whitespace-nowrap px-3 ${light ? "text-white/50" : "text-muted"}`}
+            className={`font-sans text-xs uppercase tracking-widest whitespace-nowrap px-3 ${light ? "text-white/50" : "text-parchment"}`}
           >
             {item}
           </span>
