@@ -30,11 +30,8 @@ export default async function HomePage() {
           </h1>
         </div>
 
-        <div className="bg-sage flex items-center justify-center text-center py-16 px-6">
+        <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
           <div className="max-w-2xl">
-            <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug whitespace-pre-line mb-10">
-              {heroSubheadline}
-            </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/shop"
@@ -64,9 +61,9 @@ export default async function HomePage() {
       {/* Category tiles */}
       <div className="grid grid-cols-1 md:grid-cols-3">
         {[
-          { src: "/images/bars-lineup.jpg",        alt: "Tende shampoo and conditioner bars", label: "Hair Bars" },
-          { src: "/images/hair-serums-garden.jpg",  alt: "Tende hair serums",                  label: "Hair Oil" },
+          { src: "/images/bars-lineup.jpg",        alt: "Tende shampoo and conditioner bars", label: "Hair Care" },
           { src: "/images/atlas-rose-products.jpg", alt: "Atlas Rose body oil and scrub",       label: "Body Care" },
+          { src: "/images/hair-serums-garden.jpg",  alt: "Tende hair serums",                  label: "Skin Care" },
         ].map(({ src, alt, label }) => (
           <Link key={label} href="/shop" className="group relative aspect-[3/4] overflow-hidden block">
             <Image src={src} alt={alt} fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
@@ -77,6 +74,13 @@ export default async function HomePage() {
             </div>
           </Link>
         ))}
+      </div>
+
+      {/* Brand statement */}
+      <div className="bg-sage py-14 px-6 text-center">
+        <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug whitespace-pre-line">
+          {heroSubheadline}
+        </p>
       </div>
 
       {/* Featured Products */}
