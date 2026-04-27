@@ -14,6 +14,7 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
   const [qty, setQty] = useState(1);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [fragranceOpen, setFragranceOpen] = useState(false);
+  const [added, setAdded] = useState(false);
   const addItem = useCart((s) => s.addItem);
 
   function selectFragrance(id: string) {
@@ -62,6 +63,8 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
         fragrance: fragranceName,
       });
     }
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
   }
 
   return (
@@ -176,6 +179,8 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
               ? "border border-foreground/20 text-muted/50 cursor-not-allowed"
               : hasVariants && selectedId === null
               ? "bg-foreground/40 text-background cursor-not-allowed"
+              : added
+              ? "bg-teal text-white"
               : "bg-foreground text-background hover:bg-petrol",
           ].join(" ")}
         >
@@ -183,6 +188,8 @@ export default function AddToCartButton({ product, onFragranceChange }: Props) {
             ? "Out of Stock"
             : hasVariants && selectedId === null
             ? "Select a Fragrance"
+            : added
+            ? "Added to Cart"
             : "Add to Cart"}
         </button>
       </div>
