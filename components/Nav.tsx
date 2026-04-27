@@ -43,7 +43,7 @@ export default function Nav({ bannerEnabled = true, bannerText = DEFAULT_BANNER 
   return (
     <>
       {bannerEnabled && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-petrol text-white/80 text-xs text-center py-2 px-4 tracking-wider">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-background text-foreground text-xs text-center py-2 px-4 tracking-wider">
           {bannerText}
         </div>
       )}
