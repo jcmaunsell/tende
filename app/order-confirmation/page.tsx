@@ -84,6 +84,14 @@ export default async function OrderConfirmationPage({
             </div>
           ))}
         </div>
+        {(session.shipping_cost?.amount_total ?? 0) > 0 && (
+          <div className="px-5 py-3 border-t border-parchment flex justify-between items-baseline">
+            <span className="text-sm font-sans font-light text-muted uppercase tracking-widest">Shipping</span>
+            <span className="text-sm font-sans text-teal flex-shrink-0">
+              {((session.shipping_cost!.amount_total!) / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}
+            </span>
+          </div>
+        )}
         <div className="px-5 py-3 border-t border-parchment flex justify-between items-baseline">
           <span className="text-sm font-sans font-light text-muted uppercase tracking-widest">Total</span>
           <span className="font-display font-bold text-lg text-foreground">{total}</span>
