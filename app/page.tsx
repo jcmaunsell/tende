@@ -35,18 +35,24 @@ export default async function HomePage() {
             <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug whitespace-pre-line mb-10">
               {heroSubheadline}
             </p>
-            <div className="flex flex-wrap gap-8 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/shop"
-                className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-colors"
+                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-white hover:text-sage transition-colors"
               >
                 Shop the Collection
               </Link>
               <Link
                 href="/about"
-                className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-colors"
+                className="text-xs uppercase tracking-widest text-white/70 border border-white/30 px-6 py-3 hover:border-white/60 hover:text-white transition-colors"
               >
                 Our Story
+              </Link>
+              <Link
+                href="#testimonials"
+                className="text-xs uppercase tracking-widest text-white/70 border border-white/30 px-6 py-3 hover:border-white/60 hover:text-white transition-colors"
+              >
+                What People Are Saying
               </Link>
             </div>
           </div>
@@ -143,7 +149,7 @@ export default async function HomePage() {
 
       {/* Reviews — only shown when Sage has added real testimonials in Studio */}
       {testimonials.length > 0 && (
-        <section className="max-w-4xl mx-auto px-6 py-24 text-center">
+        <section id="testimonials" className="max-w-4xl mx-auto px-6 py-24 text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
           <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
           <div className="grid md:grid-cols-3 gap-10">
