@@ -1,39 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-const SWATCHES = [
-  { label: "background", var: "--background", cls: "bg-background" },
-  { label: "foreground", var: "--foreground", cls: "bg-foreground" },
-  { label: "sage", var: "--sage", cls: "bg-sage" },
-  { label: "petrol", var: "--petrol", cls: "bg-petrol" },
-  { label: "teal", var: "--teal", cls: "bg-teal" },
-  { label: "parchment", var: "--parchment", cls: "bg-parchment" },
-  { label: "muted", var: "--muted", cls: "bg-muted" },
-];
+import { useState } from "react";
 
 const CSS_VARS = [
-  { label: "background", key: "--background" },
-  { label: "foreground", key: "--foreground" },
-  { label: "sage", key: "--sage" },
-  { label: "petrol", key: "--petrol" },
-  { label: "teal", key: "--teal" },
-  { label: "parchment", key: "--parchment" },
-  { label: "muted", key: "--muted" },
+  { label: "background", key: "--background", initial: "#7d9175" },
+  { label: "foreground", key: "--foreground", initial: "#18221a" },
+  { label: "sage",       key: "--sage",       initial: "#7b9c87" },
+  { label: "petrol",     key: "--petrol",     initial: "#213c3e" },
+  { label: "teal",       key: "--teal",       initial: "#536c6b" },
+  { label: "parchment",  key: "--parchment",  initial: "#ede8d0" },
+  { label: "muted",      key: "--muted",      initial: "#c9c4bc" },
 ];
 
-export default function PalettePage() {
-  const [values, setValues] = useState<Record<string, string>>({});
+const SWATCHES = CSS_VARS.map(({ label, key }) => ({
+  label,
+  var: key,
+  cls: `bg-${label}`,
+}));
 
-  useEffect(() => {
-    const computed = getComputedStyle(document.documentElement);
-    const initial: Record<string, string> = {};
-    CSS_VARS.forEach(({ key }) => {
-      initial[key] = computed.getPropertyValue(key).trim() || "#000000";
-    });
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setValues(initial);
-  }, []);
+export default function PalettePage() {
+  const [values, setValues] = useState<Record<string, string>>(
+    Object.fromEntries(CSS_VARS.map(({ key, initial }) => [key, initial]))
+  );
 
   function handleChange(key: string, value: string) {
     setValues((prev) => ({ ...prev, [key]: value }));
