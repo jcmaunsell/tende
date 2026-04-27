@@ -26,18 +26,16 @@ export default async function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-petrol/50" />
-          <div className="relative z-10 text-center px-6">
-            <h1 className="font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl uppercase tracking-wider leading-none mb-4">
-              {heroHeadline}
-            </h1>
-            <p className="font-sans text-white/80 text-sm md:text-base font-light tracking-wide">
-              {heroTagline}
-            </p>
-          </div>
+          <h1 className="relative z-10 font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl text-center uppercase tracking-wider leading-none px-6">
+            {heroHeadline}
+          </h1>
         </div>
 
         <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
           <div className="max-w-2xl">
+            <p className="font-sans text-white/90 text-base md:text-lg font-light tracking-wide mb-8">
+              {heroTagline}
+            </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/shop"
