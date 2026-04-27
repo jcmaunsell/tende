@@ -67,7 +67,7 @@ export default async function HomePage() {
         {[
           { src: "/images/bars-lineup.jpg",        alt: "Tende shampoo and conditioner bars", label: "Hair Care" },
           { src: "/images/atlas-rose-products.jpg", alt: "Atlas Rose body oil and scrub",       label: "Body Care" },
-          { src: "/images/hair-serums-garden.jpg",  alt: "Tende hair serums",                  label: "Skin Care" },
+          { src: "/images/brightening-face-oil.jpg", alt: "Tende brightening face oil",          label: "Skin Care" },
         ].map(({ src, alt, label }) => (
           <Link key={label} href="/shop" className="group relative aspect-[3/4] overflow-hidden block">
             <Image src={src} alt={alt} fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
