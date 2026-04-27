@@ -154,7 +154,7 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
     await resend.emails.send({
       from: fromEmail,
       to: notifyEmail,
-      subject: `New order — ${totalDollars} — ${toAddress.name}`,
+      subject: `New order ${meta.order_id ? `(${meta.order_id}) ` : ""}— ${totalDollars} — ${toAddress.name}`,
       html: `
         <h2 style="font-family:sans-serif">New Tende order 🌿</h2>
         <p><strong>Total:</strong> ${totalDollars}</p>

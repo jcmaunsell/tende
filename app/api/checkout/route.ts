@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
+import { randomBytes } from "crypto";
 import type { CartItem } from "@/types";
 import { logger } from "@/lib/logger";
 import { stripe } from "@/lib/stripe";
+
+function generateOrderId() {
+  return "TND-" + randomBytes(3).toString("hex").toUpperCase();
+}
 
 interface ShippingAddress {
   name: string;
@@ -40,6 +45,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No valid Stripe price IDs in cart" }, { status: 400 });
   }
 
+  const orderId = generateOrderId();
   const origin = new URL(req.url).origin;
 
   try {
@@ -69,6 +75,7 @@ export async function POST(req: NextRequest) {
         },
       },
       metadata: {
+        order_id:     orderId,
         ship_name:    address.name,
         ship_street1: address.street1,
         ship_street2: address.street2 ?? "",

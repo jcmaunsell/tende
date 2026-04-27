@@ -57,6 +57,11 @@ export default async function OrderConfirmationPage({
           </svg>
         </div>
         <h1 className="font-display font-bold text-3xl uppercase text-foreground mb-2">Order confirmed</h1>
+        {session.metadata?.order_id && (
+          <p className="text-xs font-sans uppercase tracking-widest text-muted mb-1">
+            Order {session.metadata.order_id}
+          </p>
+        )}
         {customer?.email && (
           <p className="text-sm font-light font-sans text-muted">
             A receipt has been sent to <strong>{customer.email}</strong>

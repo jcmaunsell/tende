@@ -98,14 +98,12 @@ function CartStep({ onContinue }: { onContinue: () => void }) {
         <span className="font-display text-xl">Subtotal</span>
         <span className="text-xl text-teal">{formatPrice(total())}</span>
       </div>
-      {total() >= FREE_SHIPPING_THRESHOLD && (
-        <p className="text-xs font-sans text-teal text-right mb-6">Free shipping applied</p>
-      )}
-      {total() < FREE_SHIPPING_THRESHOLD && (
-        <p className="text-xs font-sans text-muted text-right mb-6">
-          + shipping (calculated at next step) · Free over {formatPrice(FREE_SHIPPING_THRESHOLD)}
-        </p>
-      )}
+      <p className="text-xs font-sans text-right mb-6">
+        {total() >= FREE_SHIPPING_THRESHOLD
+          ? <span className="text-teal">Free standard shipping on this order</span>
+          : <span className="text-muted">+ shipping · Free standard shipping on orders over {formatPrice(FREE_SHIPPING_THRESHOLD)}</span>
+        }
+      </p>
 
       <button
         onClick={onContinue}
@@ -178,7 +176,6 @@ function ShippingStep({
   onBack,
   onCheckout,
   loading,
-  isFree,
 }: {
   rates: RateOption[];
   selectedId: string | null;
@@ -186,7 +183,6 @@ function ShippingStep({
   onBack: () => void;
   onCheckout: () => void;
   loading: boolean;
-  isFree: boolean;
 }) {
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
@@ -194,17 +190,7 @@ function ShippingStep({
       <h1 className="font-display text-4xl mb-10">Shipping Method</h1>
 
       <div className="space-y-3 mb-10">
-        {isFree && (
-          <label className="flex items-center gap-4 border border-teal p-4 cursor-pointer">
-            <input type="radio" checked readOnly className="accent-teal" />
-            <div className="flex-1">
-              <p className="text-sm font-sans font-medium text-foreground">Free Shipping</p>
-              <p className="text-xs font-sans text-muted">3–7 business days</p>
-            </div>
-            <p className="text-sm font-sans text-teal font-medium">Free</p>
-          </label>
-        )}
-        {!isFree && rates.map((rate) => (
+        {rates.map((rate) => (
           <label key={rate.object_id} className={`flex items-center gap-4 border p-4 cursor-pointer transition-colors ${selectedId === rate.object_id ? "border-teal" : "border-foreground/20 hover:border-foreground/40"}`}>
             <input
               type="radio"
@@ -220,14 +206,16 @@ function ShippingStep({
                 <p className="text-xs font-sans text-muted">{rate.estimatedDays} business day{rate.estimatedDays !== 1 ? "s" : ""}</p>
               )}
             </div>
-            <p className="text-sm font-sans text-teal font-medium">${parseFloat(rate.amountDollars).toFixed(2)}</p>
+            <p className="text-sm font-sans text-teal font-medium">
+              {parseFloat(rate.amountDollars) === 0 ? "Free" : `$${parseFloat(rate.amountDollars).toFixed(2)}`}
+            </p>
           </label>
         ))}
       </div>
 
       <button
         onClick={onCheckout}
-        disabled={loading || (!isFree && !selectedId)}
+        disabled={loading || !selectedId}
         className="w-full py-4 bg-foreground text-background text-sm uppercase tracking-widest hover:bg-petrol transition-colors disabled:opacity-50"
       >
         {loading ? "Redirecting…" : "Proceed to Payment"}
@@ -253,12 +241,6 @@ function CartContent() {
       return;
     }
     setError(null);
-
-    if (isFree) {
-      await checkout({ service: "Free Shipping", amountCents: 0 });
-      return;
-    }
-
     setLoading(true);
     try {
       const res = await fetch("/api/shipping-rates", {
@@ -268,8 +250,13 @@ function CartContent() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Failed to get shipping rates");
-      setRates(data.rates);
-      setSelectedRateId(data.rates[0]?.object_id ?? null);
+      // If order qualifies for free shipping, zero out the cheapest rate
+      const fetchedRates: RateOption[] = data.rates;
+      if (isFree && fetchedRates.length > 0) {
+        fetchedRates[0] = { ...fetchedRates[0], amountDollars: "0.00" };
+      }
+      setRates(fetchedRates);
+      setSelectedRateId(fetchedRates[0]?.object_id ?? null);
       setStep("shipping");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not retrieve shipping rates. Please try again.");
@@ -328,7 +315,6 @@ function CartContent() {
       onBack={() => setStep("address")}
       onCheckout={handleCheckout}
       loading={loading}
-      isFree={isFree}
     />
   );
 }
