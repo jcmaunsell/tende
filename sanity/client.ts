@@ -6,3 +6,8 @@ export const client = createClient({
   apiVersion: "2024-01-01",
   useCdn: process.env.NODE_ENV === "production",
 });
+
+export const writeClient = client.withConfig({
+  token: process.env.SANITY_API_TOKEN,
+  useCdn: false,
+});

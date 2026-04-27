@@ -122,13 +122,25 @@ export default async function OrderConfirmationPage({
         You&apos;ll receive a separate email with tracking information once your order ships.
       </div>
 
-      <div className="text-center">
-        <Link
-          href="/shop"
-          className="text-xs uppercase tracking-widest font-sans text-teal border-b border-teal pb-0.5 hover:text-petrol hover:border-petrol transition-colors"
-        >
-          Continue shopping
-        </Link>
+      <div className="text-center space-y-4">
+        {session.metadata?.order_id && customer?.email && (
+          <div>
+            <Link
+              href={`/orders?id=${session.metadata.order_id}&email=${encodeURIComponent(customer.email)}`}
+              className="text-xs uppercase tracking-widest font-sans text-teal border-b border-teal pb-0.5 hover:text-petrol hover:border-petrol transition-colors"
+            >
+              Track your order
+            </Link>
+          </div>
+        )}
+        <div>
+          <Link
+            href="/shop"
+            className="text-xs uppercase tracking-widest font-sans text-muted border-b border-muted pb-0.5 hover:text-foreground hover:border-foreground transition-colors"
+          >
+            Continue shopping
+          </Link>
+        </div>
       </div>
     </div>
   );

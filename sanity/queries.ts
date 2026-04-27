@@ -1,4 +1,4 @@
-import { client } from "./client";
+import { client, writeClient } from "./client";
 import type { Product, SanityEvent, SiteSettings } from "@/types";
 
 // ── Shared GROQ fragments ──────────────────────────────────────────────────
@@ -113,6 +113,76 @@ export async function getProductsByStripePriceIds(priceIds: string[]): Promise<P
     return [];
   }
 }
+
+// ── Order types ────────────────────────────────────────────────────────────
+
+export interface OrderItem {
+  name: string;
+  quantity: number;
+  priceCents: number;
+}
+
+export interface OrderAddress {
+  name: string;
+  street1: string;
+  street2?: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+export interface Order {
+  _id: string;
+  _createdAt: string;
+  orderId: string;
+  status: "processing" | "shipped" | "delivered";
+  customerName: string;
+  customerEmail: string;
+  items: OrderItem[];
+  shippingAddress: OrderAddress;
+  trackingNumber?: string;
+  labelUrl?: string;
+  carrier?: string;
+  shippingService?: string;
+  stripeSessionId: string;
+  totalCents: number;
+}
+
+export interface CreateOrderInput {
+  orderId: string;
+  customerName: string;
+  customerEmail: string;
+  items: OrderItem[];
+  shippingAddress: OrderAddress;
+  trackingNumber?: string;
+  labelUrl?: string;
+  carrier?: string;
+  shippingService?: string;
+  stripeSessionId: string;
+  totalCents: number;
+}
+
+export async function createOrder(input: CreateOrderInput): Promise<void> {
+  await writeClient.createIfNotExists({
+    _id: input.orderId,
+    _type: "order",
+    ...input,
+    status: "processing",
+  });
+}
+
+export async function getOrderByIdAndEmail(orderId: string, email: string): Promise<Order | null> {
+  try {
+    return await client.fetch(
+      `*[_type == "order" && orderId == $orderId && customerEmail == $email][0]`,
+      { orderId, email }
+    );
+  } catch {
+    return null;
+  }
+}
+
+// ── Site settings ──────────────────────────────────────────────────────────
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {

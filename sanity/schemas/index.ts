@@ -3,5 +3,6 @@ import event from "./event";
 import market from "./market";
 import fragrance from "./fragrance";
 import siteSettings from "./siteSettings";
+import order from "./order";
 
-export const schemaTypes = [product, event, market, fragrance, siteSettings];
+export const schemaTypes = [product, event, market, fragrance, siteSettings, order];

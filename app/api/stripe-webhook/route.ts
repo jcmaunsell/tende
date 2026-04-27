@@ -4,7 +4,7 @@ import Stripe from "stripe";
 import { Resend } from "resend";
 import { logger } from "@/lib/logger";
 import { calcParcel, purchaseLabel } from "@/lib/shipping";
-import { getProductsByStripePriceIds, type ProductDimensions } from "@/sanity/queries";
+import { getProductsByStripePriceIds, createOrder, type ProductDimensions } from "@/sanity/queries";
 import { stripe } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
@@ -115,6 +115,42 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
     }
   } else {
     logger.warn("SHIPPO_API_KEY not set — skipping label generation", { session_id: session.id });
+  }
+
+  // ── Persist order to Sanity ─────────────────────────────────────────────
+  if (meta.order_id) {
+    try {
+      await createOrder({
+        orderId: meta.order_id,
+        customerName: toAddress.name,
+        customerEmail: customer?.email ?? "",
+        items: lineItems.map((li) => ({
+          name: (li.price as Stripe.Price | null)?.nickname ?? li.description ?? "Product",
+          quantity: li.quantity ?? 1,
+          priceCents: li.amount_total ?? 0,
+        })),
+        shippingAddress: {
+          name: toAddress.name,
+          street1: toAddress.street1,
+          street2: toAddress.street2,
+          city: toAddress.city,
+          state: toAddress.state,
+          zip: toAddress.zip,
+        },
+        trackingNumber: label?.trackingCode,
+        labelUrl: label?.labelUrl,
+        carrier: label?.carrier,
+        shippingService: label?.service,
+        stripeSessionId: session.id,
+        totalCents: fullSession.amount_total ?? 0,
+      });
+      logger.info("Order saved to Sanity", { session_id: session.id, order_id: meta.order_id });
+    } catch (err) {
+      logger.error("Failed to save order to Sanity", {
+        session_id: session.id,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
   }
 
   // ── Email Sage ──────────────────────────────────────────────────────────
