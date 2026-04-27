@@ -54,9 +54,9 @@ export default function Nav({ bannerEnabled = true, bannerText = DEFAULT_BANNER 
             <Image
               src="/images/logo-white.png"
               alt="tende"
-              width={120}
-              height={42}
-              className="h-9 w-auto"
+              width={160}
+              height={56}
+              className="h-12 w-auto"
               style={{ width: "auto" }}
             />
           </Link>
