@@ -26,16 +26,10 @@ export default async function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-petrol/50" />
-          <h1 className="relative z-10 font-glassure text-white text-5xl md:text-7xl lg:text-9xl text-center uppercase tracking-wider leading-none px-6">
-            {heroHeadline}
-          </h1>
-        </div>
-
-        <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
-          <div className="max-w-2xl">
-            <p className="font-display font-bold text-white text-xl md:text-2xl uppercase tracking-wide leading-snug mb-8">
-              {heroTagline}
-            </p>
+          <div className="relative z-10 text-center px-6 flex flex-col items-center gap-8">
+            <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
+              {heroHeadline}
+            </h1>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/shop"
@@ -57,6 +51,12 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
+        </div>
+
+        <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
+          <p className="font-display font-bold text-white text-xl md:text-2xl uppercase tracking-wide leading-snug">
+            {heroTagline}
+          </p>
         </div>
       </section>
 
