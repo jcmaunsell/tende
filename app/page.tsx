@@ -146,9 +146,9 @@ export default async function HomePage() {
           />
           <div className="absolute inset-0 bg-petrol/65" />
         </div>
-        <div className="relative z-10 px-6 max-w-lg">
+        <div className="relative z-10 px-6 max-w-4xl">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">who we are</p>
-          <h2 className="font-glassure text-4xl md:text-5xl text-white mb-6 leading-tight uppercase">
+          <h2 className="font-glassure text-5xl md:text-7xl text-white mb-6 leading-tight uppercase">
             Tende was founded by an organic chemist in search of skincare that nurtures people and their planet.
           </h2>
           <Link
