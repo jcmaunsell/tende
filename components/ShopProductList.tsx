@@ -41,6 +41,7 @@ const CATEGORIES: { label: string; value: string }[] = [
 export default function ShopProductList({ products }: { products: Product[] }) {
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeFragranceId, setActiveFragranceId] = useState<string | null>(null);
+  const [fragranceOpen, setFragranceOpen] = useState(false);
 
   // Category-filtered products (before fragrance filter)
   const categoryFiltered = useMemo(
@@ -98,24 +99,35 @@ export default function ShopProductList({ products }: { products: Product[] }) {
 
       {/* Fragrance filters */}
       {fragrances.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-10">
-          <FilterBtn active={validFragranceId === null} onClick={() => setActiveFragranceId(null)}>
-            Any Fragrance
-          </FilterBtn>
-          {fragrances.map((f) => (
-            <FilterBtn
-              key={f._id}
-              active={validFragranceId === f._id}
-              onClick={() => setActiveFragranceId(validFragranceId === f._id ? null : f._id)}
-            >
-              {f.name}
-              {f.notes && (
-                <span className="block normal-case tracking-normal font-light mt-0.5 text-petrol">
-                  {f.notes}
-                </span>
-              )}
-            </FilterBtn>
-          ))}
+        <div className="mb-10">
+          <button
+            onClick={() => setFragranceOpen((v) => !v)}
+            className="flex items-center gap-2 text-xs font-sans uppercase tracking-widest text-foreground mb-3"
+          >
+            <span>Fragrance</span>
+            <span className="text-base leading-none">{fragranceOpen ? "−" : "+"}</span>
+          </button>
+          {fragranceOpen && (
+            <div className="flex flex-wrap gap-2">
+              <FilterBtn active={validFragranceId === null} onClick={() => setActiveFragranceId(null)}>
+                Any Fragrance
+              </FilterBtn>
+              {fragrances.map((f) => (
+                <FilterBtn
+                  key={f._id}
+                  active={validFragranceId === f._id}
+                  onClick={() => setActiveFragranceId(validFragranceId === f._id ? null : f._id)}
+                >
+                  {f.name}
+                  {f.notes && (
+                    <span className="block normal-case tracking-normal font-light mt-0.5 text-petrol">
+                      {f.notes}
+                    </span>
+                  )}
+                </FilterBtn>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
