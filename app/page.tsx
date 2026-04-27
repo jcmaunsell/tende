@@ -26,7 +26,7 @@ export default async function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-petrol/50" />
-          <h1 className="relative z-10 font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl text-center uppercase tracking-wider leading-none px-6">
+          <h1 className="relative z-10 font-glassure text-white text-5xl md:text-7xl lg:text-9xl text-center uppercase tracking-wider leading-none px-6">
             {heroHeadline}
           </h1>
         </div>
@@ -120,7 +120,7 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-petrol/55" />
         <div className="relative z-10 px-6 max-w-xl text-center">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">formulated with intention</p>
-          <h2 className="font-display font-bold text-3xl md:text-5xl text-white mb-6 leading-snug uppercase">
+          <h2 className="font-glassure text-4xl md:text-6xl text-white mb-6 leading-tight uppercase">
             Crafted with Chemistry.<br />Grounded in Nature.
           </h2>
           <p className="text-base text-white/75 font-sans font-light mb-8 leading-relaxed">
@@ -169,7 +169,7 @@ export default async function HomePage() {
         </div>
         <div className="relative z-10 px-6 max-w-lg">
           <p className="text-xs uppercase tracking-[0.35em] text-white/60 mb-4 font-sans">who we are</p>
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-6 leading-snug uppercase">
+          <h2 className="font-glassure text-4xl md:text-5xl text-white mb-6 leading-tight uppercase">
             Tende was founded by an organic chemist in search of skincare that nurtures people and their planet.
           </h2>
           <Link
