@@ -79,18 +79,18 @@ async function handleOrderCompleted(session: Stripe.Checkout.Session) {
 
   const parcel = calcParcel(parcelItems);
 
-  const shipping = session.collected_information?.shipping_details;
+  const meta = session.metadata ?? {};
   const customer = session.customer_details;
 
   const toAddress = {
-    name:    customer?.name ?? "Customer",
-    street1: shipping?.address?.line1 ?? "",
-    street2: shipping?.address?.line2 ?? undefined,
-    city:    shipping?.address?.city ?? "",
-    state:   shipping?.address?.state ?? "",
-    zip:     shipping?.address?.postal_code ?? "",
-    country: shipping?.address?.country ?? "US",
-    phone:   customer?.phone ?? undefined,
+    name:    meta.ship_name || customer?.name || "Customer",
+    street1: meta.ship_street1 || "",
+    street2: meta.ship_street2 || undefined,
+    city:    meta.ship_city || "",
+    state:   meta.ship_state || "",
+    zip:     meta.ship_zip || "",
+    country: "US",
+    phone:   meta.ship_phone || customer?.phone || undefined,
     email:   customer?.email ?? undefined,
   };
 

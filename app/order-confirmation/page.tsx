@@ -10,11 +10,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-function formatAddress(address: Stripe.Address | null | undefined) {
-  if (!address) return null;
-  return [address.line1, address.line2, `${address.city}, ${address.state} ${address.postal_code}`]
-    .filter(Boolean)
-    .join(", ");
+function metaAddress(session: Stripe.Checkout.Session) {
+  const m = session.metadata ?? {};
+  if (!m.ship_street1) return null;
+  return {
+    name: m.ship_name ?? "",
+    line: [m.ship_street1, m.ship_street2].filter(Boolean).join(", "),
+    cityStateZip: `${m.ship_city}, ${m.ship_state} ${m.ship_zip}`,
+  };
 }
 
 export default async function OrderConfirmationPage({
@@ -36,7 +39,7 @@ export default async function OrderConfirmationPage({
 
   const lineItems: Stripe.LineItem[] = session.line_items?.data ?? [];
   const customer = session.customer_details;
-  const shipping = session.collected_information?.shipping_details;
+  const shipping = metaAddress(session);
   const total = ((session.amount_total ?? 0) / 100).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
@@ -88,14 +91,15 @@ export default async function OrderConfirmationPage({
       </div>
 
       {/* Shipping address */}
-      {shipping?.address && (
+      {shipping && (
         <div className="border border-parchment mb-10">
           <div className="px-5 py-3 border-b border-parchment">
             <p className="text-xs uppercase tracking-widest font-sans text-muted">Shipping to</p>
           </div>
           <div className="px-5 py-3 text-sm font-sans font-light text-foreground/80 leading-relaxed">
-            <p>{customer?.name}</p>
-            <p>{formatAddress(shipping.address)}</p>
+            <p>{shipping.name}</p>
+            <p>{shipping.line}</p>
+            <p>{shipping.cityStateZip}</p>
           </div>
         </div>
       )}

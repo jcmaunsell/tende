@@ -25,7 +25,7 @@ async function shippoPost<T>(path: string, body: unknown): Promise<T> {
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-interface ShippoAddress {
+export interface ShippoAddress {
   name: string;
   street1: string;
   street2?: string;
@@ -43,6 +43,14 @@ interface ShippoRate {
   servicelevel: { name: string; token: string };
   amount: string;
   currency: string;
+  estimated_days?: number;
+}
+
+export interface RateOption {
+  object_id: string;
+  service: string;
+  amountDollars: string;
+  estimatedDays?: number;
 }
 
 interface ShippoShipment {
@@ -125,6 +133,35 @@ function selectRate(rates: ShippoRate[]): ShippoRate {
 }
 
 // ── Public API ─────────────────────────────────────────────────────────────
+
+export async function getRates(
+  toAddress: ShippoAddress,
+  parcel: { weightOz: number; length: number; width: number; height: number }
+): Promise<RateOption[]> {
+  const shipment = await shippoPost<ShippoShipment>("/shipments", {
+    address_from: fromAddress(),
+    address_to: toAddress,
+    parcels: [{
+      length: String(parcel.length),
+      width:  String(parcel.width),
+      height: String(parcel.height),
+      distance_unit: "in",
+      weight: String(parcel.weightOz),
+      mass_unit: "oz",
+    }],
+    async: false,
+  });
+
+  return shipment.rates
+    .filter((r) => r.provider === "USPS")
+    .sort((a, b) => parseFloat(a.amount) - parseFloat(b.amount))
+    .map((r) => ({
+      object_id:    r.object_id,
+      service:      r.servicelevel.name,
+      amountDollars: r.amount,
+      estimatedDays: r.estimated_days,
+    }));
+}
 
 export async function purchaseLabel(
   toAddress: ShippoAddress,
