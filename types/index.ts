@@ -27,6 +27,7 @@ export interface Product {
   ingredients?: string[];
   howToUse?: string;
   inStock: boolean;
+  featured?: boolean;
   stripePriceId?: string;
   variants?: ProductVariant[];
   weight?: number;
@@ -53,8 +54,11 @@ export interface SanityEvent {
 }
 
 export interface SiteSettings {
+  heroHeadline?: string;
+  heroSubheadline?: string;
   founderPhoto?: string;
   founderBio?: string[];
+  brandStory?: string[];
   faqs?: { question: string; answer: string }[];
   testimonials?: { quote: string; author: string }[];
 }

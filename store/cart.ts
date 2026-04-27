@@ -36,21 +36,15 @@ export const useCart = create<CartStore>()(
         }),
       removeItem: (productId, fragrance) =>
         set((state) => ({
-          items: state.items.filter(
-            (i) => !(i.productId === productId && (i.fragrance ?? "") === (fragrance ?? ""))
-          ),
+          items: state.items.filter((i) => !sameItem(i, { productId, fragrance } as Omit<CartItem, "quantity">)),
         })),
       updateQuantity: (productId, quantity, fragrance) =>
         set((state) => ({
           items:
             quantity <= 0
-              ? state.items.filter(
-                  (i) => !(i.productId === productId && (i.fragrance ?? "") === (fragrance ?? ""))
-                )
+              ? state.items.filter((i) => !sameItem(i, { productId, fragrance } as Omit<CartItem, "quantity">))
               : state.items.map((i) =>
-                  i.productId === productId && (i.fragrance ?? "") === (fragrance ?? "")
-                    ? { ...i, quantity }
-                    : i
+                  sameItem(i, { productId, fragrance } as Omit<CartItem, "quantity">) ? { ...i, quantity } : i
                 ),
         })),
       clearCart: () => set({ items: [] }),

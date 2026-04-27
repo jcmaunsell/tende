@@ -1,23 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
+import Ticker from "@/components/Ticker";
 import { getFeaturedProducts, getSiteSettings } from "@/sanity/queries";
 
 export const revalidate = 60;
 
-const TICKER_TEXT = "garden to palm";
-const TICKER_SEP = "✦";
-const TICKER_ITEMS = Array(14).fill(`${TICKER_TEXT} ${TICKER_SEP} `);
-
-const FALLBACK_TESTIMONIALS = [
-  { quote: "My hair has never felt so clean and light. I'll never go back to liquid shampoo.", author: "Maya R." },
-  { quote: "The Atlas Rose scrub is everything. My skin is so soft and the scent is incredible.", author: "Jordan T." },
-  { quote: "Love knowing exactly what's in every product. No mystery ingredients, just results.", author: "Sam L." },
-];
-
 export default async function HomePage() {
   const [products, settings] = await Promise.all([getFeaturedProducts(), getSiteSettings()]);
-  const testimonials = settings?.testimonials?.length ? settings.testimonials : FALLBACK_TESTIMONIALS;
+  const testimonials = settings?.testimonials ?? [];
+  const heroHeadline = settings?.heroHeadline ?? "Science Meets Simplicity";
+  const heroSubheadline = settings?.heroSubheadline ?? "Plant-based hair + body care,\nhandcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
 
   return (
     <>
@@ -33,17 +26,14 @@ export default async function HomePage() {
           />
           <div className="absolute inset-0 bg-petrol/50" />
           <h1 className="relative z-10 font-display font-bold text-white text-4xl md:text-6xl lg:text-7xl text-center uppercase tracking-wider leading-none px-6">
-            Science Meets Simplicity
+            {heroHeadline}
           </h1>
         </div>
 
         <div className="bg-sage flex items-center justify-center text-center py-16 px-6">
           <div className="max-w-2xl">
-            <p className="font-display font-bold text-white text-lg md:text-2xl uppercase tracking-wide leading-snug mb-3">
-              Plant-based hair + body care,<br />handcrafted by an organic chemist.
-            </p>
-            <p className="font-display font-bold text-white text-lg md:text-xl uppercase tracking-wide leading-snug mb-10">
-              Pure botanicals, zero excess.
+            <p className="font-display font-bold text-white text-lg md:text-2xl uppercase tracking-wide leading-snug whitespace-pre-line mb-10">
+              {heroSubheadline}
             </p>
             <div className="flex flex-wrap gap-8 justify-center">
               <Link
@@ -63,21 +53,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Ticker */}
-      <div className="overflow-hidden border-y border-parchment py-3 bg-background">
-        <div className="ticker-track">
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={i} className="font-sans text-xs uppercase tracking-widest text-muted whitespace-nowrap px-3">
-              {item}
-            </span>
-          ))}
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={`b${i}`} className="font-sans text-xs uppercase tracking-widest text-muted whitespace-nowrap px-3">
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
+      <Ticker />
 
       {/* Pure botanicals */}
       <section className="max-w-6xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
@@ -163,37 +139,25 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Second ticker */}
-      <div className="overflow-hidden border-y border-parchment py-3 bg-background">
-        <div className="ticker-track">
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={i} className="font-sans text-xs uppercase tracking-widest text-muted whitespace-nowrap px-3">
-              {item}
-            </span>
-          ))}
-          {TICKER_ITEMS.map((item, i) => (
-            <span key={`b${i}`} className="font-sans text-xs uppercase tracking-widest text-muted whitespace-nowrap px-3">
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
+      <Ticker />
 
-      {/* Reviews */}
-      <section className="max-w-4xl mx-auto px-6 py-24 text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
-        <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
-        <div className="grid md:grid-cols-3 gap-10">
-          {testimonials.map(({ quote, author }) => (
-            <div key={author} className="text-left">
-              <p className="font-sans text-base leading-relaxed text-muted mb-4">
-                &ldquo;{quote}&rdquo;
-              </p>
-              <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Reviews — only shown when Sage has added real testimonials in Studio */}
+      {testimonials.length > 0 && (
+        <section className="max-w-4xl mx-auto px-6 py-24 text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted mb-3 font-sans">reviews</p>
+          <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
+          <div className="grid md:grid-cols-3 gap-10">
+            {testimonials.map(({ quote, author }) => (
+              <div key={author} className="text-left">
+                <p className="font-sans text-base leading-relaxed text-muted mb-4">
+                  &ldquo;{quote}&rdquo;
+                </p>
+                <p className="text-xs uppercase tracking-widest text-muted font-sans">— {author}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Who we are */}
       <section className="relative py-28 flex items-center justify-center text-center overflow-hidden">

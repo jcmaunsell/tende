@@ -5,6 +5,21 @@ const siteSettings = defineType({
   title: "Site Settings",
   type: "document",
   fields: [
+    // ── Homepage ───────────────────────────────────────────────────────────
+    defineField({
+      name: "heroHeadline",
+      title: "Homepage headline",
+      type: "string",
+      description: 'The large text shown over the hero photo (e.g. "Science Meets Simplicity").',
+    }),
+    defineField({
+      name: "heroSubheadline",
+      title: "Homepage sub-headline",
+      type: "text",
+      description: "Short brand statement shown in the teal section beneath the hero photo. Use line breaks to separate sentences.",
+      rows: 3,
+    }),
+
     // ── About / Founder ────────────────────────────────────────────────────
     defineField({
       name: "founderPhoto",
@@ -18,6 +33,13 @@ const siteSettings = defineType({
       title: "Founder bio",
       type: "array",
       description: "Paragraphs shown on the About page beneath the headline.",
+      of: [{ type: "text" }],
+    }),
+    defineField({
+      name: "brandStory",
+      title: "Brand story",
+      type: "array",
+      description: "Paragraphs shown on the About page below your bio — the brand philosophy section.",
       of: [{ type: "text" }],
     }),
 

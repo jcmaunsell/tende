@@ -10,7 +10,7 @@ const PRODUCT_BASE = `
   _id, title, subtitle, slug, tagline,
   price, compareAtPrice,
   "images": images[].asset->url,
-  category, inStock
+  category, inStock, featured
 `;
 
 // Additional fields only needed on the product detail page
@@ -56,7 +56,7 @@ export async function getAllProducts(): Promise<Product[]> {
 export async function getFeaturedProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
-      `*[_type == "product" && inStock == true][0...4] | order(_createdAt asc) {
+      `*[_type == "product" && inStock == true] | order(coalesce(featured, false) desc, _createdAt asc) [0...4] {
         ${PRODUCT_BASE}, ${VARIANT_LIST}
       }`
     );
@@ -118,8 +118,11 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     return await client.fetch(
       `*[_type == "siteSettings"][0] {
+        heroHeadline,
+        heroSubheadline,
         "founderPhoto": founderPhoto.asset->url,
         founderBio,
+        brandStory,
         faqs[]{ question, answer },
         testimonials[]{ quote, author }
       }`

@@ -4,18 +4,25 @@ export default defineType({
   name: "product",
   title: "Product",
   type: "document",
+  groups: [
+    { name: "core", title: "Product", default: true },
+    { name: "details", title: "Details" },
+    { name: "technical", title: "Shipping & Stripe" },
+  ],
   fields: [
     // ── Core info ──────────────────────────────────────────────────────────
     defineField({
       name: "title",
       title: "Product name",
       type: "string",
+      group: "core",
       validation: (R) => R.required(),
     }),
     defineField({
       name: "slug",
       title: "URL slug",
       type: "slug",
+      group: "core",
       description: 'The URL-friendly name for this product (e.g. "scalp-oil"). Click "Generate" to create it from the product name.',
       options: { source: "title", maxLength: 96 },
       validation: (R) => R.required(),
@@ -24,18 +31,21 @@ export default defineType({
       name: "subtitle",
       title: "Subtitle",
       type: "string",
+      group: "core",
       description: 'Optional second line for the product name (e.g. "Clarifying & Renewal"). Shown below the title in a lighter style.',
     }),
     defineField({
       name: "tagline",
       title: "Tagline",
       type: "string",
+      group: "core",
       description: 'One short sentence shown under the product name (e.g. "A lightweight oil for a balanced scalp").',
     }),
     defineField({
       name: "images",
       title: "Photos",
       type: "array",
+      group: "core",
       description: "Upload one or more product photos. The first image is used as the main photo everywhere.",
       of: [{ type: "image", options: { hotspot: true } }],
     }),
@@ -43,6 +53,7 @@ export default defineType({
       name: "category",
       title: "Category",
       type: "string",
+      group: "core",
       description: "Used to filter products on the shop page.",
       options: {
         list: [
@@ -60,35 +71,17 @@ export default defineType({
       name: "inStock",
       title: "In stock?",
       type: "boolean",
+      group: "core",
       description: 'Turn this off to show "Out of Stock" and disable the Add to Cart button.',
       initialValue: true,
     }),
-
-    // ── Shipping ───────────────────────────────────────────────────────────
     defineField({
-      name: "weight",
-      title: "Weight (lbs)",
-      type: "number",
-      description: "Shipping weight in pounds — e.g. 0.165 for a shampoo bar.",
-      validation: (R) => R.positive(),
-    }),
-    defineField({
-      name: "length",
-      title: "Length (in)",
-      type: "number",
-      validation: (R) => R.positive(),
-    }),
-    defineField({
-      name: "width",
-      title: "Width (in)",
-      type: "number",
-      validation: (R) => R.positive(),
-    }),
-    defineField({
-      name: "height",
-      title: "Height (in)",
-      type: "number",
-      validation: (R) => R.positive(),
+      name: "featured",
+      title: "Featured on homepage?",
+      type: "boolean",
+      group: "core",
+      description: "Show this product in the featured section on the home page. Up to 4 featured products are shown.",
+      initialValue: false,
     }),
 
     // ── Pricing ────────────────────────────────────────────────────────────
@@ -96,6 +89,7 @@ export default defineType({
       name: "price",
       title: "Price ($)",
       type: "number",
+      group: "core",
       description: "Enter the price in dollars — e.g. enter 24 for $24.00.",
       validation: (R) => R.required().positive(),
     }),
@@ -103,15 +97,9 @@ export default defineType({
       name: "compareAtPrice",
       title: "Compare-at price ($)",
       type: "number",
+      group: "core",
       description: "Optional. If set, shown as a crossed-out original price. Enter in dollars.",
       validation: (R) => R.positive(),
-    }),
-    defineField({
-      name: "stripePriceId",
-      title: "Stripe Price ID",
-      type: "string",
-      description: "Set automatically when you publish. Do not edit manually.",
-      readOnly: true,
     }),
 
     // ── Product details ────────────────────────────────────────────────────
@@ -119,6 +107,7 @@ export default defineType({
       name: "description",
       title: "Description",
       type: "text",
+      group: "details",
       description: "Shown on the product page. A few sentences about what the product is and who it's for.",
       rows: 4,
     }),
@@ -126,6 +115,7 @@ export default defineType({
       name: "ingredients",
       title: "Ingredients",
       type: "array",
+      group: "details",
       description: "Add each ingredient as a separate item. They'll be displayed as a comma-separated list.",
       of: [{ type: "string" }],
     }),
@@ -133,6 +123,7 @@ export default defineType({
       name: "howToUse",
       title: "How to use",
       type: "text",
+      group: "details",
       description: "Step-by-step instructions shown on the product page.",
       rows: 3,
     }),
@@ -142,6 +133,7 @@ export default defineType({
       name: "variants",
       title: "Fragrance variants",
       type: "array",
+      group: "core",
       description: "Add one entry per scent. If left empty, the product has no fragrance choice and uses the Stripe Price ID above.",
       of: [
         {
@@ -197,6 +189,45 @@ export default defineType({
           },
         },
       ],
+    }),
+
+    // ── Shipping & Stripe (technical — set automatically) ──────────────────
+    defineField({
+      name: "stripePriceId",
+      title: "Stripe Price ID",
+      type: "string",
+      group: "technical",
+      description: "Set automatically when you publish. Do not edit manually.",
+      readOnly: true,
+    }),
+    defineField({
+      name: "weight",
+      title: "Weight (lbs)",
+      type: "number",
+      group: "technical",
+      description: "Shipping weight in pounds — e.g. 0.165 for a shampoo bar.",
+      validation: (R) => R.positive(),
+    }),
+    defineField({
+      name: "length",
+      title: "Length (in)",
+      type: "number",
+      group: "technical",
+      validation: (R) => R.positive(),
+    }),
+    defineField({
+      name: "width",
+      title: "Width (in)",
+      type: "number",
+      group: "technical",
+      validation: (R) => R.positive(),
+    }),
+    defineField({
+      name: "height",
+      title: "Height (in)",
+      type: "number",
+      group: "technical",
+      validation: (R) => R.positive(),
     }),
   ],
   preview: {
