@@ -38,13 +38,13 @@ export default async function HomePage() {
             <div className="flex flex-wrap gap-8 justify-center">
               <Link
                 href="/shop"
-                className="text-xs uppercase tracking-widest text-white border-b border-white pb-0.5 hover:text-white/60 hover:border-white/60 transition-colors"
+                className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-colors"
               >
                 Shop the Collection
               </Link>
               <Link
                 href="/about"
-                className="text-xs uppercase tracking-widest text-white/60 border-b border-white/30 pb-0.5 hover:text-white hover:border-white transition-colors"
+                className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-colors"
               >
                 Our Story
               </Link>
