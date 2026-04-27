@@ -56,9 +56,9 @@ export default async function EventsPage() {
             on Instagram to stay in the loop.
           </p>
         ) : (
-          <div className="space-y-10">
+          <div className="divide-y divide-parchment">
             {events.map((event) => (
-              <div key={event._id} className="border-b border-parchment pb-10 flex gap-6 items-start">
+              <div key={event._id} className="py-10 flex gap-6 items-start">
                 {event.image && (
                   <div className="w-44 flex-shrink-0 overflow-hidden rounded-2xl">
                     <Image
@@ -101,15 +101,6 @@ export default async function EventsPage() {
           </div>
         )}
 
-        <div className="mt-16 pt-10 border-t border-parchment">
-          <p className="text-xs font-sans font-light text-petrol/60">
-            Sage manages events in{" "}
-            <Link href="/studio" className="text-teal hover:underline">
-              Sanity Studio
-            </Link>
-            . Add or remove events there and they&apos;ll appear here within an hour.
-          </p>
-        </div>
       </div>
     </>
   );
