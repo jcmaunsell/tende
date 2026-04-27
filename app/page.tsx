@@ -31,25 +31,21 @@ export default async function HomePage() {
             <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
               {heroHeadline}
             </h1>
-            <div className="flex flex-wrap gap-4 justify-center px-8 py-5 rounded-sm" style={{backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", background: "rgba(255,255,255,0.12)"}}>
-              <Link
-                href="/shop"
-                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
-              >
-                Shop the Collection
-              </Link>
-              <Link
-                href="/about"
-                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
-              >
-                Our Story
-              </Link>
-              <Link
-                href="#testimonials"
-                className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 hover:bg-parchment hover:text-sage transition-colors"
-              >
-                What People Are Saying
-              </Link>
+            <div className="flex flex-wrap gap-4 justify-center">
+              {[
+                { href: "/shop", label: "Shop the Collection" },
+                { href: "/about", label: "Our Story" },
+                { href: "#testimonials", label: "What People Are Saying" },
+              ].map(({ href, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  className="text-xs uppercase tracking-widest text-white border border-white/50 px-6 py-3 transition-colors hover:bg-white/20"
+                  style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", background: "rgba(255,255,255,0.1)" }}
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
