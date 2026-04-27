@@ -17,16 +17,9 @@ export default function Footer() {
           <p className="text-xs tracking-wider font-sans">garden to palm</p>
         </div>
 
-        <div className="flex gap-10 uppercase tracking-widest text-xs font-sans">
-          <div className="flex flex-col gap-3">
-            <Link href="/shop" className="hover:text-teal transition-colors">Shop</Link>
-            <Link href="/about" className="hover:text-teal transition-colors">About</Link>
-          </div>
-          <div className="flex flex-col gap-3">
-            <Link href="/faq" className="hover:text-teal transition-colors">FAQ</Link>
-            <Link href="/events" className="hover:text-teal transition-colors">Upcoming Events</Link>
-            <Link href="/contact" className="hover:text-teal transition-colors">Contact</Link>
-          </div>
+        <div className="flex flex-col gap-3 uppercase tracking-widest text-xs font-sans">
+          <Link href="/contact" className="hover:text-teal transition-colors">Contact</Link>
+          <Link href="/orders" className="hover:text-teal transition-colors">Track your order</Link>
         </div>
 
         <div className="flex gap-4 items-center">
