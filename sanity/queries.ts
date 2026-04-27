@@ -1,17 +1,52 @@
 import { client } from "./client";
 import type { Product, SanityEvent, SiteSettings } from "@/types";
 
-const FRAGRANCE_PROJECTION = `fragrance->{ _id, name, notes }`;
+// ── Shared GROQ fragments ──────────────────────────────────────────────────
+
+const FRAGRANCE_FRAGMENT = `fragrance->{ _id, name, notes }`;
+
+// Fields needed on every product surface (card, featured, detail)
+const PRODUCT_BASE = `
+  _id, title, subtitle, slug, tagline,
+  price, compareAtPrice,
+  "images": images[].asset->url,
+  category, inStock
+`;
+
+// Additional fields only needed on the product detail page
+const PRODUCT_DETAIL_EXTRA = `
+  description, ingredients, howToUse, stripePriceId
+`;
+
+// Variant fields for list views (no image, no stripePriceId needed)
+const VARIANT_LIST = `variants[]{ "fragrance": ${FRAGRANCE_FRAGMENT}, price, compareAtPrice }`;
+
+// Variant fields for the detail page
+const VARIANT_DETAIL = `variants[]{
+  "fragrance": ${FRAGRANCE_FRAGMENT},
+  "image": image.asset->url,
+  price, compareAtPrice, stripePriceId, inStock
+}`;
+
+// ── Product shape returned by getProductsByStripePriceIds ──────────────────
+
+export interface ProductDimensions {
+  _id: string;
+  title: string;
+  weight?: number;
+  length?: number;
+  width?: number;
+  height?: number;
+  stripePriceId?: string;
+  variants?: Array<{ stripePriceId?: string }>;
+}
+
+// ── Queries ────────────────────────────────────────────────────────────────
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
-      `*[_type == "product"] | order(_createdAt asc) {
-        _id, title, subtitle, slug, tagline, description, price, compareAtPrice,
-        "images": images[].asset->url,
-        category, ingredients, howToUse, inStock, stripePriceId,
-        variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, price, compareAtPrice }
-      }`
+      `*[_type == "product"] | order(_createdAt asc) { ${PRODUCT_BASE}, ${VARIANT_LIST} }`
     );
   } catch {
     return [];
@@ -22,10 +57,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
       `*[_type == "product" && inStock == true][0...4] | order(_createdAt asc) {
-        _id, title, subtitle, slug, tagline, price,
-        "images": images[].asset->url,
-        category, inStock,
-        variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, price, compareAtPrice }
+        ${PRODUCT_BASE}, ${VARIANT_LIST}
       }`
     );
   } catch {
@@ -37,10 +69,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     return await client.fetch(
       `*[_type == "product" && slug.current == $slug][0] {
-        _id, title, subtitle, slug, tagline, description, price, compareAtPrice,
-        "images": images[].asset->url,
-        category, ingredients, howToUse, inStock, stripePriceId,
-        variants[]{ "fragrance": ${FRAGRANCE_PROJECTION}, "image": image.asset->url, price, compareAtPrice, stripePriceId, inStock }
+        ${PRODUCT_BASE}, ${PRODUCT_DETAIL_EXTRA}, ${VARIANT_DETAIL}
       }`,
       { slug }
     );
@@ -67,9 +96,7 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
   }
 }
 
-export async function getProductsByStripePriceIds(
-  priceIds: string[]
-): Promise<Array<{ _id: string; title: string; weight?: number; length?: number; width?: number; height?: number; stripePriceId?: string; variants?: Array<{ stripePriceId?: string }> }>> {
+export async function getProductsByStripePriceIds(priceIds: string[]): Promise<ProductDimensions[]> {
   try {
     return await client.fetch(
       `*[_type == "product" && (

@@ -4,13 +4,8 @@ import Stripe from "stripe";
 import { Resend } from "resend";
 import { logger } from "@/lib/logger";
 import { calcParcel, purchaseLabel } from "@/lib/shipping";
-import { getProductsByStripePriceIds } from "@/sanity/queries";
-
-function getStripe() {
-  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2026-04-22.dahlia",
-  });
-}
+import { getProductsByStripePriceIds, type ProductDimensions } from "@/sanity/queries";
+import { stripe } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
@@ -18,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   let event: Stripe.Event;
   try {
-    event = getStripe().webhooks.constructEvent(
+    event = stripe.webhooks.constructEvent(
       rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!
@@ -45,21 +40,19 @@ export async function POST(req: NextRequest) {
 }
 
 async function handleOrderCompleted(session: Stripe.Checkout.Session) {
-  const stripe = getStripe();
-
   // Expand line items
   const fullSession = await stripe.checkout.sessions.retrieve(session.id, {
     expand: ["line_items"],
   });
 
-  const lineItems = fullSession.line_items?.data ?? [];
+  const lineItems: Stripe.LineItem[] = fullSession.line_items?.data ?? [];
   const priceIds = lineItems
     .map((li) => (li.price as Stripe.Price | null)?.id)
     .filter((id): id is string => !!id);
 
   // Map price IDs → product dimensions
   const products = await getProductsByStripePriceIds(priceIds);
-  const dimensionsByPriceId = new Map<string, { weight?: number; length?: number; width?: number; height?: number }>();
+  const dimensionsByPriceId = new Map<string, ProductDimensions>();
 
   for (const product of products) {
     if (product.stripePriceId) {

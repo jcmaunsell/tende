@@ -1,4 +1,4 @@
-function fmt(dollars: number): string {
+export function formatPrice(dollars: number): string {
   const isWhole = dollars % 1 === 0;
   return dollars.toLocaleString("en-US", {
     style: "currency",
@@ -8,18 +8,14 @@ function fmt(dollars: number): string {
   });
 }
 
-export function formatPrice(dollars: number): string {
-  return fmt(dollars);
-}
-
 export function priceRange(product: { price: number; variants?: Array<{ price?: number }> }): string {
   const prices = product.variants?.length
     ? product.variants.map((v) => v.price ?? product.price)
     : [product.price];
   const min = Math.min(...prices);
   const max = Math.max(...prices);
-  if (min === max) return fmt(min);
-  return `${fmt(min)}\u2013${fmt(max)}`;
+  if (min === max) return formatPrice(min);
+  return `${formatPrice(min)}\u2013${formatPrice(max)}`;
 }
 
 export function parseFragrance(name: string): { scentName: string; notes: string | null } {

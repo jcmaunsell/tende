@@ -1,8 +1,32 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import ProductCard from "@/components/ProductCard";
 import type { Product, Fragrance } from "@/types";
+
+function FilterBtn({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={[
+        "text-xs font-sans uppercase tracking-widest px-3 py-1.5 border transition-colors text-left",
+        active
+          ? "bg-foreground text-background border-foreground"
+          : "border-foreground/30 text-foreground hover:border-foreground",
+      ].join(" ")}
+    >
+      {children}
+    </button>
+  );
+}
 
 const CATEGORIES: { label: string; value: string }[] = [
   { label: "All", value: "all" },
@@ -39,49 +63,23 @@ export default function ShopProductList({ products }: { products: Product[] }) {
     return Array.from(seen.values()).sort((a, b) => a.name.localeCompare(b.name));
   }, [categoryFiltered]);
 
-  // Clear stale fragrance selection when category changes
-  useEffect(() => {
-    if (activeFragranceId && !fragrances.some((f) => f._id === activeFragranceId)) {
-      setActiveFragranceId(null);
-    }
-  }, [fragrances, activeFragranceId]);
+  // If the selected fragrance isn't in the current category, treat it as unselected
+  const validFragranceId = fragrances.some((f) => f._id === activeFragranceId)
+    ? activeFragranceId
+    : null;
 
   const filtered = useMemo(
     () =>
       categoryFiltered.filter((p) => {
-        if (!activeFragranceId) return true;
-        return p.variants?.some((v) => v.fragrance?._id === activeFragranceId) ?? false;
+        if (!validFragranceId) return true;
+        return p.variants?.some((v) => v.fragrance?._id === validFragranceId) ?? false;
       }),
-    [categoryFiltered, activeFragranceId]
+    [categoryFiltered, validFragranceId]
   );
 
   const activeCats = CATEGORIES.filter(
     (c) => c.value === "all" || products.some((p) => p.category === c.value)
   );
-
-  function FilterBtn({
-    active,
-    onClick,
-    children,
-  }: {
-    active: boolean;
-    onClick: () => void;
-    children: React.ReactNode;
-  }) {
-    return (
-      <button
-        onClick={onClick}
-        className={[
-          "text-xs font-sans uppercase tracking-widest px-3 py-1.5 border transition-colors text-left",
-          active
-            ? "bg-foreground text-background border-foreground"
-            : "border-foreground/30 text-foreground hover:border-foreground",
-        ].join(" ")}
-      >
-        {children}
-      </button>
-    );
-  }
 
   return (
     <>
@@ -101,14 +99,14 @@ export default function ShopProductList({ products }: { products: Product[] }) {
       {/* Fragrance filters */}
       {fragrances.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-10">
-          <FilterBtn active={activeFragranceId === null} onClick={() => setActiveFragranceId(null)}>
+          <FilterBtn active={validFragranceId === null} onClick={() => setActiveFragranceId(null)}>
             Any Fragrance
           </FilterBtn>
           {fragrances.map((f) => (
             <FilterBtn
               key={f._id}
-              active={activeFragranceId === f._id}
-              onClick={() => setActiveFragranceId(activeFragranceId === f._id ? null : f._id)}
+              active={validFragranceId === f._id}
+              onClick={() => setActiveFragranceId(validFragranceId === f._id ? null : f._id)}
             >
               {f.name}
               {f.notes && (
