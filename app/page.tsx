@@ -18,7 +18,7 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="flex flex-col">
-        <div className="relative h-[55vh] flex items-end justify-center pb-16">
+        <div className="relative h-[55vh] flex flex-col">
           <Image
             src="/images/bars-overhead.jpg"
             alt="Tende products"
@@ -27,10 +27,12 @@ export default async function HomePage() {
             priority
           />
           <div className="absolute inset-0 bg-petrol/50" />
-          <div className="relative z-10 text-center px-6 flex flex-col items-center gap-8">
-            <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
+          <div className="relative z-10 flex-1 flex items-center justify-center px-6">
+            <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none text-center">
               {heroHeadline}
             </h1>
+          </div>
+          <div className="relative z-10 flex justify-center pb-10 px-6">
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="/shop"
