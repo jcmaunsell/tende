@@ -54,6 +54,8 @@ export interface SanityEvent {
 }
 
 export interface SiteSettings {
+  shippingBannerEnabled?: boolean;
+  shippingBannerText?: string;
   heroHeadline?: string;
   heroSubheadline?: string;
   founderPhoto?: string;

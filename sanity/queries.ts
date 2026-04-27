@@ -188,6 +188,8 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     return await client.fetch(
       `*[_type == "siteSettings"][0] {
+        shippingBannerEnabled,
+        shippingBannerText,
         heroHeadline,
         heroSubheadline,
         "founderPhoto": founderPhoto.asset->url,

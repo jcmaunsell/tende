@@ -5,6 +5,22 @@ const siteSettings = defineType({
   title: "Site Settings",
   type: "document",
   fields: [
+    // ── Banner ────────────────────────────────────────────────────────────
+    defineField({
+      name: "shippingBannerEnabled",
+      title: "Show shipping banner",
+      type: "boolean",
+      description: "Show the free shipping announcement bar at the top of every page.",
+      initialValue: true,
+    }),
+    defineField({
+      name: "shippingBannerText",
+      title: "Shipping banner text",
+      type: "string",
+      description: 'The message shown in the banner, e.g. "Free U.S. shipping on orders over $55 — no code needed".',
+      initialValue: "Free U.S. shipping on orders over $55 — no code needed",
+    }),
+
     // ── Homepage ───────────────────────────────────────────────────────────
     defineField({
       name: "heroHeadline",

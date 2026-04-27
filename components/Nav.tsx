@@ -34,17 +34,21 @@ function CartIcon({ count }: { count: number }) {
   );
 }
 
-export default function Nav() {
+const DEFAULT_BANNER = "Free U.S. shipping on orders over $55 — no code needed";
+
+export default function Nav({ bannerEnabled = true, bannerText = DEFAULT_BANNER }: { bannerEnabled?: boolean; bannerText?: string }) {
   const [open, setOpen] = useState(false);
   const count = useCart((s) => s.items.reduce((sum, i) => sum + i.quantity, 0));
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-petrol text-white/80 text-xs text-center py-2 px-4 tracking-wider">
-        Free U.S. shipping on orders over $55 — no code needed
-      </div>
+      {bannerEnabled && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-petrol text-white/80 text-xs text-center py-2 px-4 tracking-wider">
+          {bannerText}
+        </div>
+      )}
 
-      <nav className="fixed top-8 left-0 right-0 z-40 bg-petrol">
+      <nav className={`fixed ${bannerEnabled ? "top-8" : "top-0"} left-0 right-0 z-40 bg-petrol`}>
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center flex-shrink-0" onClick={() => setOpen(false)}>
             <Image
