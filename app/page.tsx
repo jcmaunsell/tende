@@ -31,7 +31,7 @@ export default async function HomePage() {
             <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
               {heroHeadline}
             </h1>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center mt-5">
               {[
                 { href: "/shop", label: "Shop the Collection" },
                 { href: "/about", label: "Our Story" },
