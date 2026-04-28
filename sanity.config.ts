@@ -6,6 +6,15 @@ import { visionTool } from "@sanity/vision";
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import { schemaTypes } from "./sanity/schemas";
 
+const PRODUCT_CATEGORIES = [
+  { title: "Hair Care",    value: "hair" },
+  { title: "Body Care",    value: "body" },
+  { title: "Skin Care",    value: "skincare" },
+  { title: "Scalp Care",   value: "scalp" },
+  { title: "Accessories",  value: "accessories" },
+  { title: "Merch",        value: "merch" },
+];
+
 export default defineConfig({
   basePath: "/studio",
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
@@ -16,7 +25,25 @@ export default defineConfig({
         S.list()
           .title("Content")
           .items([
-            orderableDocumentListDeskItem({ type: "product", title: "Products", S, context }),
+            S.listItem()
+              .title("Products")
+              .icon(() => "🛍️")
+              .child(
+                S.list()
+                  .title("Products by Category")
+                  .items(
+                    PRODUCT_CATEGORIES.map(({ title, value }) =>
+                      orderableDocumentListDeskItem({
+                        type: "product",
+                        title,
+                        filter: "_type == $type && category == $category",
+                        params: { type: "product", category: value },
+                        S,
+                        context,
+                      })
+                    )
+                  )
+              ),
             S.documentTypeListItem("fragrance").title("Fragrances"),
             S.documentTypeListItem("market").title("Markets"),
             S.documentTypeListItem("event").title("Events"),
