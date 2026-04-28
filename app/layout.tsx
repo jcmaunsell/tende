@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main className={`flex-1 ${bannerEnabled ? "pt-[88px]" : "pt-14"}`}>{children}</main>
         <Footer />
         <SanityLive />
-        {isDraftMode && <VisualEditing />}
+        <VisualEditing />
       </body>
     </html>
   );
