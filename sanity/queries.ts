@@ -46,7 +46,7 @@ export interface ProductDimensions {
 export async function getAllProducts(): Promise<Product[]> {
   try {
     return await client.fetch(
-      `*[_type == "product"] | order(_createdAt asc) { ${PRODUCT_BASE}, ${VARIANT_LIST} }`
+      `*[_type == "product"] | order(orderRank asc, _createdAt asc) { ${PRODUCT_BASE}, ${VARIANT_LIST} }`
     );
   } catch {
     return [];
