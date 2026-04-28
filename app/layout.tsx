@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import DatadogRum from "@/components/DatadogRum";
 import { getSiteSettings } from "@/sanity/queries";
 import { SanityLive } from "@/sanity/live";
-import { VisualEditing } from "next-sanity/visual-editing";
+import VisualEditingLoader from "@/components/VisualEditingLoader";
 import { draftMode } from "next/headers";
 
 export const metadata: Metadata = {
@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main className={`flex-1 ${bannerEnabled ? "pt-[88px]" : "pt-14"}`}>{children}</main>
         <Footer />
         <SanityLive />
-        <VisualEditing />
+        <VisualEditingLoader />
       </body>
     </html>
   );
