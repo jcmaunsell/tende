@@ -2,11 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/types";
 import { priceRange } from "@/lib/utils";
-import { da } from "@/sanity/attr";
 
 export default function ProductCard({ product }: { product: Product }) {
   const slug = product.slug.current;
-  const pda = da(product._id, "product");
   const onSale =
     !!product.compareAtPrice ||
     (product.variants?.some((v) => v.compareAtPrice) ?? false);
@@ -34,13 +32,13 @@ export default function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <p className="text-xs uppercase tracking-widest text-petrol mb-1 font-sans">{product.category}</p>
-      <h3 className="font-display font-bold text-base text-foreground uppercase leading-tight" data-sanity={pda("title")}>
+      <h3 className="font-display font-bold text-base text-foreground uppercase leading-tight">
         {product.title}
         {product.subtitle && (
-          <span className="block font-light text-sm normal-case tracking-normal text-foreground/60" data-sanity={pda("subtitle")}>{product.subtitle}</span>
+          <span className="block font-light text-sm normal-case tracking-normal text-foreground/60">{product.subtitle}</span>
         )}
       </h3>
-      {product.tagline && <p className="text-sm font-light text-petrol/80 mb-2 font-sans" data-sanity={pda("tagline")}>{product.tagline}</p>}
+      {product.tagline && <p className="text-sm font-light text-petrol/80 mb-2 font-sans">{product.tagline}</p>}
       <p className="text-sm text-teal font-sans">{priceRange(product)}</p>
     </Link>
   );
