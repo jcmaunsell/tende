@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Ticker from "@/components/Ticker";
-import { getSiteSettings } from "@/sanity/queries";
+import { getAboutPage } from "@/sanity/queries";
 import { da } from "@/sanity/attr";
 
 const FALLBACK_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
@@ -16,11 +16,11 @@ const FALLBACK_BRAND_STORY = [
 export const revalidate = 3600;
 
 export default async function AboutPage() {
-  const settings = await getSiteSettings();
-  const photoUrl = settings?.founderPhoto ?? FALLBACK_IMG;
-  const bio = settings?.founderBio?.length ? settings.founderBio : FALLBACK_BIO;
-  const brandStory = settings?.brandStory?.length ? settings.brandStory : FALLBACK_BRAND_STORY;
-  const sda = settings?._id ? da(settings._id, "siteSettings") : null;
+  const about = await getAboutPage();
+  const photoUrl = about?.founderPhoto ?? FALLBACK_IMG;
+  const bio = about?.founderBio?.length ? about.founderBio : FALLBACK_BIO;
+  const brandStory = about?.brandStory?.length ? about.brandStory : FALLBACK_BRAND_STORY;
+  const sda = about?._id ? da(about._id, "aboutPage") : null;
 
   return (
     <div className="bg-sage min-h-screen">

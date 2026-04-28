@@ -5,7 +5,6 @@ const siteSettings = defineType({
   title: "Site Settings",
   type: "document",
   fields: [
-    // ── Banner ────────────────────────────────────────────────────────────
     defineField({
       name: "shippingBannerEnabled",
       title: "Show sitewide banner",
@@ -20,113 +19,10 @@ const siteSettings = defineType({
       description: 'The message shown in the banner, e.g. "Free U.S. shipping on orders over $55 — no code needed".',
       initialValue: "Free U.S. shipping on orders over $55 — no code needed",
     }),
-
-    // ── Homepage ───────────────────────────────────────────────────────────
-    defineField({
-      name: "heroHeadline",
-      title: "Homepage headline",
-      type: "string",
-      description: 'The large text shown over the hero photo (e.g. "Science Meets Simplicity").',
-    }),
-    defineField({
-      name: "heroSubheadline",
-      title: "Homepage sub-headline",
-      type: "text",
-      description: "Short brand statement shown in the teal section beneath the hero photo. Use line breaks to separate sentences.",
-      rows: 3,
-    }),
-
-    // ── About / Founder ────────────────────────────────────────────────────
-    defineField({
-      name: "founderPhoto",
-      title: "Founder photo",
-      type: "image",
-      description: "The photo that appears on the About page.",
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: "founderBio",
-      title: "Founder bio",
-      type: "array",
-      description: "Paragraphs shown on the About page beneath the headline.",
-      of: [{ type: "text" }],
-    }),
-    defineField({
-      name: "brandStory",
-      title: "Brand story",
-      type: "array",
-      description: "Paragraphs shown on the About page below your bio — the brand philosophy section.",
-      of: [{ type: "text" }],
-    }),
-
-    // ── FAQ ────────────────────────────────────────────────────────────────
-    defineField({
-      name: "faqs",
-      title: "FAQ",
-      type: "array",
-      description: "Questions and answers shown on the FAQ page. Drag to reorder.",
-      of: [
-        {
-          type: "object",
-          name: "faqItem",
-          fields: [
-            defineField({ name: "question", title: "Question", type: "string", validation: R => R.required() }),
-            defineField({ name: "answer", title: "Answer", type: "text", rows: 3, validation: R => R.required() }),
-          ],
-          preview: { select: { title: "question" } },
-        },
-      ],
-    }),
-
-    // ── Gallery ─────────────────────────────────────────────────────────────
-    defineField({
-      name: "galleryImages",
-      title: "Gallery",
-      type: "array",
-      description: "Photos shown on the /gallery page. Drag to reorder.",
-      of: [
-        {
-          type: "object",
-          name: "galleryImage",
-          fields: [
-            defineField({ name: "image", title: "Image", type: "image", options: { hotspot: true }, validation: (R) => R.required() }),
-            defineField({ name: "alt", title: "Alt text", type: "string", description: "Describe the image for screen readers." }),
-          ],
-          preview: {
-            select: { media: "image", title: "alt" },
-            prepare(value: Record<string, unknown>) {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              return { media: value.image as any, title: (value.alt as string | undefined) ?? "Gallery image" };
-            },
-          },
-        },
-      ],
-    }),
-
-    // ── Testimonials ───────────────────────────────────────────────────────
-    defineField({
-      name: "testimonials",
-      title: "Customer reviews",
-      type: "array",
-      description: "Reviews shown on the home page. Add real customer quotes here.",
-      of: [
-        {
-          type: "object",
-          name: "testimonial",
-          fields: [
-            defineField({ name: "quote", title: "Quote", type: "text", rows: 2, validation: R => R.required() }),
-            defineField({ name: "author", title: "Name", type: "string", description: 'e.g. "Maya R."', validation: R => R.required() }),
-          ],
-          preview: { select: { title: "author", subtitle: "quote" } },
-        },
-      ],
-    }),
   ],
   preview: { prepare: () => ({ title: "Site Settings" }) },
 });
 
-// Prevent creating or deleting this singleton document via the Studio UI.
-// __experimental_actions is not in Sanity's TS types but is supported at runtime.
 (siteSettings as unknown as Record<string, unknown>).__experimental_actions = ["update", "publish"];
 
 export default siteSettings;

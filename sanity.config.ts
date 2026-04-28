@@ -50,7 +50,22 @@ export default defineConfig({
             S.documentTypeListItem("market").title("Markets"),
             S.documentTypeListItem("event").title("Events"),
             S.documentTypeListItem("order").title("Orders"),
-            S.documentTypeListItem("siteSettings").title("Site Settings"),
+            S.divider(),
+            S.listItem().title("Site Settings").child(
+              S.editor().schemaType("siteSettings").documentId("siteSettings")
+            ),
+            S.listItem().title("Home Page").child(
+              S.editor().schemaType("homePage").documentId("homePage")
+            ),
+            S.listItem().title("About Page").child(
+              S.editor().schemaType("aboutPage").documentId("aboutPage")
+            ),
+            S.listItem().title("FAQ").child(
+              S.editor().schemaType("faq").documentId("faq")
+            ),
+            S.listItem().title("Gallery").child(
+              S.editor().schemaType("gallery").documentId("gallery")
+            ),
           ]),
     }),
     presentationTool({

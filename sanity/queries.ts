@@ -1,6 +1,6 @@
 import { writeClient } from "./client";
 import { sanityFetch } from "./live";
-import type { Product, SanityEvent, SiteSettings } from "@/types";
+import type { Product, SanityEvent, SiteSettings, HomePage, AboutPage, FAQPage, GalleryPage } from "@/types";
 
 // ── Shared GROQ fragments ──────────────────────────────────────────────────
 
@@ -194,21 +194,53 @@ export async function getOrderByIdAndEmail(orderId: string, email: string): Prom
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const { data } = await sanityFetch({
-      query: `*[_type == "siteSettings"][0] {
-        _id,
-        shippingBannerEnabled,
-        shippingBannerText,
-        heroHeadline,
-        heroSubheadline,
-        "founderPhoto": founderPhoto.asset->url,
-        founderBio,
-        brandStory,
-        "galleryImages": galleryImages[]{ "image": image.asset->url, alt },
-        faqs[]{ question, answer },
-        testimonials[]{ quote, author }
-      }`,
+      query: `*[_type == "siteSettings"][0] { _id, shippingBannerEnabled, shippingBannerText }`,
     });
     return data as SiteSettings | null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getHomePage(): Promise<HomePage | null> {
+  try {
+    const { data } = await sanityFetch({
+      query: `*[_type == "homePage"][0] { _id, heroHeadline, heroSubheadline, testimonials[]{ quote, author } }`,
+    });
+    return data as HomePage | null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getAboutPage(): Promise<AboutPage | null> {
+  try {
+    const { data } = await sanityFetch({
+      query: `*[_type == "aboutPage"][0] { _id, "founderPhoto": founderPhoto.asset->url, founderBio, brandStory }`,
+    });
+    return data as AboutPage | null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getFAQPage(): Promise<FAQPage | null> {
+  try {
+    const { data } = await sanityFetch({
+      query: `*[_type == "faq"][0] { _id, items[]{ question, answer } }`,
+    });
+    return data as FAQPage | null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getGalleryPage(): Promise<GalleryPage | null> {
+  try {
+    const { data } = await sanityFetch({
+      query: `*[_type == "gallery"][0] { _id, "images": images[]{ "image": image.asset->url, alt } }`,
+    });
+    return data as GalleryPage | null;
   } catch {
     return null;
   }

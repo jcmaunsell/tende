@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getSiteSettings } from "@/sanity/queries";
+import { getGalleryPage } from "@/sanity/queries";
 import GalleryGrid from "@/components/GalleryGrid";
 
 export const revalidate = 60;
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  const settings = await getSiteSettings();
-  const images = settings?.galleryImages ?? [];
+  const galleryPage = await getGalleryPage();
+  const images = galleryPage?.images ?? [];
 
   return (
     <div className="max-w-6xl mx-auto px-4 md:px-6 py-16">
@@ -21,7 +21,7 @@ export default async function GalleryPage() {
       </div>
 
       {images.length === 0 ? (
-        <p className="text-sm font-sans text-petrol">No images yet — add some in Sanity Studio under Site Settings → Gallery.</p>
+        <p className="text-sm font-sans text-petrol">No images yet — add some in Sanity Studio under Gallery.</p>
       ) : (
         <GalleryGrid images={images} />
       )}

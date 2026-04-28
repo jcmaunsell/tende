@@ -3,18 +3,18 @@ import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import Ticker from "@/components/Ticker";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
-import { getFeaturedProducts, getSiteSettings } from "@/sanity/queries";
+import { getFeaturedProducts, getHomePage } from "@/sanity/queries";
 import { da } from "@/sanity/attr";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const [products, settings] = await Promise.all([getFeaturedProducts(), getSiteSettings()]);
-  const testimonials = settings?.testimonials ?? [];
-  const heroHeadline = settings?.heroHeadline ?? "Science Meets Simplicity";
-  const heroSubheadline = settings?.heroSubheadline ?? "Plant-based hair + body care, handcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
+  const [products, home] = await Promise.all([getFeaturedProducts(), getHomePage()]);
+  const testimonials = home?.testimonials ?? [];
+  const heroHeadline = home?.heroHeadline ?? "Science Meets Simplicity";
+  const heroSubheadline = home?.heroSubheadline ?? "Plant-based hair + body care, handcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
   const [heroTagline, heroBrandline] = heroSubheadline.split("\n\n");
-  const sda = settings?._id ? da(settings._id, "siteSettings") : null;
+  const sda = home?._id ? da(home._id, "homePage") : null;
 
   return (
     <>

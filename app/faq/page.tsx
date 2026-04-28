@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getSiteSettings } from "@/sanity/queries";
+import { getFAQPage } from "@/sanity/queries";
 import { da } from "@/sanity/attr";
 
 export const revalidate = 3600;
@@ -15,9 +15,9 @@ const FALLBACK_FAQS = [
 ];
 
 export default async function FAQPage() {
-  const settings = await getSiteSettings();
-  const faqs = settings?.faqs?.length ? settings.faqs : FALLBACK_FAQS;
-  const sda = settings?._id ? da(settings._id, "siteSettings") : null;
+  const faqPage = await getFAQPage();
+  const faqs = faqPage?.items?.length ? faqPage.items : FALLBACK_FAQS;
+  const sda = faqPage?._id ? da(faqPage._id, "faq") : null;
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-16">
@@ -27,8 +27,8 @@ export default async function FAQPage() {
       <div className="divide-y divide-parchment">
         {faqs.map(({ question, answer }, i) => (
           <div key={question} className="py-8">
-            <h2 className="font-display text-xl text-foreground mb-3" data-sanity={sda?.(`faqs[${i}].question`)}>{question}</h2>
-            <p className="text-sm font-light leading-relaxed text-petrol" data-sanity={sda?.(`faqs[${i}].answer`)}>{answer}</p>
+            <h2 className="font-display text-xl text-foreground mb-3" data-sanity={sda?.(`items[${i}].question`)}>{question}</h2>
+            <p className="text-sm font-light leading-relaxed text-petrol" data-sanity={sda?.(`items[${i}].answer`)}>{answer}</p>
           </div>
         ))}
       </div>
