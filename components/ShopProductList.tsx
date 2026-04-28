@@ -30,7 +30,7 @@ function FilterBtn({
 
 const CATEGORIES: { label: string; value: string }[] = [
   { label: "All", value: "all" },
-  { label: "Skincare", value: "skincare" },
+  { label: "Skin Care", value: "skincare" },
   { label: "Hair Care", value: "hair" },
   { label: "Body Care", value: "body" },
   { label: "Scalp Care", value: "scalp" },
