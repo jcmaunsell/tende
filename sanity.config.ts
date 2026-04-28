@@ -57,6 +57,9 @@ export default defineConfig({
             S.listItem().title("Home Page").child(
               S.editor().schemaType("homePage").documentId("homePage")
             ),
+            S.listItem().title("Shop Page").child(
+              S.editor().schemaType("shopPage").documentId("shopPage")
+            ),
             S.listItem().title("About Page").child(
               S.editor().schemaType("aboutPage").documentId("aboutPage")
             ),

@@ -83,6 +83,11 @@ export interface GalleryPage {
   images?: { image: string; alt?: string }[];
 }
 
+export interface ShopPage {
+  _id: string;
+  products?: Product[];
+}
+
 export interface CartItem {
   productId: string;
   title: string;

@@ -1,6 +1,6 @@
 import { writeClient } from "./client";
 import { sanityFetch } from "./live";
-import type { Product, SanityEvent, SiteSettings, HomePage, AboutPage, FAQPage, GalleryPage } from "@/types";
+import type { Product, SanityEvent, SiteSettings, HomePage, AboutPage, FAQPage, GalleryPage, ShopPage } from "@/types";
 
 // ── Shared GROQ fragments ──────────────────────────────────────────────────
 
@@ -43,6 +43,22 @@ export interface ProductDimensions {
 }
 
 // ── Queries ────────────────────────────────────────────────────────────────
+
+export async function getShopPage(): Promise<ShopPage | null> {
+  try {
+    const { data } = await sanityFetch({
+      query: `*[_type == "shopPage"][0] {
+        _id,
+        "products": products[]->{
+          ${PRODUCT_BASE}, ${VARIANT_LIST}
+        }
+      }`,
+    });
+    return data as ShopPage | null;
+  } catch {
+    return null;
+  }
+}
 
 export async function getAllProducts(): Promise<Product[]> {
   try {

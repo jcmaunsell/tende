@@ -1,6 +1,7 @@
 import Image from "next/image";
 import ShopProductList from "@/components/ShopProductList";
-import { getAllProducts } from "@/sanity/queries";
+import { getShopPage, getAllProducts } from "@/sanity/queries";
+import { da } from "@/sanity/attr";
 
 export const revalidate = 60;
 
@@ -9,9 +10,20 @@ export default async function ShopPage({
 }: {
   searchParams: Promise<{ category?: string; fragrance?: string }>;
 }) {
-  const [products, params] = await Promise.all([getAllProducts(), searchParams]);
+  const [shopPage, allProducts, params] = await Promise.all([
+    getShopPage(),
+    getAllProducts(),
+    searchParams,
+  ]);
+
+  // Use shopPage order; append any products not yet added to the list
+  const orderedIds = new Set((shopPage?.products ?? []).map((p) => p._id));
+  const unlistedProducts = allProducts.filter((p) => !orderedIds.has(p._id));
+  const products = [...(shopPage?.products ?? allProducts), ...unlistedProducts];
+
   const initialCategory = params.category ?? "all";
   const initialFragrance = params.fragrance ?? null;
+  const sda = shopPage?._id ? da(shopPage._id, "shopPage") : null;
 
   return (
     <>
@@ -30,7 +42,7 @@ export default async function ShopPage({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="max-w-6xl mx-auto px-6 py-16" data-sanity={sda?.("products")}>
         <ShopProductList products={products} initialCategory={initialCategory} initialFragrance={initialFragrance} />
       </div>
     </>
