@@ -16,10 +16,17 @@ export default async function ShopPage({
     searchParams,
   ]);
 
-  // Use shopPage order; append any products not yet added to the list
-  const orderedIds = new Set((shopPage?.products ?? []).map((p) => p._id));
-  const unlistedProducts = allProducts.filter((p) => !orderedIds.has(p._id));
-  const products = [...(shopPage?.products ?? allProducts), ...unlistedProducts];
+  // Use shopPage order; append any products not yet added to the list.
+  // Deduplicate by _id in case a reference was added twice in Studio.
+  const seen = new Set<string>();
+  const deduped = (shopPage?.products ?? []).filter((p) => {
+    if (seen.has(p._id)) return false;
+    seen.add(p._id);
+    return true;
+  });
+  const products = deduped.length > 0
+    ? [...deduped, ...allProducts.filter((p) => !seen.has(p._id))]
+    : allProducts;
 
   const initialCategory = params.category ?? "all";
   const initialFragrance = params.fragrance ?? null;
