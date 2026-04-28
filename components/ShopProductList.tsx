@@ -38,9 +38,17 @@ const CATEGORIES: { label: string; value: string }[] = [
   { label: "Merch", value: "merch" },
 ];
 
-export default function ShopProductList({ products }: { products: Product[] }) {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const [activeFragranceId, setActiveFragranceId] = useState<string | null>(null);
+export default function ShopProductList({
+  products,
+  initialCategory = "all",
+  initialFragrance = null,
+}: {
+  products: Product[];
+  initialCategory?: string;
+  initialFragrance?: string | null;
+}) {
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
+  const [activeFragranceId, setActiveFragranceId] = useState<string | null>(initialFragrance);
   const [fragranceOpen, setFragranceOpen] = useState(false);
 
   // Category-filtered products (before fragrance filter)

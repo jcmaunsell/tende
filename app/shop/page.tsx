@@ -4,8 +4,14 @@ import { getAllProducts } from "@/sanity/queries";
 
 export const revalidate = 60;
 
-export default async function ShopPage() {
-  const products = await getAllProducts();
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string; fragrance?: string }>;
+}) {
+  const [products, params] = await Promise.all([getAllProducts(), searchParams]);
+  const initialCategory = params.category ?? "all";
+  const initialFragrance = params.fragrance ?? null;
 
   return (
     <>
@@ -25,7 +31,7 @@ export default async function ShopPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-16">
-        <ShopProductList products={products} />
+        <ShopProductList products={products} initialCategory={initialCategory} initialFragrance={initialFragrance} />
       </div>
     </>
   );

@@ -62,11 +62,11 @@ export default async function HomePage() {
       {/* Category tiles */}
       <div className="grid grid-cols-1 md:grid-cols-3">
         {[
-          { src: "/images/bars-lineup.jpg",        alt: "Tende shampoo and conditioner bars", label: "Hair Care" },
-          { src: "/images/atlas-rose-products.jpg", alt: "Atlas Rose body oil and scrub",       label: "Body Care" },
-          { src: "/images/brightening-face-oil.jpg", alt: "Tende brightening face oil",          label: "Skin Care" },
-        ].map(({ src, alt, label }) => (
-          <Link key={label} href="/shop" className="group relative aspect-[3/4] overflow-hidden block">
+          { src: "/images/bars-lineup.jpg",         alt: "Tende shampoo and conditioner bars", label: "Hair Care",  href: "/shop?category=hair" },
+          { src: "/images/atlas-rose-products.jpg", alt: "Atlas Rose body oil and scrub",       label: "Body Care",  href: "/shop?category=body" },
+          { src: "/images/brightening-face-oil.jpg", alt: "Tende brightening face oil",         label: "Skin Care",  href: "/shop?category=skincare" },
+        ].map(({ src, alt, label, href }) => (
+          <Link key={label} href={href} className="group relative aspect-[3/4] overflow-hidden block">
             <Image src={src} alt={alt} fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute inset-0 bg-petrol/30 group-hover:bg-petrol/50 transition-colors duration-300" />
             <div className="absolute bottom-0 left-0 right-0 p-8">
