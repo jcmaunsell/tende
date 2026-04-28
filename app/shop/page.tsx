@@ -19,7 +19,8 @@ export default async function ShopPage({
   // Use shopPage order; append any products not yet added to the list.
   // Deduplicate by _id in case a reference was added twice in Studio.
   const seen = new Set<string>();
-  const deduped = (shopPage?.products ?? []).filter((p) => {
+  const deduped = (shopPage?.products ?? []).filter((p): p is NonNullable<typeof p> => {
+    if (!p?._id) return false;
     if (seen.has(p._id)) return false;
     seen.add(p._id);
     return true;
