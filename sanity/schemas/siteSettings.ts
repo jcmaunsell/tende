@@ -8,14 +8,14 @@ const siteSettings = defineType({
     // ── Banner ────────────────────────────────────────────────────────────
     defineField({
       name: "shippingBannerEnabled",
-      title: "Show shipping banner",
+      title: "Show sitewide banner",
       type: "boolean",
-      description: "Show the free shipping announcement bar at the top of every page.",
+      description: "Show the announcement bar at the top of every page.",
       initialValue: true,
     }),
     defineField({
       name: "shippingBannerText",
-      title: "Shipping banner text",
+      title: "Sitewide banner text",
       type: "string",
       description: 'The message shown in the banner, e.g. "Free U.S. shipping on orders over $55 — no code needed".',
       initialValue: "Free U.S. shipping on orders over $55 — no code needed",
