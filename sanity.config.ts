@@ -36,6 +36,7 @@ export default defineConfig({
                       orderableDocumentListDeskItem({
                         type: "product",
                         title,
+                        id: `orderable-product-${value}`,
                         filter: "_type == $type && category == $category",
                         params: { type: "product", category: value },
                         S,
