@@ -4,6 +4,7 @@ import ProductCard from "@/components/ProductCard";
 import Ticker from "@/components/Ticker";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import { getFeaturedProducts, getSiteSettings } from "@/sanity/queries";
+import { da } from "@/sanity/attr";
 
 export const revalidate = 60;
 
@@ -13,6 +14,7 @@ export default async function HomePage() {
   const heroHeadline = settings?.heroHeadline ?? "Science Meets Simplicity";
   const heroSubheadline = settings?.heroSubheadline ?? "Plant-based hair + body care, handcrafted by an organic chemist.\n\nPure botanicals, zero excess.";
   const [heroTagline, heroBrandline] = heroSubheadline.split("\n\n");
+  const sda = settings?._id ? da(settings._id, "siteSettings") : null;
 
   return (
     <>
@@ -28,7 +30,7 @@ export default async function HomePage() {
           />
           <div className="absolute inset-0 bg-petrol/50" />
           <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center translate-y-8">
-            <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none">
+            <h1 className="font-glassure text-white text-5xl md:text-7xl lg:text-9xl uppercase tracking-wider leading-none" data-sanity={sda?.("heroHeadline")}>
               {heroHeadline}
             </h1>
             <div className="flex flex-wrap gap-4 justify-center mt-5">
@@ -51,7 +53,7 @@ export default async function HomePage() {
         </div>
 
         <div className="bg-sage flex items-center justify-center text-center py-12 px-6">
-          <p className="font-display font-bold text-white text-xl md:text-2xl uppercase tracking-wide leading-snug">
+          <p className="font-display font-bold text-white text-xl md:text-2xl uppercase tracking-wide leading-snug" data-sanity={sda?.("heroSubheadline")}>
             {heroTagline}
           </p>
         </div>
@@ -79,7 +81,7 @@ export default async function HomePage() {
 
       {/* Brand statement */}
       <div className="bg-sage py-14 px-6 text-center">
-        <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug">
+        <p className="font-display font-bold text-white text-2xl md:text-3xl lg:text-4xl uppercase tracking-wide leading-snug" data-sanity={sda?.("heroSubheadline")}>
           {heroBrandline}
         </p>
       </div>
@@ -115,7 +117,7 @@ export default async function HomePage() {
       {/* Reviews */}
       {testimonials.length > 0 && (
         <section id="testimonials" className="bg-parchment py-24">
-          <div className="max-w-4xl mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto px-6 text-center" data-sanity={sda?.("testimonials")}>
             <p className="text-xs uppercase tracking-[0.3em] text-petrol mb-3 font-sans">reviews</p>
             <h2 className="font-display font-bold text-3xl text-foreground mb-16 uppercase">What People are Saying</h2>
             <TestimonialCarousel testimonials={testimonials} />

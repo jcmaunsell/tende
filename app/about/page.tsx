@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Ticker from "@/components/Ticker";
 import { getSiteSettings } from "@/sanity/queries";
+import { da } from "@/sanity/attr";
 
 const FALLBACK_IMG = "https://images.squarespace-cdn.com/content/v1/67b280d5f7c74d32903613d1/4a1fce95-19e6-4b67-87e6-bcc5d7f4fcb9/DSC_0932+2.jpg";
 const FALLBACK_BIO = [
@@ -19,12 +20,13 @@ export default async function AboutPage() {
   const photoUrl = settings?.founderPhoto ?? FALLBACK_IMG;
   const bio = settings?.founderBio?.length ? settings.founderBio : FALLBACK_BIO;
   const brandStory = settings?.brandStory?.length ? settings.brandStory : FALLBACK_BRAND_STORY;
+  const sda = settings?._id ? da(settings._id, "siteSettings") : null;
 
   return (
     <div className="bg-sage min-h-screen">
 
       <section className="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
-        <div className="p-3 border-2 border-white/40 aspect-[3/4] overflow-hidden">
+        <div className="p-3 border-2 border-white/40 aspect-[3/4] overflow-hidden" data-sanity={sda?.("founderPhoto")}>
           <Image
             src={photoUrl}
             alt="Sage, founder of Tende"
@@ -39,7 +41,7 @@ export default async function AboutPage() {
           </h2>
           <div className="space-y-5 text-base font-light leading-relaxed text-white/80 font-sans">
             {bio.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
+              <p key={i} data-sanity={sda?.(`founderBio[${i}]`)}>{paragraph}</p>
             ))}
           </div>
         </div>
@@ -50,7 +52,7 @@ export default async function AboutPage() {
       <section className="max-w-3xl mx-auto px-6 py-16">
         <div className="space-y-6 text-base font-light leading-relaxed text-white/75 font-sans">
           {brandStory.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
+            <p key={i} data-sanity={sda?.(`brandStory[${i}]`)}>{paragraph}</p>
           ))}
         </div>
       </section>

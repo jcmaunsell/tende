@@ -195,6 +195,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const { data } = await sanityFetch({
       query: `*[_type == "siteSettings"][0] {
+        _id,
         shippingBannerEnabled,
         shippingBannerText,
         heroHeadline,

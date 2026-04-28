@@ -5,10 +5,12 @@ import ProductGallery from "@/components/ProductGallery";
 import AddToCartButton from "@/components/AddToCartButton";
 import type { Product } from "@/types";
 import { formatPrice, priceRange } from "@/lib/utils";
+import { da } from "@/sanity/attr";
 
 export default function ProductDetail({ product }: { product: Product }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const pda = da(product._id, "product");
 
   // Merge product images + variant-specific images not already present
   const allImages = useMemo(() => {
@@ -57,11 +59,11 @@ export default function ProductDetail({ product }: { product: Product }) {
 
       <div className="flex flex-col gap-6">
         <div>
-          <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground uppercase leading-none mb-1">
+          <h1 className="font-display font-bold text-4xl md:text-5xl text-foreground uppercase leading-none mb-1" data-sanity={pda("title")}>
             {product.title}
           </h1>
           {product.subtitle && (
-            <p className="font-display font-light text-xl md:text-2xl text-foreground/50 mb-3">{product.subtitle}</p>
+            <p className="font-display font-light text-xl md:text-2xl text-foreground/50 mb-3" data-sanity={pda("subtitle")}>{product.subtitle}</p>
           )}
           <div className="flex items-baseline gap-3">
             <p className="font-display font-bold text-xl text-teal">
@@ -76,7 +78,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         </div>
 
         {shortDesc && (
-          <p className="text-sm font-sans font-light leading-relaxed text-petrol">
+          <p className="text-sm font-sans font-light leading-relaxed text-petrol" data-sanity={pda("description")}>
             {shortDesc}
           </p>
         )}
@@ -84,7 +86,7 @@ export default function ProductDetail({ product }: { product: Product }) {
         <AddToCartButton product={product} onFragranceChange={handleFragranceChange} />
 
         {product.tagline && (
-          <p className="text-xs font-sans uppercase tracking-widest text-petrol">
+          <p className="text-xs font-sans uppercase tracking-widest text-petrol" data-sanity={pda("tagline")}>
             {product.tagline}
           </p>
         )}

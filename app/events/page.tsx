@@ -1,4 +1,5 @@
 import { getAllEvents } from "@/sanity/queries";
+import { da } from "@/sanity/attr";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -60,7 +61,7 @@ export default async function EventsPage() {
             {events.map((event) => (
               <div key={event._id} className="py-10 flex gap-6 items-start">
                 {event.image && (
-                  <div className="w-44 flex-shrink-0 overflow-hidden rounded-2xl">
+                  <div className="w-44 flex-shrink-0 overflow-hidden rounded-2xl" data-sanity={da(event._id, "event")("image")}>
                     <Image
                       src={event.image}
                       alt={event.title}
@@ -72,19 +73,20 @@ export default async function EventsPage() {
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs uppercase tracking-widest text-petrol mb-1 font-sans">
+                  <p className="text-xs uppercase tracking-widest text-petrol mb-1 font-sans" data-sanity={da(event._id, "event")("date")}>
                     {formatDate(event.date)}
                   </p>
                   <p className="text-xs uppercase tracking-widest text-petrol mb-2 font-sans">
                     {formatTime(event.date)}
                   </p>
-                  <h2 className="font-display font-bold text-xl text-foreground mb-2 uppercase">{event.title}</h2>
+                  <h2 className="font-display font-bold text-xl text-foreground mb-2 uppercase" data-sanity={da(event._id, "event")("title")}>{event.title}</h2>
                   {event.location && (
                     <a
                       href={`https://maps.google.com/?q=${encodeURIComponent(event.location)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-light text-teal hover:underline transition-colors mb-3 font-sans"
+                      data-sanity={da(event._id, "event")("location")}
                     >
                       <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
                         <path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5zm0 6.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor"/>
@@ -93,7 +95,7 @@ export default async function EventsPage() {
                     </a>
                   )}
                   {event.description && (
-                    <p className="text-sm font-light leading-relaxed text-petrol font-sans">{event.description}</p>
+                    <p className="text-sm font-light leading-relaxed text-petrol font-sans" data-sanity={da(event._id, "event")("description")}>{event.description}</p>
                   )}
                 </div>
               </div>
