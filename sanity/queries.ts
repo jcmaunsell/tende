@@ -1,4 +1,5 @@
-import { client, writeClient } from "./client";
+import { writeClient } from "./client";
+import { sanityFetch } from "./live";
 import type { Product, SanityEvent, SiteSettings } from "@/types";
 
 // ── Shared GROQ fragments ──────────────────────────────────────────────────
@@ -45,9 +46,10 @@ export interface ProductDimensions {
 
 export async function getAllProducts(): Promise<Product[]> {
   try {
-    return await client.fetch(
-      `*[_type == "product"] | order(orderRank asc, _createdAt asc) { ${PRODUCT_BASE}, ${VARIANT_LIST} }`
-    );
+    const { data } = await sanityFetch({
+      query: `*[_type == "product"] | order(orderRank asc, _createdAt asc) { ${PRODUCT_BASE}, ${VARIANT_LIST} }`,
+    });
+    return data as Product[];
   } catch {
     return [];
   }
@@ -55,11 +57,12 @@ export async function getAllProducts(): Promise<Product[]> {
 
 export async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    return await client.fetch(
-      `*[_type == "product" && inStock == true] | order(coalesce(featured, false) desc, _createdAt asc) [0...4] {
+    const { data } = await sanityFetch({
+      query: `*[_type == "product" && inStock == true] | order(coalesce(featured, false) desc, _createdAt asc) [0...4] {
         ${PRODUCT_BASE}, ${VARIANT_LIST}
-      }`
-    );
+      }`,
+    });
+    return data as Product[];
   } catch {
     return [];
   }
@@ -67,12 +70,13 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    return await client.fetch(
-      `*[_type == "product" && slug.current == $slug][0] {
+    const { data } = await sanityFetch({
+      query: `*[_type == "product" && slug.current == $slug][0] {
         ${PRODUCT_BASE}, ${PRODUCT_DETAIL_EXTRA}, ${VARIANT_DETAIL}
       }`,
-      { slug }
-    );
+      params: { slug },
+    });
+    return data as Product | null;
   } catch {
     return null;
   }
@@ -80,8 +84,8 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export async function getAllEvents(): Promise<SanityEvent[]> {
   try {
-    return await client.fetch(
-      `*[_type == "event" && date >= now()] | order(date asc) {
+    const { data } = await sanityFetch({
+      query: `*[_type == "event" && date >= now()] | order(date asc) {
         _id,
         "title": coalesce(title, market->name),
         date,
@@ -89,8 +93,9 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
         "location": coalesce(location, market->location),
         description,
         "market": market->{ _id, name, location, website }
-      }`
-    );
+      }`,
+    });
+    return data as SanityEvent[];
   } catch {
     return [];
   }
@@ -98,8 +103,8 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
 
 export async function getProductsByStripePriceIds(priceIds: string[]): Promise<ProductDimensions[]> {
   try {
-    return await client.fetch(
-      `*[_type == "product" && (
+    const { data } = await sanityFetch({
+      query: `*[_type == "product" && (
         stripePriceId in $ids ||
         count(variants[stripePriceId in $ids]) > 0
       )] {
@@ -107,8 +112,9 @@ export async function getProductsByStripePriceIds(priceIds: string[]): Promise<P
         stripePriceId,
         variants[]{ stripePriceId }
       }`,
-      { ids: priceIds }
-    );
+      params: { ids: priceIds },
+    });
+    return data as ProductDimensions[];
   } catch {
     return [];
   }
@@ -173,10 +179,11 @@ export async function createOrder(input: CreateOrderInput): Promise<void> {
 
 export async function getOrderByIdAndEmail(orderId: string, email: string): Promise<Order | null> {
   try {
-    return await client.fetch(
-      `*[_type == "order" && orderId == $orderId && customerEmail == $email][0]`,
-      { orderId, email }
-    );
+    const { data } = await sanityFetch({
+      query: `*[_type == "order" && orderId == $orderId && customerEmail == $email][0]`,
+      params: { orderId, email },
+    });
+    return data as Order | null;
   } catch {
     return null;
   }
@@ -186,8 +193,8 @@ export async function getOrderByIdAndEmail(orderId: string, email: string): Prom
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
-    return await client.fetch(
-      `*[_type == "siteSettings"][0] {
+    const { data } = await sanityFetch({
+      query: `*[_type == "siteSettings"][0] {
         shippingBannerEnabled,
         shippingBannerText,
         heroHeadline,
@@ -198,8 +205,9 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
         "galleryImages": galleryImages[]{ "image": image.asset->url, alt },
         faqs[]{ question, answer },
         testimonials[]{ quote, author }
-      }`
-    );
+      }`,
+    });
+    return data as SiteSettings | null;
   } catch {
     return null;
   }

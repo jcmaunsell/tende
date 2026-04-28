@@ -4,6 +4,9 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import DatadogRum from "@/components/DatadogRum";
 import { getSiteSettings } from "@/sanity/queries";
+import { SanityLive } from "@/sanity/live";
+import { VisualEditing } from "next-sanity/visual-editing";
+import { draftMode } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Tende — plant-based beauty",
@@ -17,7 +20,10 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings = await getSiteSettings();
+  const [settings, { isEnabled: isDraftMode }] = await Promise.all([
+    getSiteSettings(),
+    draftMode(),
+  ]);
   const bannerEnabled = settings?.shippingBannerEnabled ?? true;
   const bannerText = settings?.shippingBannerText ?? "Free U.S. shipping on orders over $55 — no code needed";
 
@@ -28,6 +34,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Nav bannerEnabled={bannerEnabled} bannerText={bannerText} />
         <main className={`flex-1 ${bannerEnabled ? "pt-[88px]" : "pt-14"}`}>{children}</main>
         <Footer />
+        <SanityLive />
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   );

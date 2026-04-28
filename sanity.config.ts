@@ -2,6 +2,7 @@
 
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
+import { presentationTool } from "sanity/presentation";
 import { visionTool } from "@sanity/vision";
 import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 import { schemaTypes } from "./sanity/schemas";
@@ -51,6 +52,15 @@ export default defineConfig({
             S.documentTypeListItem("order").title("Orders"),
             S.documentTypeListItem("siteSettings").title("Site Settings"),
           ]),
+    }),
+    presentationTool({
+      previewUrl: {
+        origin: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+        preview: "/",
+        draftMode: {
+          enable: "/api/draft-mode/enable",
+        },
+      },
     }),
     visionTool(),
   ],
