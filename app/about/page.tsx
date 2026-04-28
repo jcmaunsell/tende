@@ -24,23 +24,14 @@ export default async function AboutPage() {
     <div className="bg-sage min-h-screen">
 
       <section className="max-w-5xl mx-auto px-6 py-20 grid md:grid-cols-[2fr_3fr] gap-12 items-center">
-        {/* Skewed frame matching the original Squarespace look */}
-        <div className="relative" style={{ perspective: "800px" }}>
-          <div
-            className="aspect-[3/4] overflow-hidden"
-            style={{
-              transform: "rotate3d(2, -1, 0.5, 8deg)",
-              boxShadow: "-12px 16px 40px rgba(0,0,0,0.35)",
-            }}
-          >
-            <Image
-              src={photoUrl}
-              alt="Sage, founder of Tende"
-              width={900}
-              height={1200}
-              className="w-full h-full object-cover"
-            />
-          </div>
+        <div className="p-3 border-2 border-white/40 aspect-[3/4] overflow-hidden">
+          <Image
+            src={photoUrl}
+            alt="Sage, founder of Tende"
+            width={900}
+            height={1200}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div>
           <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-8 leading-snug uppercase">
